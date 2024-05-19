@@ -1,7 +1,8 @@
 package org.srestrepo.java.jdbc;
 
+import org.srestrepo.java.jdbc.util.DatabaseConnection;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -9,13 +10,9 @@ import java.sql.Statement;
 public class JdbcExample {
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/jakarta_course";
-        String username = "SANTIAGO";
-        String password = "password";
-
-        try (Connection connection = DriverManager.getConnection(url, username, password);
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("SELECT * FROM PRODUCTS")) {
+        try (Connection connection = DatabaseConnection.getInstance();
+             Statement statement = connection.createStatement();
+             ResultSet result = statement.executeQuery("SELECT * FROM PRODUCTS")) {
             while (result.next()) {
                 System.out.print(result.getInt("id"));
                 System.out.print(" | ");
