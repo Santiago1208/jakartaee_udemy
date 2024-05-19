@@ -17,7 +17,13 @@ public class JdbcExample {
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery("SELECT * FROM PRODUCTS")) {
             while (result.next()) {
-                System.out.println(result.getString("name"));
+                System.out.print(result.getInt("id"));
+                System.out.print(" | ");
+                System.out.print(result.getString("name"));
+                System.out.print(" | ");
+                System.out.print(result.getInt("price"));
+                System.out.print(" | ");
+                System.out.println(result.getDate("register_date"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
