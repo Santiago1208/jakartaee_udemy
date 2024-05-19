@@ -2,7 +2,9 @@ package org.srestrepo.java.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class JdbcExample {
 
@@ -12,6 +14,15 @@ public class JdbcExample {
         String password = "password";
         try {
             Connection connection = DriverManager.getConnection(url, username, password);
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM PRODUCTS");
+
+            while (result.next()) {
+                System.out.println(result.getString("name"));
+            }
+            result.close();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
