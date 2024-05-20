@@ -40,11 +40,11 @@ public class ProductDAO implements GenericDAO<Product> {
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement("SELECT * FROM PRODUCTS WHERE ID = ?")) {
             preparedStatement.setLong(1, id);
-            ResultSet result = preparedStatement.executeQuery();
-            if (result.next()) {
-                product = createProduct(result);
+            try (ResultSet result = preparedStatement.executeQuery()) {
+                if (result.next()) {
+                    product = createProduct(result);
+                }
             }
-            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
