@@ -10,6 +10,7 @@ CREATE TABLE `products` (
     `name` varchar(45) DEFAULT NULL,
     `price` int unsigned DEFAULT NULL,
     `register_date` datetime DEFAULT NULL,
+    `sku` varchar(45) DEFAULT NULL,
     `category_id` int unsigned NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
