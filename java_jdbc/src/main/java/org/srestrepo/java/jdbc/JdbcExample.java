@@ -27,9 +27,10 @@ public class JdbcExample {
             // Save
             System.out.println("============ Save Product ============");
             Product newProduct = new Product();
-            newProduct.setName("Razer Keyboard");
-            newProduct.setPrice(450);
+            newProduct.setName("IBM Keyboard");
+            newProduct.setPrice(1550);
             newProduct.setRegisterDate(new Date());
+            newProduct.setSku("sku19");
 
             Category technology = new Category();
             technology.setId(3L);
@@ -38,8 +39,23 @@ public class JdbcExample {
             productDAO.save(newProduct);
             System.out.println("Product Saved successfully!");
 
+            // Update
+            System.out.println("============ Update Product ============");
+            newProduct = new Product();
+            newProduct.setId(20L);
+            newProduct.setName("Corsair K95 Keyboard");
+            newProduct.setPrice(700);
+            newProduct.setSku("sku19");
+
+            Category entertainment = new Category();
+            entertainment.setId(2L);
+            newProduct.setCategory(entertainment);
+
+            productDAO.save(newProduct);
+            System.out.println("Product Updated successfully!");
+
             // Find All - the saved product
-            System.out.println("============ Find All - the Saved Product ============");
+            System.out.println("============ Find All Again ============");
             productDAO.findAll().forEach(System.out::println);
 
         } catch (SQLException e) {
