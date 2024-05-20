@@ -2,6 +2,7 @@ package org.srestrepo.java.jdbc;
 
 import org.srestrepo.java.jdbc.dao.GenericDAO;
 import org.srestrepo.java.jdbc.dao.ProductDAO;
+import org.srestrepo.java.jdbc.model.Category;
 import org.srestrepo.java.jdbc.model.Product;
 import org.srestrepo.java.jdbc.util.DatabaseConnection;
 
@@ -26,9 +27,14 @@ public class JdbcExample {
             // Save
             System.out.println("============ Save Product ============");
             Product newProduct = new Product();
-            newProduct.setName("Logitech Keyboard");
-            newProduct.setPrice(500);
+            newProduct.setName("Razer Keyboard");
+            newProduct.setPrice(450);
             newProduct.setRegisterDate(new Date());
+
+            Category technology = new Category();
+            technology.setId(3L);
+            newProduct.setCategory(technology);
+
             productDAO.save(newProduct);
             System.out.println("Product Saved successfully!");
 
