@@ -2,6 +2,7 @@ package org.srestrepo.java.jdbc;
 
 import org.srestrepo.java.jdbc.dao.GenericDAO;
 import org.srestrepo.java.jdbc.dao.ProductDAO;
+import org.srestrepo.java.jdbc.model.Category;
 import org.srestrepo.java.jdbc.model.Product;
 import org.srestrepo.java.jdbc.util.DatabaseConnection;
 
@@ -25,9 +26,14 @@ public class JdbcUpdateExample {
             // Update
             System.out.println("============ Update Product ============");
             Product newProduct = new Product();
-            newProduct.setId(33L);
-            newProduct.setName("Razer Keyboard");
+            newProduct.setId(20L);
+            newProduct.setName("Corsair K95 Keyboard");
             newProduct.setPrice(700);
+
+            Category entertainment = new Category();
+            entertainment.setId(2L);
+            newProduct.setCategory(entertainment);
+
             productDAO.save(newProduct);
             System.out.println("Product Deleted successfully!");
 
