@@ -22,7 +22,8 @@ public class ProductDAO implements GenericDAO<Product> {
     @Override
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
-        try (Statement statement = getConnection().createStatement();
+        try (Connection connection = getConnection();
+             Statement statement = connection.createStatement();
              ResultSet result = statement.executeQuery("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
                      "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id)")) {
             while (result.next()) {
@@ -39,7 +40,8 @@ public class ProductDAO implements GenericDAO<Product> {
     @Override
     public Product findById(Long id) {
         Product product = null;
-        try (PreparedStatement preparedStatement = getConnection()
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection
                 .prepareStatement("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
                         "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id) WHERE p.ID = ?")) {
             preparedStatement.setLong(1, id);
@@ -62,7 +64,8 @@ public class ProductDAO implements GenericDAO<Product> {
         } else {
             sql = "INSERT INTO PRODUCTS (NAME, PRICE, CATEGORY_ID, REGISTER_DATE) VALUES (?, ?, ?, ?)";
         }
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setInt(2, product.getPrice());
             preparedStatement.setLong(3, product.getCategory().getId());
@@ -79,7 +82,8 @@ public class ProductDAO implements GenericDAO<Product> {
 
     @Override
     public void deleteById(Long id) {
-        try (PreparedStatement preparedStatement = getConnection()
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection
                 .prepareStatement("DELETE FROM PRODUCTS WHERE ID = ?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
