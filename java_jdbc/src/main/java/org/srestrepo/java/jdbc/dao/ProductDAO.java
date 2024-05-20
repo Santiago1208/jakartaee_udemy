@@ -4,6 +4,7 @@ import org.srestrepo.java.jdbc.model.Product;
 import org.srestrepo.java.jdbc.util.DatabaseConnection;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,8 +52,25 @@ public class ProductDAO implements GenericDAO<Product> {
     }
 
     @Override
-    public void save(Product model) {
-
+    public void save(Product product) {
+        String sql;
+        if (product.getId() != null && product.getId() > 0L) {
+            sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ? WHERE ID = ?";
+        } else {
+            sql = "INSERT INTO PRODUCTS (NAME, PRICE, REGISTER_DATE) VALUES (?, ?, ?)";
+        }
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setInt(2, product.getPrice());
+            if (product.getId() != null && product.getId() > 0) {
+                preparedStatement.setLong(3, product.getId());
+            } else {
+                preparedStatement.setDate(3, new Date(product.getRegisterDate().getTime()));
+            }
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
