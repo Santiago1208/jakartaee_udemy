@@ -75,7 +75,13 @@ public class ProductDAO implements GenericDAO<Product> {
 
     @Override
     public void deleteById(Long id) {
-
+        try (PreparedStatement preparedStatement = getConnection()
+                .prepareStatement("DELETE FROM PRODUCTOS WHERE ID = ?")) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Product createProduct(ResultSet result) throws SQLException {
