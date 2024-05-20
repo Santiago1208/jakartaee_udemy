@@ -16,12 +16,13 @@ import java.util.List;
 public class ProductDAO implements GenericDAO<Product> {
 
     private Connection getConnection() throws SQLException {
-        return DatabaseConnection.getInstance();
+        return DatabaseConnection.getConnection();
     }
 
     @Override
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
+        // Try/catch won't close the connection, it will release it
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
              ResultSet result = statement.executeQuery("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
@@ -40,6 +41,7 @@ public class ProductDAO implements GenericDAO<Product> {
     @Override
     public Product findById(Long id) {
         Product product = null;
+        // Try/catch won't close the connection, it will release it
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection
                 .prepareStatement("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
@@ -64,6 +66,7 @@ public class ProductDAO implements GenericDAO<Product> {
         } else {
             sql = "INSERT INTO PRODUCTS (NAME, PRICE, CATEGORY_ID, REGISTER_DATE) VALUES (?, ?, ?, ?)";
         }
+        // Try/catch won't close the connection, it will release it
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, product.getName());
@@ -82,6 +85,7 @@ public class ProductDAO implements GenericDAO<Product> {
 
     @Override
     public void deleteById(Long id) {
+        // Try/catch won't close the connection, it will release it
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection
                 .prepareStatement("DELETE FROM PRODUCTS WHERE ID = ?")) {
