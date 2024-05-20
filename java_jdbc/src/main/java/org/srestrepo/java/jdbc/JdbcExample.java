@@ -13,7 +13,13 @@ public class JdbcExample {
     public static void main(String[] args) {
         try (Connection connection = DatabaseConnection.getInstance()) {
             GenericDAO<Product> productDAO = new ProductDAO();
+
+            // Find All
             productDAO.findAll().forEach(System.out::println);
+
+            // Find by ID
+            System.out.println(productDAO.findById(2L));
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
