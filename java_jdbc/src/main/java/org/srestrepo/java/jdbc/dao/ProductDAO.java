@@ -1,12 +1,39 @@
 package org.srestrepo.java.jdbc.dao;
 
 import org.srestrepo.java.jdbc.model.Product;
+import org.srestrepo.java.jdbc.util.DatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO implements GenericDAO<Product> {
+
+    private Connection getConnection() throws SQLException {
+        return DatabaseConnection.getInstance();
+    }
+
     @Override
     public List<Product> findAll() {
-        return List.of();
+        List<Product> products = new ArrayList<>();
+        try (Statement statement = getConnection().createStatement();
+             ResultSet result = statement.executeQuery("SELECT * FROM PRODUCTS")) {
+            while (result.next()) {
+                Product product = new Product();
+                product.setId(result.getLong("id"));
+                product.setName(result.getString("name"));
+                product.setPrice(result.getInt("price"));
+                product.setRegisterDate(result.getDate("register_date"));
+
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 
     @Override
