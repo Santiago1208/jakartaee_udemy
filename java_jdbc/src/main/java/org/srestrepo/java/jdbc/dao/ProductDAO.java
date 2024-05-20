@@ -4,6 +4,7 @@ import org.srestrepo.java.jdbc.model.Product;
 import org.srestrepo.java.jdbc.util.DatabaseConnection;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,11 +23,7 @@ public class ProductDAO implements GenericDAO<Product> {
         try (Statement statement = getConnection().createStatement();
              ResultSet result = statement.executeQuery("SELECT * FROM PRODUCTS")) {
             while (result.next()) {
-                Product product = new Product();
-                product.setId(result.getLong("id"));
-                product.setName(result.getString("name"));
-                product.setPrice(result.getInt("price"));
-                product.setRegisterDate(result.getDate("register_date"));
+                Product product = createProduct(result);
 
                 products.add(product);
             }
@@ -38,7 +35,19 @@ public class ProductDAO implements GenericDAO<Product> {
 
     @Override
     public Product findById(Long id) {
-        return null;
+        Product product = null;
+        try (PreparedStatement preparedStatement = getConnection()
+                .prepareStatement("SELECT * FROM PRODUCTS WHERE ID = ?")) {
+            preparedStatement.setLong(1, id);
+            ResultSet result = preparedStatement.executeQuery();
+            if (result.next()) {
+                product = createProduct(result);
+            }
+            result.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
     }
 
     @Override
@@ -49,5 +58,14 @@ public class ProductDAO implements GenericDAO<Product> {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    private Product createProduct(ResultSet result) throws SQLException {
+        Product product = new Product();
+        product.setId(result.getLong("id"));
+        product.setName(result.getString("name"));
+        product.setPrice(result.getInt("price"));
+        product.setRegisterDate(result.getDate("register_date"));
+        return product;
     }
 }
