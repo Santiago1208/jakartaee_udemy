@@ -7,6 +7,7 @@ import org.srestrepo.java.jdbc.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class JdbcExample {
 
@@ -15,10 +16,25 @@ public class JdbcExample {
             GenericDAO<Product> productDAO = new ProductDAO();
 
             // Find All
+            System.out.println("============ Find All ============");
             productDAO.findAll().forEach(System.out::println);
 
             // Find by ID
+            System.out.println("============ Find By ID ============");
             System.out.println(productDAO.findById(2L));
+
+            // Save
+            System.out.println("============ Save Product ============");
+            Product newProduct = new Product();
+            newProduct.setName("Logitech Keyboard");
+            newProduct.setPrice(500);
+            newProduct.setRegisterDate(new Date());
+            productDAO.save(newProduct);
+            System.out.println("Product Saved successfully!");
+
+            // Find All - the saved product
+            System.out.println("============ Find All - the Saved Product ============");
+            productDAO.findAll().forEach(System.out::println);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
