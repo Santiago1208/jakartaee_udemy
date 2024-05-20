@@ -41,7 +41,7 @@ public class ProductDAO implements GenericDAO<Product> {
         Product product = null;
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
-                        "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id) WHERE ID = ?")) {
+                        "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id) WHERE p.ID = ?")) {
             preparedStatement.setLong(1, id);
             try (ResultSet result = preparedStatement.executeQuery()) {
                 if (result.next()) {
