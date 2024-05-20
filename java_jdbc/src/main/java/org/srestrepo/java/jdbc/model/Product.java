@@ -49,4 +49,12 @@ public class Product {
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
     }
+
+    @Override
+    public String toString() {
+        return id +
+                " | " + name +
+                " | " + price +
+                " | " + registerDate;
+    }
 }
