@@ -62,9 +62,9 @@ public class ProductDAO implements GenericDAO<Product> {
     public void save(Product product) {
         String sql;
         if (product.getId() != null && product.getId() > 0L) {
-            sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, CATEGORY_ID = ? WHERE ID = ?";
+            sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, CATEGORY_ID = ?, SKU = ? WHERE ID = ?";
         } else {
-            sql = "INSERT INTO PRODUCTS (NAME, PRICE, CATEGORY_ID, REGISTER_DATE) VALUES (?, ?, ?, ?)";
+            sql = "INSERT INTO PRODUCTS (NAME, PRICE, CATEGORY_ID, SKU, REGISTER_DATE) VALUES (?, ?, ?, ?, ?)";
         }
         // Try/catch won't close the connection, it will release it
         try (Connection connection = getConnection();
@@ -72,10 +72,11 @@ public class ProductDAO implements GenericDAO<Product> {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setInt(2, product.getPrice());
             preparedStatement.setLong(3, product.getCategory().getId());
+            preparedStatement.setString(4, product.getSku());
             if (product.getId() != null && product.getId() > 0) {
-                preparedStatement.setLong(4, product.getId());
+                preparedStatement.setLong(5, product.getId());
             } else {
-                preparedStatement.setDate(4, new Date(product.getRegisterDate().getTime()));
+                preparedStatement.setDate(5, new Date(product.getRegisterDate().getTime()));
             }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -102,6 +103,7 @@ public class ProductDAO implements GenericDAO<Product> {
         product.setName(result.getString("name"));
         product.setPrice(result.getInt("price"));
         product.setRegisterDate(result.getDate("register_date"));
+        product.setSku(result.getString("sku"));
 
         Category category = new Category();
         category.setId(result.getLong("category_id"));
