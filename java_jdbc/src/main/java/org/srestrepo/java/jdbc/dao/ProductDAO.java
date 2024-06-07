@@ -15,14 +15,16 @@ import java.util.List;
 
 public class ProductDAO implements GenericDAO<Product> {
 
-    private Connection getConnection() throws SQLException {
-        return DatabaseConnection.getInstance().getConnection();
+    private final Connection connection;
+
+    public ProductDAO(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
     public List<Product> findAll() throws SQLException {
         List<Product> products = new ArrayList<>();
-        try (Statement statement = getConnection().createStatement();
+        try (Statement statement = connection.createStatement();
              ResultSet result = statement.executeQuery("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
                      "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id)")) {
             while (result.next()) {
@@ -37,7 +39,7 @@ public class ProductDAO implements GenericDAO<Product> {
     @Override
     public Product findById(Long id) throws SQLException {
         Product product = null;
-        try (PreparedStatement preparedStatement = getConnection()
+        try (PreparedStatement preparedStatement = connection
                 .prepareStatement("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
                         "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id) WHERE p.ID = ?")) {
             preparedStatement.setLong(1, id);
@@ -58,7 +60,7 @@ public class ProductDAO implements GenericDAO<Product> {
         } else {
             sql = "INSERT INTO PRODUCTS (NAME, PRICE, CATEGORY_ID, SKU, REGISTER_DATE) VALUES (?, ?, ?, ?, ?)";
         }
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setInt(2, product.getPrice());
             preparedStatement.setLong(3, product.getCategory().getId());
@@ -91,7 +93,7 @@ public class ProductDAO implements GenericDAO<Product> {
 
     @Override
     public void deleteById(Long id) throws SQLException {
-        try (PreparedStatement preparedStatement = getConnection()
+        try (PreparedStatement preparedStatement = connection
                 .prepareStatement("DELETE FROM PRODUCTS WHERE ID = ?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();

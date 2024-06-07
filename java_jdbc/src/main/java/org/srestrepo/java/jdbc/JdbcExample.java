@@ -18,7 +18,7 @@ public class JdbcExample {
                 connection.setAutoCommit(false);
             }
             try {
-                GenericDAO<Product> productDAO = new ProductDAO();
+                GenericDAO<Product> productDAO = new ProductDAO(connection);
 
                 // Find All
                 System.out.println("============ Find All ============");
