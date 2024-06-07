@@ -1,5 +1,6 @@
 package org.srestrepo.java.jdbc.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,4 +21,6 @@ public interface GenericDAO<T> {
         }
         return lastEntityId;
     }
+
+    void setConnection(Connection connection);
 }

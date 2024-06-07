@@ -12,9 +12,16 @@ import java.util.List;
 
 public class CategoryDAO implements GenericDAO<Category> {
 
-    private final Connection connection;
+    private Connection connection;
+
+    public CategoryDAO() {}
 
     public CategoryDAO(Connection connection) {
+        this.connection = connection;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

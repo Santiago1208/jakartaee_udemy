@@ -14,9 +14,16 @@ import java.util.List;
 
 public class ProductDAO implements GenericDAO<Product> {
 
-    private final Connection connection;
+    private Connection connection;
+
+    public ProductDAO() {}
 
     public ProductDAO(Connection connection) {
+        this.connection = connection;
+    }
+
+    @Override
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 
