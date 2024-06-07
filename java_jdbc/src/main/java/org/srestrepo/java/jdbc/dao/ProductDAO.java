@@ -20,7 +20,7 @@ public class ProductDAO implements GenericDAO<Product> {
     }
 
     @Override
-    public List<Product> findAll() {
+    public List<Product> findAll() throws SQLException {
         List<Product> products = new ArrayList<>();
         try (Statement statement = getConnection().createStatement();
              ResultSet result = statement.executeQuery("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
@@ -30,14 +30,12 @@ public class ProductDAO implements GenericDAO<Product> {
 
                 products.add(product);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return products;
     }
 
     @Override
-    public Product findById(Long id) {
+    public Product findById(Long id) throws SQLException {
         Product product = null;
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
@@ -48,14 +46,12 @@ public class ProductDAO implements GenericDAO<Product> {
                     product = createProduct(result);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return product;
     }
 
     @Override
-    public void save(Product product) {
+    public void save(Product product) throws SQLException {
         String sql;
         if (product.getId() != null && product.getId() > 0L) {
             sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, CATEGORY_ID = ?, SKU = ? WHERE ID = ?";
@@ -73,19 +69,15 @@ public class ProductDAO implements GenericDAO<Product> {
                 preparedStatement.setDate(5, new Date(product.getRegisterDate().getTime()));
             }
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws SQLException {
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement("DELETE FROM PRODUCTS WHERE ID = ?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
