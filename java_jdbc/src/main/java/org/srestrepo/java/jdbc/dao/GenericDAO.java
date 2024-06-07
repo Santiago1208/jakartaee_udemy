@@ -6,6 +6,6 @@ import java.util.List;
 public interface GenericDAO<T> {
     List<T> findAll() throws SQLException;
     T findById(Long id) throws SQLException;
-    void save(T model) throws SQLException;
+    T save(T model) throws SQLException;
     void deleteById(Long id) throws SQLException;
 }

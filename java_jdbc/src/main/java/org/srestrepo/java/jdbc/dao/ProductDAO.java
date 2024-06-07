@@ -51,7 +51,7 @@ public class ProductDAO implements GenericDAO<Product> {
     }
 
     @Override
-    public void save(Product product) throws SQLException {
+    public Product save(Product product) throws SQLException {
         String sql;
         if (product.getId() != null && product.getId() > 0L) {
             sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, CATEGORY_ID = ?, SKU = ? WHERE ID = ?";
@@ -69,7 +69,24 @@ public class ProductDAO implements GenericDAO<Product> {
                 preparedStatement.setDate(5, new Date(product.getRegisterDate().getTime()));
             }
             preparedStatement.executeUpdate();
+
+            // Retrieve the last generated product ID
+            if (product.getId() == null && product.getId() <= 0) {
+                Long lastProductId = retrieveLastGeneratedId(preparedStatement);
+                product.setId(lastProductId);
+            }
         }
+        return product;
+    }
+
+    private Long retrieveLastGeneratedId(PreparedStatement preparedStatement) throws SQLException {
+        long id = 0L;
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                id = generatedKeys.getLong(1);
+            }
+        }
+        return id;
     }
 
     @Override
