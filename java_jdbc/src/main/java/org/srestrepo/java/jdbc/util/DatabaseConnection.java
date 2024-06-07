@@ -13,7 +13,7 @@ public class DatabaseConnection {
 
     private DatabaseConnection() {}
 
-    public static BasicDataSource getInstance() throws SQLException {
+    public static BasicDataSource getInstance() {
         if (pool == null) {
             pool = new BasicDataSource();
             // Basic configuration
@@ -30,12 +30,17 @@ public class DatabaseConnection {
     }
 
     /**
-     * Gets one connection from the already configured pool.
+     * Gets one connection from the already configured pool. The connection returned will have the autocommit
+     * disabled, so every service has control on the commit and rollback in each operation.
      * @return the connection object DAOs can use to do CRUD operations
      * @throws SQLException if the pool could not get a connection because they all are busy
      * or the pool is misconfigured.
      */
     public static Connection getConnection() throws SQLException {
-        return getInstance().getConnection();
+        Connection connection = getInstance().getConnection();
+        if (connection.getAutoCommit()) {
+            connection.setAutoCommit(false);
+        }
+        return connection;
     }
 }
