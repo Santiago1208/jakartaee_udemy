@@ -1,5 +1,6 @@
 package org.srestrepo.java.jdbc;
 
+import org.srestrepo.java.jdbc.dao.CategoryDAO;
 import org.srestrepo.java.jdbc.dao.GenericDAO;
 import org.srestrepo.java.jdbc.dao.ProductDAO;
 import org.srestrepo.java.jdbc.model.Category;
@@ -13,12 +14,20 @@ import java.util.Date;
 public class JdbcExample {
 
     public static void main(String[] args) throws SQLException {
-        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
+        try (Connection connection = DatabaseConnection.getConnection()) {
             if (connection.getAutoCommit()) {
                 connection.setAutoCommit(false);
             }
             try {
                 GenericDAO<Product> productDAO = new ProductDAO(connection);
+                GenericDAO<Category> categoryDAO = new CategoryDAO(connection);
+
+                System.out.println("============ Save new Category ============");
+                Category appliances = new Category();
+                appliances.setName("Appliances");
+                appliances = categoryDAO.save(appliances);
+                System.out.println("Category Saved successfully: " + appliances.getId());
+
 
                 // Find All
                 System.out.println("============ Find All ============");
@@ -31,17 +40,14 @@ public class JdbcExample {
                 // Save
                 System.out.println("============ Save Product ============");
                 Product newProduct = new Product();
-                newProduct.setName("IBM Keyboard");
+                newProduct.setName("Blender");
                 newProduct.setPrice(1550);
                 newProduct.setRegisterDate(new Date());
-                newProduct.setSku("sku19");
-
-                Category technology = new Category();
-                technology.setId(3L);
-                newProduct.setCategory(technology);
+                newProduct.setSku("sku44");
+                newProduct.setCategory(appliances);
 
                 productDAO.save(newProduct);
-                System.out.println("Product Saved successfully!");
+                System.out.println("Product Saved successfully: " + newProduct.getId());
 
                 // Update
                 System.out.println("============ Update Product ============");
