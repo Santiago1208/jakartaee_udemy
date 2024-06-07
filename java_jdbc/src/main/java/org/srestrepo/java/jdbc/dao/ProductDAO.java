@@ -55,17 +55,19 @@ public class ProductDAO implements GenericDAO<Product> {
     @Override
     public Product save(Product product) throws SQLException {
         String sql;
-        if (product.getId() != null && product.getId() > 0L) {
-            sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, CATEGORY_ID = ?, SKU = ? WHERE ID = ?";
-        } else {
+        boolean isInserting = product.getId() == null || product.getId() <= 0L;
+        boolean isUpdating = product.getId() != null && product.getId() > 0L;
+        if (isInserting) {
             sql = "INSERT INTO PRODUCTS (NAME, PRICE, CATEGORY_ID, SKU, REGISTER_DATE) VALUES (?, ?, ?, ?, ?)";
+        } else {
+            sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, CATEGORY_ID = ?, SKU = ? WHERE ID = ?";
         }
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setInt(2, product.getPrice());
             preparedStatement.setLong(3, product.getCategory().getId());
             preparedStatement.setString(4, product.getSku());
-            if (product.getId() != null && product.getId() > 0) {
+            if (isUpdating) {
                 preparedStatement.setLong(5, product.getId());
             } else {
                 preparedStatement.setDate(5, new Date(product.getRegisterDate().getTime()));
@@ -73,22 +75,12 @@ public class ProductDAO implements GenericDAO<Product> {
             preparedStatement.executeUpdate();
 
             // Retrieve the last generated product ID
-            if (product.getId() == null && product.getId() <= 0) {
-                Long lastProductId = retrieveLastGeneratedId(preparedStatement);
+            if (isInserting) {
+                Long lastProductId = retrieveLastEntityId(preparedStatement);
                 product.setId(lastProductId);
             }
         }
         return product;
-    }
-
-    private Long retrieveLastGeneratedId(PreparedStatement preparedStatement) throws SQLException {
-        long id = 0L;
-        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                id = generatedKeys.getLong(1);
-            }
-        }
-        return id;
     }
 
     @Override
