@@ -10,29 +10,36 @@ import java.sql.SQLException;
 
 public class JdbcDeleteExample {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         try (Connection connection = DatabaseConnection.getInstance()) {
-            GenericDAO<Product> productDAO = new ProductDAO();
+            if (connection.getAutoCommit()) {
+                connection.setAutoCommit(false);
+            }
+            try {
+                GenericDAO<Product> productDAO = new ProductDAO();
 
-            // Find All
-            System.out.println("============ Find All ============");
-            productDAO.findAll().forEach(System.out::println);
+                // Find All
+                System.out.println("============ Find All ============");
+                productDAO.findAll().forEach(System.out::println);
 
-            // Find by ID
-            System.out.println("============ Find By ID ============");
-            System.out.println(productDAO.findById(2L));
+                // Find by ID
+                System.out.println("============ Find By ID ============");
+                System.out.println(productDAO.findById(2L));
 
-            // Delete
-            System.out.println("============ Delete Product ============");
-            productDAO.deleteById(33L);
-            System.out.println("Product Updated successfully!");
+                // Delete
+                System.out.println("============ Delete Product ============");
+                productDAO.deleteById(33L);
+                System.out.println("Product Updated successfully!");
 
-            // Find All - the saved product
-            System.out.println("============ Find All - the Deleted Product ============");
-            productDAO.findAll().forEach(System.out::println);
+                // Find All - the saved product
+                System.out.println("============ Find All - the Deleted Product ============");
+                productDAO.findAll().forEach(System.out::println);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                connection.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+                connection.rollback();
+            }
         }
     }
 }
