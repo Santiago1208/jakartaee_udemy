@@ -16,15 +16,13 @@ import java.util.List;
 public class ProductDAO implements GenericDAO<Product> {
 
     private Connection getConnection() throws SQLException {
-        return DatabaseConnection.getConnection();
+        return DatabaseConnection.getInstance().getConnection();
     }
 
     @Override
-    public List<Product> findAll() {
+    public List<Product> findAll() throws SQLException {
         List<Product> products = new ArrayList<>();
-        // Try/catch won't close the connection, it will release it
-        try (Connection connection = getConnection();
-             Statement statement = connection.createStatement();
+        try (Statement statement = getConnection().createStatement();
              ResultSet result = statement.executeQuery("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
                      "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id)")) {
             while (result.next()) {
@@ -32,18 +30,14 @@ public class ProductDAO implements GenericDAO<Product> {
 
                 products.add(product);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return products;
     }
 
     @Override
-    public Product findById(Long id) {
+    public Product findById(Long id) throws SQLException {
         Product product = null;
-        // Try/catch won't close the connection, it will release it
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection
+        try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement("SELECT p.*, c.NAME AS category FROM PRODUCTS " +
                         "AS p INNER JOIN CATEGORIES AS c ON (p.category_id = c.id) WHERE p.ID = ?")) {
             preparedStatement.setLong(1, id);
@@ -52,23 +46,19 @@ public class ProductDAO implements GenericDAO<Product> {
                     product = createProduct(result);
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return product;
     }
 
     @Override
-    public void save(Product product) {
+    public void save(Product product) throws SQLException {
         String sql;
         if (product.getId() != null && product.getId() > 0L) {
             sql = "UPDATE PRODUCTS SET NAME = ?, PRICE = ?, CATEGORY_ID = ?, SKU = ? WHERE ID = ?";
         } else {
             sql = "INSERT INTO PRODUCTS (NAME, PRICE, CATEGORY_ID, SKU, REGISTER_DATE) VALUES (?, ?, ?, ?, ?)";
         }
-        // Try/catch won't close the connection, it will release it
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(sql)) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setInt(2, product.getPrice());
             preparedStatement.setLong(3, product.getCategory().getId());
@@ -79,21 +69,15 @@ public class ProductDAO implements GenericDAO<Product> {
                 preparedStatement.setDate(5, new Date(product.getRegisterDate().getTime()));
             }
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void deleteById(Long id) {
-        // Try/catch won't close the connection, it will release it
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection
+    public void deleteById(Long id) throws SQLException {
+        try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement("DELETE FROM PRODUCTS WHERE ID = ?")) {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

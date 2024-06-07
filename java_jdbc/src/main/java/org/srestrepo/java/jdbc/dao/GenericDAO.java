@@ -1,10 +1,11 @@
 package org.srestrepo.java.jdbc.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface GenericDAO<T> {
-    List<T> findAll();
-    T findById(Long id);
-    void save(T model);
-    void deleteById(Long id);
+    List<T> findAll() throws SQLException;
+    T findById(Long id) throws SQLException;
+    void save(T model) throws SQLException;
+    void deleteById(Long id) throws SQLException;
 }
