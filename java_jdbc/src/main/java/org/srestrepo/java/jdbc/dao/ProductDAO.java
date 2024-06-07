@@ -2,7 +2,6 @@ package org.srestrepo.java.jdbc.dao;
 
 import org.srestrepo.java.jdbc.model.Category;
 import org.srestrepo.java.jdbc.model.Product;
-import org.srestrepo.java.jdbc.util.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.Date;
