@@ -11,38 +11,45 @@ import java.sql.SQLException;
 
 public class JdbcUpdateExample {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         try (Connection connection = DatabaseConnection.getInstance()) {
-            GenericDAO<Product> productDAO = new ProductDAO();
+            if (connection.getAutoCommit()) {
+                connection.setAutoCommit(false);
+            }
+            try {
+                GenericDAO<Product> productDAO = new ProductDAO();
 
-            // Find All
-            System.out.println("============ Find All ============");
-            productDAO.findAll().forEach(System.out::println);
+                // Find All
+                System.out.println("============ Find All ============");
+                productDAO.findAll().forEach(System.out::println);
 
-            // Find by ID
-            System.out.println("============ Find By ID ============");
-            System.out.println(productDAO.findById(2L));
+                // Find by ID
+                System.out.println("============ Find By ID ============");
+                System.out.println(productDAO.findById(2L));
 
-            // Update
-            System.out.println("============ Update Product ============");
-            Product newProduct = new Product();
-            newProduct.setId(20L);
-            newProduct.setName("Corsair K95 Keyboard");
-            newProduct.setPrice(700);
+                // Update
+                System.out.println("============ Update Product ============");
+                Product newProduct = new Product();
+                newProduct.setId(20L);
+                newProduct.setName("Corsair K95 Keyboard");
+                newProduct.setPrice(700);
 
-            Category entertainment = new Category();
-            entertainment.setId(2L);
-            newProduct.setCategory(entertainment);
+                Category entertainment = new Category();
+                entertainment.setId(2L);
+                newProduct.setCategory(entertainment);
 
-            productDAO.save(newProduct);
-            System.out.println("Product Deleted successfully!");
+                productDAO.save(newProduct);
+                System.out.println("Product Deleted successfully!");
 
-            // Find All - the saved product
-            System.out.println("============ Find All - the Updated Product ============");
-            productDAO.findAll().forEach(System.out::println);
+                // Find All - the saved product
+                System.out.println("============ Find All - the Updated Product ============");
+                productDAO.findAll().forEach(System.out::println);
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                connection.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                connection.rollback();
+            }
         }
     }
 }
