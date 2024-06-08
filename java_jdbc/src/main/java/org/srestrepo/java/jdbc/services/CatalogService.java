@@ -10,8 +10,10 @@ import org.srestrepo.java.jdbc.util.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CatalogService implements Service {
+    private static final Logger log = Logger.getLogger(CatalogService.class.getName());
 
     private final GenericDAO<Category> categoryDAO;
     private final GenericDAO<Product> productDAO;
@@ -116,8 +118,10 @@ public class CatalogService implements Service {
                 category = categoryDAO.save(category);
                 product.setCategory(category);
                 productDAO.save(product);
+                log.info("Saved product with id " + product.getId() + " and category " + category.getId());
             } catch (Exception e) {
                 connection.rollback();
+                log.severe(e.getMessage());
             }
             connection.commit();
         }

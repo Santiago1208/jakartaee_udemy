@@ -7,8 +7,10 @@ import org.srestrepo.java.jdbc.services.Service;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class JdbcExample {
+    private static final Logger log = Logger.getLogger(JdbcExample.class.getName());
 
     public static void main(String[] args) throws SQLException {
         Service service = new CatalogService();
