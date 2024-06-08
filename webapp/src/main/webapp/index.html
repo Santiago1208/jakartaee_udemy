@@ -5,9 +5,33 @@
     <title>Hello World Tomcat</title>
 </head>
 <body>
-    <h1>Hello World Tomcat</h1>
-    <a href="/webapp/query?hello=How%20is%20it%20going%3F">
-        Sending Query Parameters: <code>/query?hello=How is it going</code>
-    </a>
+<h1>Hello World Tomcat</h1>
+<ul>
+    <li>
+        <a href="/webapp/query?hello=How%20is%20it%20going%3F">
+            Sending Query Parameters: <code>/query?hello=How is it going</code>
+        </a>
+    </li>
+    <li>
+        <a href="/webapp/query?name=Santiago">
+            <code>/query?name=Santiago</code>
+        </a>
+    </li>
+    <li>
+        <a href="/webapp/query?hello=How%20is%20it%20going%3F&name=Santiago">
+            <code>/query?hello=How is it going&name=Santiago</code>
+        </a>
+    </li>
+    <li>
+        <a href="/webapp/query">
+            <code>No Parameters</code>
+        </a>
+    </li>
+    <li>
+        <a href="/webapp/query?hello=How%20is%20it%20going%3F&name=Santiago&code=12345">
+            <code>/query?hello=How is it going&name=Santiago&code=12345</code>
+        </a>
+    </li>
+</ul>
 </body>
 </html>

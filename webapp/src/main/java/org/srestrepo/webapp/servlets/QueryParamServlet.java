@@ -19,6 +19,8 @@ public class QueryParamServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String hello = request.getParameter("hello");
+        String name = request.getParameter("name");
+
         try (PrintWriter printWriter = response.getWriter()) {
             printWriter.println("<!DOCTYPE html>");
             printWriter.println("<html>");
@@ -28,7 +30,21 @@ public class QueryParamServlet extends HttpServlet {
             printWriter.println("    </head>");
             printWriter.println("    <body>");
             printWriter.println("        <h1>Query Parameters</h1>");
-            printWriter.println("        <h2>The greeting received was: " + hello + "</h2>");
+            if (hello != null && name != null) {
+                printWriter.println("        <h2>The greeting received was: " + hello + " " + name + "</h2>");
+            } else if (hello != null) {
+                printWriter.println("        <h2>The greeting received was: " + hello + "</h2>");
+            } else if (name != null) {
+                printWriter.println("        <h2>Hello, my name is: " + name + "</h2>");
+            } else {
+                printWriter.println("        <h2>No parameters were passed in</h2>");
+            }
+            try {
+                int code = Integer.parseInt(request.getParameter("code"));
+                printWriter.println("        <h3>The code you sent is " + code + "</h3>");
+            } catch (NumberFormatException e) {
+                printWriter.println("        <h3>No code was sent</h3>");
+            }
             printWriter.println("    </body>");
             printWriter.println("</html>");
         } catch (IOException e) {
