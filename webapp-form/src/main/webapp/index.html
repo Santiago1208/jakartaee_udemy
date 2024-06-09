@@ -20,6 +20,49 @@
     <div><input type="email" name="email" id="email"></div>
   </div>
   <div>
+    <label for="country">Country:</label>
+    <div>
+      <select name="country" id="country">
+        <option value="">-- Select one --</option>
+        <option value="ES">Spain</option>
+        <option value="MX">Mexico</option>
+        <option value="CL">Chile</option>
+        <option value="AR">Argentina</option>
+        <option value="PE">Peru</option>
+        <option value="CO" selected>Colombia</option>
+        <option value="VE">Venezuela</option>
+      </select>
+    </div>
+  </div>
+  <div>
+    <label for="programming">Programming Languages:</label>
+    <div>
+      <select name="programming" id="programming" multiple>
+        <option value="java" selected>Java SE</option>
+        <option value="jakartaee" selected>Jakarta EE 9</option>
+        <option value="spring">Spring Boot</option>
+        <option value="js">JavaScript</option>
+        <option value="angular">Angular</option>
+        <option value="react" selected>React</option>
+      </select>
+    </div>
+  </div>
+  <div>
+    <label>Roles:</label>
+    <div>
+      <input type="checkbox" name="roles" id="role-admin" value="ROLE_ADMIN">
+      <label for="role-admin">Administrator</label>
+    </div>
+    <div>
+      <input type="checkbox" name="roles" id="role-user" value="ROLE_USER" checked>
+      <label for="role-user">User</label>
+    </div>
+    <div>
+      <input type="checkbox" name="roles" id="role-moderator" value="ROLE_MODERATOR">
+      <label for="role-moderator">Moderator</label>
+    </div>
+  </div>
+  <div>
     <div>
       <input type="submit" value="Save">
     </div>
