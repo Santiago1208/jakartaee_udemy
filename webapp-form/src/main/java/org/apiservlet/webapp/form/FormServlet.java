@@ -1,5 +1,6 @@
 package org.apiservlet.webapp.form;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,38 +55,44 @@ public class FormServlet extends HttpServlet {
             errors.add("Idiom is required");
         }
 
-        try (PrintWriter printWriter = response.getWriter()) {
-            printWriter.println("<!DOCTYPE html>");
-            printWriter.println("<html>");
-            printWriter.println("    <head>");
-            printWriter.println("        <meta charset=\"UTF-8\">");
-            printWriter.println("        <title>Form Result</title>");
-            printWriter.println("    </head>");
-            printWriter.println("    <body>");
-            printWriter.println("        <h1>Form Result</h1>");
-            printWriter.println("        <ul>");
+        try {
             if (errors.isEmpty()) {
-                printWriter.println("           <li>Username: " + username + "</li>");
-                printWriter.println("           <li>Password: " + password + "</li>");
-                printWriter.println("           <li>E-Mail: " + email + "</li>");
-                printWriter.println("           <li>Country: " + country + "</li>");
-                printWriter.println("           <li>Programming Languages: <ul>");
-                Arrays.asList(programming).forEach(p -> printWriter.println("<li>" + p + "</li>"));
-                printWriter.println("           </ul></li>");
-                printWriter.println("           <li>Roles: <ul>");
-                Arrays.asList(roles).forEach(r -> printWriter.println("<li>" + r + "</li>"));
-                printWriter.println("           </ul></li>");
-                printWriter.println("           <li>Idiom: " + idiom + "</li>");
-                printWriter.println("           <li>Enable: " + enable + "</li>");
-                printWriter.println("           <li>Secret: " + secret + "</li>");
+                try (PrintWriter printWriter = response.getWriter()) {
+                    printWriter.println("<!DOCTYPE html>");
+                    printWriter.println("<html>");
+                    printWriter.println("    <head>");
+                    printWriter.println("        <meta charset=\"UTF-8\">");
+                    printWriter.println("        <title>Form Result</title>");
+                    printWriter.println("    </head>");
+                    printWriter.println("    <body>");
+                    printWriter.println("        <h1>Form Result</h1>");
+                    printWriter.println("        <ul>");
+                    printWriter.println("           <li>Username: " + username + "</li>");
+                    printWriter.println("           <li>Password: " + password + "</li>");
+                    printWriter.println("           <li>E-Mail: " + email + "</li>");
+                    printWriter.println("           <li>Country: " + country + "</li>");
+                    printWriter.println("           <li>Programming Languages: <ul>");
+                    Arrays.asList(programming).forEach(p -> printWriter.println("<li>" + p + "</li>"));
+                    printWriter.println("           </ul></li>");
+                    printWriter.println("           <li>Roles: <ul>");
+                    Arrays.asList(roles).forEach(r -> printWriter.println("<li>" + r + "</li>"));
+                    printWriter.println("           </ul></li>");
+                    printWriter.println("           <li>Idiom: " + idiom + "</li>");
+                    printWriter.println("           <li>Enable: " + enable + "</li>");
+                    printWriter.println("           <li>Secret: " + secret + "</li>");
+                    printWriter.println("        </ul>");
+                    printWriter.println("    </body>");
+                    printWriter.println("</html>");
+                } catch (IOException e) {
+                    log.throwing(this.getClass().getName(), "doPost", e);
+                }
             } else {
-                errors.forEach(error -> printWriter.println("<li>" + error + "</li>"));
-                printWriter.println("<p><a href=\"index.html\">Back</a></p>");
+                // Allow sending data Servlet to JSP or Servlet to Servlet.
+                // Important to know, the data will be persistent during the request.
+                request.setAttribute("errors", errors);
+                getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             }
-            printWriter.println("        </ul>");
-            printWriter.println("    </body>");
-            printWriter.println("</html>");
-        } catch (IOException e) {
+        } catch (IOException | ServletException e) {
             log.throwing(this.getClass().getName(), "doPost", e);
         }
     }
