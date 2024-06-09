@@ -24,6 +24,9 @@ public class FormServlet extends HttpServlet {
         String country = request.getParameter("country");
         String[] programming = request.getParameterValues("programming");
         String[] roles = request.getParameterValues("roles");
+        String idiom = request.getParameter("idiom");
+        String enable = request.getParameter("enable");
+        String secret = request.getParameter("secret");
 
         try (PrintWriter printWriter = response.getWriter()) {
             printWriter.println("<!DOCTYPE html>");
@@ -45,6 +48,9 @@ public class FormServlet extends HttpServlet {
             printWriter.println("           <li>Roles: <ul>");
             Arrays.asList(roles).forEach(r -> printWriter.println("<li>" + r + "</li>"));
             printWriter.println("           </ul></li>");
+            printWriter.println("           <li>Idiom: " + idiom + "</li>");
+            printWriter.println("           <li>Enable: " + enable + "</li>");
+            printWriter.println("           <li>Secret: " + secret + "</li>");
             printWriter.println("        </ul>");
             printWriter.println("    </body>");
             printWriter.println("</html>");
