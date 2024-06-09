@@ -27,7 +27,8 @@ public class FormServlet extends HttpServlet {
         String[] programming = request.getParameterValues("programming");
         String[] roles = request.getParameterValues("roles");
         String idiom = request.getParameter("idiom");
-        String enable = request.getParameter("enable");
+        boolean enable = request.getParameter("enable") != null &&
+                request.getParameter("enable").equals("on");
         String secret = request.getParameter("secret");
 
         List<String> errors = new ArrayList<>();
