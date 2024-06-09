@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @WebServlet("/register")
@@ -32,27 +34,27 @@ public class FormServlet extends HttpServlet {
                 request.getParameter("enable").equals("on");
         String secret = request.getParameter("secret");
 
-        List<String> errors = new ArrayList<>();
+        Map<String, String> errors = new HashMap<>();
         if (username == null || username.isBlank()) {
-            errors.add("Username is required");
+            errors.put("username", "Username is required");
         }
         if (password == null || password.isBlank()) {
-            errors.add("Password is required");
+            errors.put("password", "Password is required");
         }
         if (email == null || !email.contains("@")) {
-            errors.add("E-Mail is required and should be valid");
+            errors.put("email", "E-Mail is required and should be valid");
         }
         if (country == null || country.isBlank()) {
-            errors.add("Country is required");
+            errors.put("country", "Country is required");
         }
         if (programming == null || programming.length == 0) {
-            errors.add("At least one Programming Language is required");
+            errors.put("programming", "At least one Programming Language is required");
         }
         if (roles == null || roles.length == 0) {
-            errors.add("At least one Role is required");
+            errors.put("roles", "At least one Role is required");
         }
         if (idiom == null) {
-            errors.add("Idiom is required");
+            errors.put("idiom", "Idiom is required");
         }
 
         try {

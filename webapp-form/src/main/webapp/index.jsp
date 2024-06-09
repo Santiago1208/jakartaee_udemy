@@ -1,8 +1,8 @@
 <%@page contentType="text/html" pageEncoding="utf-8" %>
-<%@page import="java.util.List" %>
+<%@page import="java.util.Map" %>
 
 <%
-List<String> errors = (List<String>) request.getAttribute("errors");
+Map<String, String> errors = (Map<String, String>) request.getAttribute("errors");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@ List<String> errors = (List<String>) request.getAttribute("errors");
 
 <%if (errors != null && !errors.isEmpty()) {%>
 <ul>
-  <%for (String error : errors) { %>
+  <%for (String error : errors.values()) { %>
   <li><%=error%></li>
   <%}%>
 </ul>
@@ -24,14 +24,23 @@ List<String> errors = (List<String>) request.getAttribute("errors");
   <div>
     <label for="username">Username:</label>
     <div><input type="text" name="username" id="username" autofocus></div>
+    <%if(errors != null && errors.containsKey("username")) {%>
+    <small style="color: red"><%=errors.get("username")%></small>
+    <%}%>
   </div>
   <div>
     <label for="password">Password:</label>
     <div><input type="password" name="password" id="password"></div>
+    <%if(errors != null && errors.containsKey("password")) {%>
+    <small style="color: red"><%=errors.get("password")%></small>
+    <%}%>
   </div>
   <div>
     <label for="email">E-Mail:</label>
     <div><input type="email" name="email" id="email"></div>
+    <%if(errors != null && errors.containsKey("email")) {%>
+    <small style="color: red"><%=errors.get("email")%></small>
+    <%}%>
   </div>
   <div>
     <label for="country">Country:</label>
@@ -47,6 +56,9 @@ List<String> errors = (List<String>) request.getAttribute("errors");
         <option value="VE">Venezuela</option>
       </select>
     </div>
+    <%if(errors != null && errors.containsKey("country")) {%>
+    <small style="color: red"><%=errors.get("country")%></small>
+    <%}%>
   </div>
   <div>
     <label for="programming">Programming Languages:</label>
@@ -60,6 +72,9 @@ List<String> errors = (List<String>) request.getAttribute("errors");
         <option value="react" selected>React</option>
       </select>
     </div>
+    <%if(errors != null && errors.containsKey("country")) {%>
+    <small style="color: red"><%=errors.get("country")%></small>
+    <%}%>
   </div>
   <div>
     <label>Roles:</label>
@@ -75,6 +90,9 @@ List<String> errors = (List<String>) request.getAttribute("errors");
       <input type="checkbox" name="roles" id="role-moderator" value="ROLE_MODERATOR">
       <label for="role-moderator">Moderator</label>
     </div>
+    <%if(errors != null && errors.containsKey("roles")) {%>
+    <small style="color: red"><%=errors.get("roles")%></small>
+    <%}%>
   </div>
   <div>
     <label>Idioms:</label>
@@ -90,6 +108,9 @@ List<String> errors = (List<String>) request.getAttribute("errors");
       <input type="radio" name="idiom" id="french" value="fr">
       <label for="french">French</label>
     </div>
+    <%if(errors != null && errors.containsKey("idiom")) {%>
+    <small style="color: red"><%=errors.get("idiom")%></small>
+    <%}%>
   </div>
   <div>
     <label for="enable">Enable:</label>
