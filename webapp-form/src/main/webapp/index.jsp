@@ -16,7 +16,7 @@
 <h3>User Form Example</h3>
 
 <%if (errors != null && !errors.isEmpty()) {%>
-<ul class="alert alert-danger mx-5">
+<ul class="alert alert-danger mx-5 px-5">
     <%for (String error : errors.values()) { %>
     <li>
         <%=error%>
