@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <title>User Form</title>
-    <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 <body>
@@ -25,7 +25,7 @@
 </ul>
 <%}%>
 <div class="px-5">
-    <form action="/webapp-form/register" method="post">
+    <form action="${pageContext.request.contextPath}/register" method="post">
         <div class="row mb-3">
             <label for="username" class="col-form-label col-sm-2">Username:</label>
             <div class="col-sm-4">
@@ -109,7 +109,7 @@
         </div>
         <%}%>
         <div class="row mb-3">
-            <label class="col-form-label col-sm-2">Roles:</label>
+            <span class="col-form-label col-sm-2">Roles:</span>
             <div class="form-check col-sm-2">
                 <input type="checkbox" name="roles" id="role-admin" value="ROLE_ADMIN"
                        class="form-check-input" ${paramValues.roles.stream().anyMatch(p -> p.equals("ROLE_ADMIN")).ifPresent(() -> pageContext.out.print("checked"))}>
@@ -132,7 +132,7 @@
         </div>
         <%}%>
         <div class="row mb-3">
-            <label class="col-form-label col-sm-2">Idioms:</label>
+            <span class="col-form-label col-sm-2">Idioms:</span>
             <div class="form-check col-sm-2">
                 <input type="radio" name="idiom" id="spanish" value="es"
                        class="form-check-input" ${param.idiom.equals("es") ? "checked" : ""}>
