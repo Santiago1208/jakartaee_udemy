@@ -40,7 +40,8 @@ public class ProductXLSServlet extends HttpServlet {
                 printWriter.println("    </head>");
                 printWriter.println("    <body>");
                 printWriter.println("        <h1>Product List</h1>");
-                printWriter.println("        <p><a href=\"" + request.getContextPath() + "products.xls\">Export to XLS</a></p>");
+                printWriter.println("        <p><a href=\"" + request.getContextPath() + "/products.xls\">Export to XLS</a></p>");
+                printWriter.println("        <p><a href=\"" + request.getContextPath() + "/products.json\">View as JSON</a></p>");
             }
             printWriter.println("        <table>");
             printWriter.println("           <tr>");
