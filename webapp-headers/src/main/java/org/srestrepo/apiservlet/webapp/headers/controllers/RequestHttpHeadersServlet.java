@@ -1,4 +1,4 @@
-package org.srestrepo.apiservlet.webapp.headers;
+package org.srestrepo.apiservlet.webapp.headers.controllers;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
