@@ -1,6 +1,7 @@
 package org.srestrepo.apiservlet.webapp.cookie.controllers;
 
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,10 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (USERNAME.equals(username) && PASSWORD.equals(password)) {
+
+            Cookie usernameCookie = new Cookie("username", username);
+            response.addCookie(usernameCookie);
+
             response.setContentType("text/html;charset=UTF-8");
             try (PrintWriter printWriter = response.getWriter()) {
                 printWriter.println("<!DOCTYPE html>");
