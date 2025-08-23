@@ -6,10 +6,11 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.srestrepo.apiservlet.webapp.cookie.services.LoginService;
+import org.srestrepo.apiservlet.webapp.cookie.services.LoginServiceImpl;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Optional;
 
 @WebServlet({"/login", "/login.html"})
@@ -19,11 +20,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElse(new Cookie[0]);
-        Optional<String> usernameOptional = Arrays.stream(cookies)
-                .filter(cookie -> "username".equals(cookie.getName()))
-                .map(Cookie::getValue)
-                .findFirst();
+        LoginService loginService = new LoginServiceImpl();
+        Optional<String> usernameOptional = loginService.getUsername(request);
 
         if (usernameOptional.isEmpty()) {
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
@@ -37,6 +35,7 @@ public class LoginServlet extends HttpServlet {
                 out.println("   </head>");
                 out.println("   <body>");
                 out.println("       <h1>Welcome back! You are logged in already</h1>");
+                out.println("       <p><a href='" + request.getContextPath() + "/index.html'>Go Back</a></p>");
                 out.println("   </body>");
                 out.println("</html>");
             }
@@ -64,6 +63,7 @@ public class LoginServlet extends HttpServlet {
                 printWriter.println("    <body>");
                 printWriter.println("        <h1>Correct Login</h1>");
                 printWriter.println("        <h3>Hello! " + username + " you logged in successfully!</h3>");
+                printWriter.println("        <p><a href='" + request.getContextPath() + "/index.html'>Go Back</a></p>");
                 printWriter.println("    </body>");
                 printWriter.println("</html>");
             } catch (IOException e) {
