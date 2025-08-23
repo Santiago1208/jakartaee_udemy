@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cookie.controllers;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -8,11 +9,39 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Optional;
 
-@WebServlet("/login")
+@WebServlet({"/login", "/login.html"})
 public class LoginServlet extends HttpServlet {
     static final String USERNAME = "admin";
     static final String PASSWORD = "12345";
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElse(new Cookie[0]);
+        Optional<String> usernameOptional = Arrays.stream(cookies)
+                .filter(cookie -> "username".equals(cookie.getName()))
+                .map(Cookie::getValue)
+                .findFirst();
+
+        if (usernameOptional.isEmpty()) {
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        } else {
+            try (PrintWriter out = response.getWriter()) {
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("   <head>");
+                out.println("       <meta charset=\"UTF-8\">");
+                out.println("       <title>Hello " + usernameOptional.get() + "!</title>");
+                out.println("   </head>");
+                out.println("   <body>");
+                out.println("       <h1>Welcome back! You are logged in already</h1>");
+                out.println("   </body>");
+                out.println("</html>");
+            }
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
