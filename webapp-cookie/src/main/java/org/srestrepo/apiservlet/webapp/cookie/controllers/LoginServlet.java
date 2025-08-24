@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
                 out.println("   <body>");
                 out.println("       <h1>Welcome back! You are logged in already</h1>");
                 out.println("       <p><a href='" + request.getContextPath() + "/index.html'>Go Back</a></p>");
+                out.println("       <p><a href='" + request.getContextPath() + "/logout'>Logout</a></p>");
                 out.println("   </body>");
                 out.println("</html>");
             }
