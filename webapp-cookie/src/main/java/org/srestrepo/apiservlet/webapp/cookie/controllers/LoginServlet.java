@@ -52,23 +52,7 @@ public class LoginServlet extends HttpServlet {
             Cookie usernameCookie = new Cookie("username", username);
             response.addCookie(usernameCookie);
 
-            response.setContentType("text/html;charset=UTF-8");
-            try (PrintWriter printWriter = response.getWriter()) {
-                printWriter.println("<!DOCTYPE html>");
-                printWriter.println("<html>");
-                printWriter.println("    <head>");
-                printWriter.println("        <meta charset=\"UTF-8\">");
-                printWriter.println("        <title>Correct Login</title>");
-                printWriter.println("    </head>");
-                printWriter.println("    <body>");
-                printWriter.println("        <h1>Correct Login</h1>");
-                printWriter.println("        <h3>Hello! " + username + " you logged in successfully!</h3>");
-                printWriter.println("        <p><a href='" + request.getContextPath() + "/index.html'>Go Back</a></p>");
-                printWriter.println("    </body>");
-                printWriter.println("</html>");
-            } catch (IOException e) {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-            }
+            response.sendRedirect(request.getContextPath() + "/login.html");
         } else {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Login incorrect");
         }
