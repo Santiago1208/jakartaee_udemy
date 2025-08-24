@@ -5,10 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.srestrepo.apiservlet.webapp.session.models.Product;
-import org.srestrepo.apiservlet.webapp.session.services.LoginService;
-import org.srestrepo.apiservlet.webapp.session.services.LoginServiceImpl;
-import org.srestrepo.apiservlet.webapp.session.services.ProductService;
-import org.srestrepo.apiservlet.webapp.session.services.ProductServiceImpl;
+import org.srestrepo.apiservlet.webapp.session.services.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,7 +22,7 @@ public class ProductServlet extends HttpServlet {
         ProductService productService = new ProductServiceImpl();
         List<Product> products = productService.getProducts();
 
-        LoginService loginService = new LoginServiceImpl();
+        LoginService loginService = new LoginSessionService();
         Optional<String> usernameOptional = loginService.getUsername(request);
 
         response.setContentType("text/html;charset=UTF-8");

@@ -2,12 +2,9 @@ package org.srestrepo.apiservlet.webapp.session.controllers;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import org.srestrepo.apiservlet.webapp.session.services.LoginService;
-import org.srestrepo.apiservlet.webapp.session.services.LoginServiceImpl;
+import org.srestrepo.apiservlet.webapp.session.services.LoginSessionService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +17,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LoginService loginService = new LoginServiceImpl();
+        LoginService loginService = new LoginSessionService();
         Optional<String> usernameOptional = loginService.getUsername(request);
 
         if (usernameOptional.isEmpty()) {
@@ -49,9 +46,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (USERNAME.equals(username) && PASSWORD.equals(password)) {
-
-            Cookie usernameCookie = new Cookie("username", username);
-            response.addCookie(usernameCookie);
+            HttpSession httpSession = request.getSession();
+            httpSession.setAttribute("username", username);
 
             response.sendRedirect(request.getContextPath() + "/login.html");
         } else {
