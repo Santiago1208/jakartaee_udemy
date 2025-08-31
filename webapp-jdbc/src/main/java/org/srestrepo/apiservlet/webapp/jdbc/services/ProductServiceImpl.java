@@ -41,4 +41,9 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Category> findCategoryById(Long id) {
         return Optional.empty();
     }
+
+    @Override
+    public boolean existsBySku(String sku) {
+        return false;
+    }
 }

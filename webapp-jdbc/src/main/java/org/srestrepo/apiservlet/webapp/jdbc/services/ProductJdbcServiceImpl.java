@@ -73,4 +73,13 @@ public class ProductJdbcServiceImpl implements ProductService {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }
+
+    @Override
+    public boolean existsBySku(String sku) {
+        try {
+            return ((ProductJdbcRepositoryImpl) productJdbcRepository).existsBySku(sku);
+        } catch (SQLException e) {
+            throw new JdbcServiceException(e.getMessage(), e);
+        }
+    }
 }

@@ -1,9 +1,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.srestrepo.apiservlet.webapp.jdbc.models.Category" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html; UTF-8" %>
 
 <%
     List<Category> categories = (List<Category>) request.getAttribute("categories");
+    Map<String, String> errors = (Map<String, String>) request.getAttribute("errors");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,24 +21,44 @@
             <div>
                 <input type="text" name="name" id="name">
             </div>
+            <%if (errors != null && errors.containsKey("name")) {%>
+                <div style="color: red;">
+                    <%=errors.get("name")%>
+                </div>
+            <%}%>
         </div>
         <div>
             <label for="price">Price:</label>
             <div>
                 <input type="number" name="price" id="price">
             </div>
+            <%if (errors != null && errors.containsKey("price")) {%>
+                <div style="color: red;">
+                    <%=errors.get("price")%>
+                </div>
+            <%}%>
         </div>
         <div>
             <label for="sku">SKU:</label>
             <div>
                 <input type="text" name="sku" id="sku">
             </div>
+            <%if (errors != null && errors.containsKey("sku")) {%>
+                <div style="color: red;">
+                    <%=errors.get("sku")%>
+                </div>
+            <%}%>
         </div>
         <div>
             <label for="createdAt">Created At:</label>
             <div>
                 <input type="date" name="createdAt" id="createdAt">
             </div>
+            <%if (errors != null && errors.containsKey("createdAt")) {%>
+                <div style="color: red;">
+                    <%=errors.get("createdAt")%>
+                </div>
+            <%}%>
         </div>
         <div>
             <label for="category">Category:</label>
@@ -48,6 +70,11 @@
                     <%}%>
                 </select>
             </div>
+            <%if (errors != null && errors.containsKey("category")) {%>
+                <div style="color: red;">
+                    <%=errors.get("category")%>
+                </div>
+            <%}%>
         </div>
         <div>
             <input type="submit" value="Save">

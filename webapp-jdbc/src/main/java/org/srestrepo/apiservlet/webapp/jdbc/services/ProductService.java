@@ -13,4 +13,5 @@ public interface ProductService {
     void delete(Long id);
     List<Category> getCategories();
     Optional<Category> findCategoryById(Long id);
+    boolean existsBySku(String sku);
 }

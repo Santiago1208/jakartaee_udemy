@@ -18,7 +18,7 @@ public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
     public List<Product> findAll() throws SQLException {
         List<Product> products = new ArrayList<>();
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select p.*, c.name as category from products as p inner join categories as c on p.category_id = c.id" )) {
+             ResultSet resultSet = statement.executeQuery("select p.*, c.name as category from products as p inner join categories as c on p.category_id = c.id order by p.id" )) {
             while (resultSet.next()) {
                 Product product = getProduct(resultSet);
                 products.add(product);
@@ -71,6 +71,19 @@ public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
             statement.setLong(1, id);
             statement.executeUpdate();
         }
+    }
+
+    public boolean existsBySku(String sku) throws SQLException {
+        boolean exists = false;
+        try (PreparedStatement statement = connection.prepareStatement("select p.id from products as p where sku = ?")) {
+            statement.setString(1, sku);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    exists = true;
+                }
+            }
+        }
+        return exists;
     }
 
     private static Product getProduct(ResultSet resultSet) throws SQLException {

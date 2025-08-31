@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/product/add")
 public class ProductFormServlet extends HttpServlet {
@@ -32,8 +34,12 @@ public class ProductFormServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection connection = (Connection) req.getAttribute("jdbcConnection");
         ProductService productService = new ProductJdbcServiceImpl(connection);
+        final Map<String, String> errors = new HashMap<>();
 
         String name = req.getParameter("name");
+        if (name == null || name.isBlank()) {
+            errors.put("name", "Please enter a name");
+        }
 
         Integer price;
         try {
@@ -41,11 +47,25 @@ public class ProductFormServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             price = 0;
         }
+        if (price.equals(0)) {
+            errors.put("price", "Please enter a price");
+        }
 
         String sku =  req.getParameter("sku");
+        if (sku == null || sku.isBlank()) {
+            errors.put("sku", "Please enter a sku");
+        } else if (sku.length() > 10) {
+            errors.put("sku", "Sku exceeds maximum 10 characters");
+        }
+        boolean existsSku = productService.existsBySku(sku);
+        if (existsSku) {
+            errors.put("sku", "Sku already exists");
+        }
 
         String createdAtStr = req.getParameter("createdAt");
-        LocalDate createdAt = LocalDate.parse(createdAtStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        if (createdAtStr == null || createdAtStr.isBlank()) {
+            errors.put("createdAt", "Please enter a creation date");
+        }
 
         Long categoryId;
         try {
@@ -53,19 +73,27 @@ public class ProductFormServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             categoryId = 0L;
         }
+        if (categoryId.equals(0L)) {
+            errors.put("category", "Please enter a category");
+        }
 
+        if (errors.isEmpty()) {
+            LocalDate createdAt = LocalDate.parse(createdAtStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            Product product = new Product();
+            product.setName(name);
+            product.setPrice(price);
+            product.setSku(sku);
+            product.setCreatedAt(createdAt);
 
-        Product product = new Product();
-        product.setName(name);
-        product.setPrice(price);
-        product.setSku(sku);
-        product.setCreatedAt(createdAt);
+            Category category = new Category();
+            category.setId(categoryId);
+            product.setCategory(category);
 
-        Category category = new Category();
-        category.setId(categoryId);
-        product.setCategory(category);
-
-        productService.save(product);
-        resp.sendRedirect(req.getContextPath() + "/products");
+            productService.save(product);
+            resp.sendRedirect(req.getContextPath() + "/products");
+        } else {
+            req.setAttribute("errors", errors);
+            doGet(req, resp);
+        }
     }
 }
