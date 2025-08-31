@@ -18,6 +18,7 @@
     <h1>View Products</h1>
     <%if (username.isPresent()) {%>
         <div>Welcome <%=username.get()%>!</div>
+        <p><a href="<%=request.getContextPath()%>/product/add">[+] New Product</a></p>
     <%}%>
     <table>
         <tr>
