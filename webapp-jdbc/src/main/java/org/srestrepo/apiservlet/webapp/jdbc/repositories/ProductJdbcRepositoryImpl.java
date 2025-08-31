@@ -1,11 +1,9 @@
 package org.srestrepo.apiservlet.webapp.jdbc.repositories;
 
 import org.srestrepo.apiservlet.webapp.jdbc.models.Product;
+import org.srestrepo.apiservlet.webapp.jdbc.util.JdbcConnection;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +29,16 @@ public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
 
     @Override
     public Product findById(Long id) throws SQLException {
-        return null;
+        Product product = null;
+        try (PreparedStatement statement = connection.prepareStatement("select p.*, c.name as category from products as p inner join categories c on c.id = p.category_id where p.id = ?")) {
+            statement.setLong(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    product = getProduct(resultSet);
+                }
+            }
+        }
+        return product;
     }
 
     @Override

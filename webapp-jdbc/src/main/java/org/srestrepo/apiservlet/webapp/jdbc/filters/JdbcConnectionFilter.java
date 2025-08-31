@@ -3,6 +3,7 @@ package org.srestrepo.apiservlet.webapp.jdbc.filters;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
+import org.srestrepo.apiservlet.webapp.jdbc.services.JdbcServiceException;
 import org.srestrepo.apiservlet.webapp.jdbc.util.JdbcConnection;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class JdbcConnectionFilter implements Filter {
                 servletRequest.setAttribute("jdbcConnection", connection);
                 filterChain.doFilter(servletRequest, servletResponse);
                 connection.commit();
-            } catch (SQLException e) {
+            } catch (SQLException | JdbcServiceException e) {
                 connection.rollback();
                 ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                 e.printStackTrace();
