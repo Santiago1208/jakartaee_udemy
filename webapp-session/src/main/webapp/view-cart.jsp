@@ -15,7 +15,7 @@
     <%if (cart.getCartItems().isEmpty()) {%>
         <p>Sorry, the cart is empty</p>
     <%} else {%>
-        <form action="<%=request.getContextPath()%>/update-cart" method="post">
+        <form action="<%=request.getContextPath()%>/cart/update" method="post">
             <table>
                 <tr>
                     <th>ID</th>

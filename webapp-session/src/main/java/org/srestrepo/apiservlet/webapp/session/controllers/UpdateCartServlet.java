@@ -10,7 +10,7 @@ import org.srestrepo.apiservlet.webapp.session.models.Cart;
 
 import java.io.IOException;
 
-@WebServlet("/update-cart")
+@WebServlet("/cart/update")
 public class UpdateCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,6 +33,6 @@ public class UpdateCartServlet extends HttpServlet {
             }
         }
         session.setAttribute("cart", cart);
-        response.sendRedirect("view-cart.jsp");
+        response.sendRedirect(getServletContext().getContextPath() +  "/cart/view");
     }
 }

@@ -15,7 +15,7 @@ import org.srestrepo.apiservlet.webapp.session.services.ProductServiceImpl;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet("/add-cart")
+@WebServlet("/cart/add")
 public class AddProductCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,6 +28,6 @@ public class AddProductCartServlet extends HttpServlet {
             Cart cart = (Cart) session.getAttribute("cart");
             cart.addItem(cartItem);
         }
-        response.sendRedirect(request.getContextPath() + "/view-cart");
+        response.sendRedirect(request.getContextPath() + "/cart/view");
     }
 }
