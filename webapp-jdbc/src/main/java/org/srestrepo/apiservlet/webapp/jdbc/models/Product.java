@@ -1,19 +1,32 @@
 package org.srestrepo.apiservlet.webapp.jdbc.models;
 
+
+import java.time.LocalDate;
+
 public class Product {
     private Long id;
     private String name;
-    private String type;
+    private Category category;
     private int price;
+    private String sku;
+    private LocalDate createdAt;
 
     public Product() {
     }
 
-    public Product(Long id, String name, String type, int price) {
+    public Product(Long id, String name, int price) {
         this.id = id;
         this.name = name;
-        this.type = type;
         this.price = price;
+    }
+
+    public Product(Long id, String name, String category, int price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        Category cat = new Category();
+        cat.setName(category);
+        this.category = cat;
     }
 
     public Long getId() {
@@ -32,12 +45,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getPrice() {
@@ -46,5 +59,21 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 }

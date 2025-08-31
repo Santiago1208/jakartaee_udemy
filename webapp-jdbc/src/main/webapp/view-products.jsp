@@ -33,7 +33,7 @@
             <tr>
                 <td><%=p.getId()%></td>
                 <td><%=p.getName()%></td>
-                <td><%=p.getType()%></td>
+                <td><%=p.getCategory().getName()%></td>
                 <%if (username.isPresent()) {%>
                     <td><%=p.getPrice()%></td>
                     <td><a href="<%=request.getContextPath()%>/cart/add?id=<%=p.getId()%>">Add to Cart</a></td>

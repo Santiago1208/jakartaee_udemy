@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.jdbc.repositories;
 
+import org.srestrepo.apiservlet.webapp.jdbc.models.Category;
 import org.srestrepo.apiservlet.webapp.jdbc.models.Product;
 
 import java.sql.*;
@@ -55,7 +56,14 @@ public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
         product.setId(resultSet.getLong("id"));
         product.setName(resultSet.getString("name"));
         product.setPrice(resultSet.getInt("price"));
-        product.setType(resultSet.getString("category"));
+        product.setSku(resultSet.getString("sku"));
+        product.setCreatedAt(resultSet.getDate("created_at").toLocalDate());
+
+        Category category = new Category();
+        category.setId(resultSet.getLong("category_id"));
+        category.setName(resultSet.getString("category"));
+        product.setCategory(category);
+
         return product;
     }
 }
