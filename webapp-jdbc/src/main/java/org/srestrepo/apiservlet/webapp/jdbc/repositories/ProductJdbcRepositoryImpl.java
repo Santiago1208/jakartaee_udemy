@@ -1,7 +1,6 @@
 package org.srestrepo.apiservlet.webapp.jdbc.repositories;
 
 import org.srestrepo.apiservlet.webapp.jdbc.models.Product;
-import org.srestrepo.apiservlet.webapp.jdbc.util.JdbcConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

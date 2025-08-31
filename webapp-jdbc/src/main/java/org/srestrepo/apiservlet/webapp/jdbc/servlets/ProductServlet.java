@@ -9,6 +9,7 @@ import org.srestrepo.apiservlet.webapp.jdbc.services.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -19,7 +20,8 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        ProductService productService = new ProductServiceImpl();
+        Connection connection = (Connection) request.getAttribute("jdbcConnection");
+        ProductService productService = new ProductJdbcServiceImpl(connection);
         List<Product> products = productService.getProducts();
 
         LoginService loginService = new LoginSessionService();
