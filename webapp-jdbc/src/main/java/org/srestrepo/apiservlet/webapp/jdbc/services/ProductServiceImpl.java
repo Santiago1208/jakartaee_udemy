@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.jdbc.services;
 
+import org.srestrepo.apiservlet.webapp.jdbc.models.Category;
 import org.srestrepo.apiservlet.webapp.jdbc.models.Product;
 
 import java.util.Arrays;
@@ -19,5 +20,25 @@ public class ProductServiceImpl implements ProductService {
         return getProducts().stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst();
+    }
+
+    @Override
+    public void save(Product product) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        return List.of();
+    }
+
+    @Override
+    public Optional<Category> findCategoryById(Long id) {
+        return Optional.empty();
     }
 }

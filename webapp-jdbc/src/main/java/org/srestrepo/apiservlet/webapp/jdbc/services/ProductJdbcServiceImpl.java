@@ -1,6 +1,9 @@
 package org.srestrepo.apiservlet.webapp.jdbc.services;
 
+import org.srestrepo.apiservlet.webapp.jdbc.models.Category;
 import org.srestrepo.apiservlet.webapp.jdbc.models.Product;
+import org.srestrepo.apiservlet.webapp.jdbc.repositories.CategoryJdbcRepositoryImpl;
+import org.srestrepo.apiservlet.webapp.jdbc.repositories.JdbcRepository;
 import org.srestrepo.apiservlet.webapp.jdbc.repositories.ProductJdbcRepositoryImpl;
 
 import java.sql.Connection;
@@ -9,10 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProductJdbcServiceImpl implements ProductService {
-    private final ProductJdbcRepositoryImpl productJdbcRepository;
+    private final JdbcRepository<Product> productJdbcRepository;
+    private final JdbcRepository<Category> categoryJdbcRepository;
 
     public ProductJdbcServiceImpl(Connection connection) {
         productJdbcRepository = new ProductJdbcRepositoryImpl(connection);
+        categoryJdbcRepository = new CategoryJdbcRepositoryImpl(connection);
     }
 
     @Override
@@ -27,7 +32,43 @@ public class ProductJdbcServiceImpl implements ProductService {
     @Override
     public Optional<Product> findById(Long id) {
         try {
-            return Optional.of(productJdbcRepository.findById(id));
+            return Optional.ofNullable(productJdbcRepository.findById(id));
+        } catch (SQLException e) {
+            throw new JdbcServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void save(Product product) {
+        try {
+            productJdbcRepository.save(product);
+        } catch (SQLException e) {
+            throw new JdbcServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        try {
+            productJdbcRepository.delete(id);
+        } catch (SQLException e) {
+            throw new JdbcServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public List<Category> getCategories() {
+        try {
+            return categoryJdbcRepository.findAll();
+        } catch (SQLException e) {
+            throw new JdbcServiceException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Optional<Category> findCategoryById(Long id) {
+        try {
+            return Optional.ofNullable(categoryJdbcRepository.findById(id));
         } catch (SQLException e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
