@@ -25,6 +25,8 @@ public class ProductServlet extends HttpServlet {
         LoginService loginService = new LoginSessionService();
         Optional<String> usernameOptional = loginService.getUsername(request);
 
+        String requestMessage = (String) request.getAttribute("requestMessage");
+        String appMessage = (String) getServletContext().getAttribute("globalMessage");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter printWriter = response.getWriter()) {
             printWriter.println("<!DOCTYPE html>");
@@ -60,6 +62,8 @@ public class ProductServlet extends HttpServlet {
                 printWriter.println("            </tr>");
             });
             printWriter.println("        </table>");
+            printWriter.println("        <p>" + appMessage + "</p>");
+            printWriter.println("        <p>" + requestMessage + "</p>");
             printWriter.println("    </body>");
             printWriter.println("</html>");
         } catch (IOException e) {

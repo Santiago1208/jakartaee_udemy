@@ -2,8 +2,10 @@ package org.srestrepo.apiservlet.webapp.session.listeners;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebListener;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSessionEvent;
 import jakarta.servlet.http.HttpSessionListener;
+import org.srestrepo.apiservlet.webapp.session.models.Cart;
 
 @WebListener
 public class ApplicationListener implements ServletContextListener, ServletRequestListener, HttpSessionListener {
@@ -14,6 +16,8 @@ public class ApplicationListener implements ServletContextListener, ServletReque
     public void contextInitialized(ServletContextEvent sce) {
         servletContext = sce.getServletContext();
         servletContext.log("Initializing Application");
+        // This will be application scoped
+        servletContext.setAttribute("globalMessage", "Some global message for the Application");
     }
 
     @Override
@@ -24,6 +28,8 @@ public class ApplicationListener implements ServletContextListener, ServletReque
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
         servletContext.log("Initializing Request");
+        // This will be request scoped
+        sre.getServletRequest().setAttribute("requestMessage", "Some message for the Request");
     }
 
     @Override
@@ -34,6 +40,9 @@ public class ApplicationListener implements ServletContextListener, ServletReque
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         servletContext.log("Creating Session");
+        Cart cart = new Cart();
+        HttpSession session = se.getSession();
+        session.setAttribute("cart", cart);
     }
 
     @Override

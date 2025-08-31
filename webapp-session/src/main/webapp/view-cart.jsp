@@ -12,7 +12,7 @@
 </head>
 <body>
     <h1>Cart</h1>
-    <%if (cart == null || cart.getCartItems().isEmpty()) {%>
+    <%if (cart.getCartItems().isEmpty()) {%>
         <p>Sorry, the cart is empty</p>
     <%} else {%>
         <table>

@@ -25,13 +25,7 @@ public class AddProductCartServlet extends HttpServlet {
         if (product.isPresent()) {
             CartItem cartItem = new CartItem(1, product.get());
             HttpSession session = request.getSession();
-            Cart cart;
-            if (session.getAttribute("cart") == null) {
-                cart = new Cart();
-                session.setAttribute("cart", cart);
-            } else {
-                cart = (Cart) session.getAttribute("cart");
-            }
+            Cart cart = (Cart) session.getAttribute("cart");
             cart.addItem(cartItem);
         }
         response.sendRedirect(request.getContextPath() + "/view-cart");
