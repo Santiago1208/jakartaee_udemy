@@ -1,0 +1,55 @@
+package org.srestrepo.apiservlet.webapp.jdbc.repositories;
+
+import org.srestrepo.apiservlet.webapp.jdbc.models.Product;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
+    private final Connection connection;
+
+    public ProductJdbcRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
+
+    @Override
+    public List<Product> findAll() throws SQLException {
+        List<Product> products = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("select p.*, c.name as category from products as p inner join categories as c on p.category_id = c.id" )) {
+            while (resultSet.next()) {
+                Product product = getProduct(resultSet);
+                products.add(product);
+            }
+        }
+        return products;
+    }
+
+    @Override
+    public Product findById(Long id) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public void save(Product entity) throws SQLException {
+
+    }
+
+    @Override
+    public void delete(Long id) throws SQLException {
+
+    }
+
+    private static Product getProduct(ResultSet resultSet) throws SQLException {
+        Product product = new Product();
+        product.setId(resultSet.getLong("id"));
+        product.setName(resultSet.getString("name"));
+        product.setPrice(resultSet.getInt("price"));
+        product.setType(resultSet.getString("category"));
+        return product;
+    }
+}
