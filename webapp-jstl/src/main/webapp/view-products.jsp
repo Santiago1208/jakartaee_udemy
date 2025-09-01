@@ -1,13 +1,5 @@
 <%@ page contentType="text/html; UTF-8" %>
-<%@ page import="org.srestrepo.apiservlet.webapp.jstl.models.Product" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Optional" %>
-<%
-    List<Product> products = (List<Product>) request.getAttribute("products");
-    Optional<String> username = (Optional<String>) request.getAttribute("username");
-    String requestMessage = (String) request.getAttribute("requestMessage");
-    String appMessage = (String) getServletContext().getAttribute("globalMessage");
-%>
+<%@ taglib prefix="c"  uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,38 +8,38 @@
 </head>
 <body>
     <h1>View Products</h1>
-    <%if (username.isPresent()) {%>
-        <div>Welcome <%=username.get()%>!</div>
-        <p><a href="<%=request.getContextPath()%>/product/add">[+] New Product</a></p>
-    <%}%>
+    <c:if test="${requestScope.username.present}">
+        <div>Welcome ${requestScope.username.get()}!</div>
+        <p><a href="${pageContext.request.contextPath}/product/add">[+] New Product</a></p>
+    </c:if>
     <table>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Type</th>
-            <%if (username.isPresent()) {%>
+            <c:if test="${requestScope.username.present}">
                 <th>Price</th>
                 <th>Add</th>
                 <th>Edit</th>
                 <th>Delete</th>
-            <%}%>
+            </c:if>
         </tr>
-        <%for (Product p : products) {%>
+        <c:forEach items="${requestScope.products}" var="p">
             <tr>
-                <td><%=p.getId()%></td>
-                <td><%=p.getName()%></td>
-                <td><%=p.getCategory().getName()%></td>
-                <%if (username.isPresent()) {%>
-                    <td><%=p.getPrice()%></td>
-                    <td><a href="<%=request.getContextPath()%>/cart/add?id=<%=p.getId()%>">Add to Cart</a></td>
-                    <td><a href="<%=request.getContextPath()%>/product/add?id=<%=p.getId()%>">Edit Product</a></td>
-                    <td><a href="<%=request.getContextPath()%>/product/delete?id=<%=p.getId()%>"
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td>${p.category.name}</td>
+                <c:if test="${requestScope.username.present}">
+                    <td>${p.price}</td>
+                    <td><a href="${pageContext.request.contextPath}/cart/add?id=${p.id}">Add to Cart</a></td>
+                    <td><a href="${pageContext.request.contextPath}/product/add?id=${p.id}">Edit Product</a></td>
+                    <td><a href="${pageContext.request.contextPath}/product/delete?id=${p.id}"
                            onclick="return confirm('Are you sure you want to delete this record?')">Delete Product</a></td>
-                <%}%>
+                </c:if>
             </tr>
-        <%}%>
+        </c:forEach>
     </table>
-    <p><%=appMessage%></p>
-    <p><%=requestMessage%></p>
+    <p>${applicationScope.globalMessage}</p>
+    <p>${requestScope.requestMessage}</p>
 </body>
 </html>
