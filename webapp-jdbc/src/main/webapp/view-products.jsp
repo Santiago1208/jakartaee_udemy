@@ -29,6 +29,7 @@
                 <th>Price</th>
                 <th>Add</th>
                 <th>Edit</th>
+                <th>Delete</th>
             <%}%>
         </tr>
         <%for (Product p : products) {%>
@@ -39,7 +40,9 @@
                 <%if (username.isPresent()) {%>
                     <td><%=p.getPrice()%></td>
                     <td><a href="<%=request.getContextPath()%>/cart/add?id=<%=p.getId()%>">Add to Cart</a></td>
-                <td><a href="<%=request.getContextPath()%>/product/add?id=<%=p.getId()%>">Edit Product</a></td>
+                    <td><a href="<%=request.getContextPath()%>/product/add?id=<%=p.getId()%>">Edit Product</a></td>
+                    <td><a href="<%=request.getContextPath()%>/product/delete?id=<%=p.getId()%>"
+                           onclick="return confirm('Are you sure you want to delete this record?')">Delete Product</a></td>
                 <%}%>
             </tr>
         <%}%>

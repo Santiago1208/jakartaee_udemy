@@ -10,7 +10,7 @@ import org.srestrepo.apiservlet.webapp.jdbc.services.LoginSessionService;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebFilter({"/cart/*"})
+@WebFilter({"/cart/*", "/product/*"})
 public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
