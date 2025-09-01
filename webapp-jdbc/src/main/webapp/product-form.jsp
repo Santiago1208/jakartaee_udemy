@@ -15,11 +15,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Product</title>
+    <title><%=beingEdited.getId() != null && beingEdited.getId() > 0L ? "Edit" : "Add"%> Product</title>
 </head>
 <body>
-    <h1>Add Product</h1>
+    <h1><%=beingEdited.getId() != null && beingEdited.getId() > 0L ? "Edit" : "Add"%> Product</h1>
     <form action="<%=request.getContextPath()%>/product/add" method="post">
+        <input type="hidden" name="id" value="<%= beingEdited.getId() %>">
         <div>
             <label for="name">Name:</label>
             <div>

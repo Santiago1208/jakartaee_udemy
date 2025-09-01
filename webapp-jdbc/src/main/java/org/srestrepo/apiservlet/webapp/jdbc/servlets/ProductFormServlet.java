@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,6 @@ public class ProductFormServlet extends HttpServlet {
         Connection connection = (Connection) req.getAttribute("jdbcConnection");
         ProductService productService = new ProductJdbcServiceImpl(connection);
         List<Category> categories = productService.getCategories();
-        req.setAttribute("categories", categories);
 
         Long productId;
         try {
@@ -42,8 +42,9 @@ public class ProductFormServlet extends HttpServlet {
                 product = optionalProduct.get();
             }
         }
-        req.setAttribute("product", product);
 
+        req.setAttribute("product", product);
+        req.setAttribute("categories", categories);
         getServletContext().getRequestDispatcher("/product-form.jsp").forward(req, resp);
     }
 
@@ -74,10 +75,6 @@ public class ProductFormServlet extends HttpServlet {
         } else if (sku.length() > 10) {
             errors.put("sku", "Sku exceeds maximum 10 characters");
         }
-        boolean existsSku = productService.existsBySku(sku);
-        if (existsSku) {
-            errors.put("sku", "Sku already exists");
-        }
 
         String createdAtStr = req.getParameter("createdAt");
         if (createdAtStr == null || createdAtStr.isBlank()) {
@@ -94,23 +91,46 @@ public class ProductFormServlet extends HttpServlet {
             errors.put("category", "Please enter a category");
         }
 
+        LocalDate createdAt;
+        try {
+            createdAt = LocalDate.parse(createdAtStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        } catch (DateTimeParseException e) {
+            createdAt = null;
+        }
+
+        long productId;
+        try {
+            productId = Long.parseLong(req.getParameter("id"));
+        } catch (NumberFormatException e) {
+            productId = 0L;
+        }
+        if (productId == 0L) {
+            boolean existsSku = productService.existsBySku(sku);
+            if (existsSku) {
+                errors.put("sku", "Sku already exists");
+            }
+        }
+
+        Product product = new Product();
+        product.setId(productId);
+        product.setName(name);
+        product.setPrice(price);
+        product.setSku(sku);
+        product.setCreatedAt(createdAt);
+
+        Category category = new Category();
+        category.setId(categoryId);
+        product.setCategory(category);
+
         if (errors.isEmpty()) {
-            LocalDate createdAt = LocalDate.parse(createdAtStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            Product product = new Product();
-            product.setName(name);
-            product.setPrice(price);
-            product.setSku(sku);
-            product.setCreatedAt(createdAt);
-
-            Category category = new Category();
-            category.setId(categoryId);
-            product.setCategory(category);
-
             productService.save(product);
             resp.sendRedirect(req.getContextPath() + "/products");
         } else {
+            List<Category> categories = productService.getCategories();
             req.setAttribute("errors", errors);
-            doGet(req, resp);
+            req.setAttribute("product", product);
+            req.setAttribute("categories", categories);
+            getServletContext().getRequestDispatcher("/product-form.jsp").forward(req, resp);
         }
     }
 }
