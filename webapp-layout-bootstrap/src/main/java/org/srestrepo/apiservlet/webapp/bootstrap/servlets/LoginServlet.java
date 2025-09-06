@@ -24,20 +24,8 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("title", request.getAttribute("title") + ": Login");
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         } else {
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("   <head>");
-                out.println("       <meta charset=\"UTF-8\">");
-                out.println("       <title>Hello " + usernameOptional.get() + "!</title>");
-                out.println("   </head>");
-                out.println("   <body>");
-                out.println("       <h1>Welcome back! You are logged in already</h1>");
-                out.println("       <p><a href='" + request.getContextPath() + "/index.jsp'>Go Back</a></p>");
-                out.println("       <p><a href='" + request.getContextPath() + "/logout'>Logout</a></p>");
-                out.println("   </body>");
-                out.println("</html>");
-            }
+            request.setAttribute("title", request.getAttribute("title") + ": Welcome!");
+            getServletContext().getRequestDispatcher("/welcome.jsp").forward(request, response);
         }
     }
 
