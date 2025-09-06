@@ -3,17 +3,18 @@ package org.srestrepo.apiservlet.webapp.authjdbc.servlets;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.srestrepo.apiservlet.webapp.authjdbc.models.User;
 import org.srestrepo.apiservlet.webapp.authjdbc.services.LoginService;
 import org.srestrepo.apiservlet.webapp.authjdbc.services.LoginSessionService;
+import org.srestrepo.apiservlet.webapp.authjdbc.services.UserService;
+import org.srestrepo.apiservlet.webapp.authjdbc.services.UserServiceImpl;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.Optional;
 
 @WebServlet({"/login", "/login.html"})
 public class LoginServlet extends HttpServlet {
-    static final String USERNAME = "admin";
-    static final String PASSWORD = "12345";
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LoginService loginService = new LoginSessionService();
@@ -33,7 +34,10 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (USERNAME.equals(username) && PASSWORD.equals(password)) {
+        Connection connection = (Connection) request.getAttribute("jdbcConnection");
+        UserService userService = new UserServiceImpl(connection);
+        Optional<User> userOptional = userService.login(username, password);
+        if (userOptional.isPresent()) {
             HttpSession httpSession = request.getSession();
             httpSession.setAttribute("username", username);
 
