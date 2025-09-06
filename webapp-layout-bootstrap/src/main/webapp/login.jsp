@@ -1,28 +1,23 @@
 <%@page contentType="text/html; UTF-8" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-<h1>Login</h1>
+<jsp:include page="layout/header.jsp"/>
+<h3>${requestScope.title}</h3>
 <form action="${pageContext.request.contextPath}/login" method="post">
-  <div>
-    <label for="username">Username:</label>
+  <div class="row my-2">
+    <label for="username" class="form-label">Username:</label>
     <div>
-      <input type="text" name="username" id="username" autofocus>
+      <input class="form-control" type="text" name="username" id="username" autofocus>
     </div>
   </div>
-  <div>
-    <label for="password">Password:</label>
+  <div class="row my-2">
+    <label for="password" class="form-label">Password:</label>
     <div>
-      <input type="password" name="password" id="password">
+      <input class="form-control" type="password" name="password" id="password">
     </div>
   </div>
-  <div>
-    <input type="submit" value="Login">
+  <div class="row my-2">
+      <div>
+        <input type="submit" class="btn btn-primary" value="Login">
+      </div>
   </div>
 </form>
-</body>
-</html>
+<jsp:include page="layout/footer.jsp"/>

@@ -29,6 +29,7 @@ public class ProductServlet extends HttpServlet {
 
         request.setAttribute("products", products);
         request.setAttribute("username", usernameOptional);
+        request.setAttribute("title", request.getAttribute("title") + ": Products");
         getServletContext().getRequestDispatcher("/view-products.jsp").forward(request, response);
     }
 }

@@ -21,6 +21,7 @@ public class LoginServlet extends HttpServlet {
         Optional<String> usernameOptional = loginService.getUsername(request);
 
         if (usernameOptional.isEmpty()) {
+            request.setAttribute("title", request.getAttribute("title") + ": Login");
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         } else {
             try (PrintWriter out = response.getWriter()) {
@@ -32,7 +33,7 @@ public class LoginServlet extends HttpServlet {
                 out.println("   </head>");
                 out.println("   <body>");
                 out.println("       <h1>Welcome back! You are logged in already</h1>");
-                out.println("       <p><a href='" + request.getContextPath() + "/index.html'>Go Back</a></p>");
+                out.println("       <p><a href='" + request.getContextPath() + "/index.jsp'>Go Back</a></p>");
                 out.println("       <p><a href='" + request.getContextPath() + "/logout'>Logout</a></p>");
                 out.println("   </body>");
                 out.println("</html>");

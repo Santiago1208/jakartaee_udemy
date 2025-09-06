@@ -30,6 +30,7 @@ public class ApplicationListener implements ServletContextListener, ServletReque
         servletContext.log("Initializing Request");
         // This will be request scoped
         sre.getServletRequest().setAttribute("requestMessage", "Some message for the Request");
+        sre.getServletRequest().setAttribute("title", "Servlet Catalog");
     }
 
     @Override
