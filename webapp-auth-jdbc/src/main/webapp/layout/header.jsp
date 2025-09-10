@@ -22,6 +22,9 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/products">Products</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/users">Users</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/cart/view">Cart (${sessionScope.cart.cartItems.size()})</a>
                 </li>
                 <li class="nav-item dropdown">

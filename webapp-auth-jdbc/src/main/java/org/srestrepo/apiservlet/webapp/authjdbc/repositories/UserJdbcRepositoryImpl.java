@@ -85,6 +85,20 @@ public class UserJdbcRepositoryImpl implements UserJdbcRepository {
         return user;
     }
 
+    @Override
+    public User findByEmail(String email) throws SQLException {
+        User user = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE email = ?")) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = getUser(resultSet);
+                }
+            }
+        }
+        return user;
+    }
+
     private User getUser(ResultSet resultSet) throws SQLException {
         User user = new User();
         user.setId(resultSet.getLong("id"));
