@@ -4,7 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.srestrepo.apiservlet.webapp.authjdbc.services.JdbcServiceException;
-import org.srestrepo.apiservlet.webapp.authjdbc.util.JdbcConnection;
+import org.srestrepo.apiservlet.webapp.authjdbc.util.DatasourceJdbcConnection;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class JdbcConnectionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        try (Connection connection = JdbcConnection.getConnection()) {
+        try (Connection connection = DatasourceJdbcConnection.getConnection()) {
             if (connection.getAutoCommit()) {
                 connection.setAutoCommit(false);
             }
