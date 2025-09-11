@@ -3,7 +3,8 @@
 <jsp:include page="layout/header.jsp"/>
 <h3>${requestScope.title}</h3>
 <c:choose>
-    <c:when test="${empty sessionScope.cart.cartItems}">
+    <%--@elvariable id="cart" type="org.srestrepo.apiservlet.webapp.cdi.models.Cart"--%>
+    <c:when test="${empty cart.cartItems}">
         <div class="alert alert-warning">Sorry, the cart is empty</div>
     </c:when>
     <c:otherwise>
@@ -17,7 +18,7 @@
                     <th>Total</th>
                     <th>Delete</th>
                 </tr>
-                <c:forEach items="${sessionScope.cart.cartItems}" var="item">
+                <c:forEach items="${cart.cartItems}" var="item">
                 <tr>
                     <td>${item.product.id}</td>
                     <td>${item.product.name}</td>
@@ -29,7 +30,7 @@
                 </c:forEach>
                 <tr>
                     <td colspan="5" style="text-align: right">Total</td>
-                    <td>${sessionScope.cart.total}</td>
+                    <td>${cart.total}</td>
                 </tr>
             </table>
             <p><button class="btn btn-primary" type="submit">Update</button></p>

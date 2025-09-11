@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,12 +13,14 @@ import java.io.IOException;
 
 @WebServlet("/cart/update")
 public class UpdateCartServlet extends HttpServlet {
+
+    @Inject
+    private Cart cart;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] amounts = request.getParameterValues("amount");
         String[] deletes = request.getParameterValues("delete");
-        HttpSession session = request.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
         int itemsLength = cart.getCartItems().size();
         for (int i = 0; i < itemsLength; i++) {
             int amountInt = Integer.parseInt(amounts[i]);
@@ -32,7 +35,6 @@ public class UpdateCartServlet extends HttpServlet {
                         .ifPresent(item -> cart.getCartItems().remove(item));
             }
         }
-        session.setAttribute("cart", cart);
         response.sendRedirect(getServletContext().getContextPath() +  "/cart/view");
     }
 }

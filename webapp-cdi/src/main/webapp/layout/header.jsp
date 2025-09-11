@@ -1,3 +1,4 @@
+<%--@elvariable id="cart" type="org.srestrepo.apiservlet.webapp.cdi.models.Cart"--%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +26,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/users">Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/cart/view">Cart (${sessionScope.cart.cartItems.size()})</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/cart/view">Cart (${cart.cartItems.size()})</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

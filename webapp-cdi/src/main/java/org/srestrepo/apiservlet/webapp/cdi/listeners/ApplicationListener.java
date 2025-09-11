@@ -41,9 +41,6 @@ public class ApplicationListener implements ServletContextListener, ServletReque
     @Override
     public void sessionCreated(HttpSessionEvent se) {
         servletContext.log("Creating Session");
-        Cart cart = new Cart();
-        HttpSession session = se.getSession();
-        session.setAttribute("cart", cart);
     }
 
     @Override

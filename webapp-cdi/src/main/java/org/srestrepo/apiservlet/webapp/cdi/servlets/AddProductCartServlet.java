@@ -1,11 +1,11 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.srestrepo.apiservlet.webapp.cdi.models.Cart;
 import org.srestrepo.apiservlet.webapp.cdi.models.CartItem;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
@@ -18,6 +18,10 @@ import java.util.Optional;
 
 @WebServlet("/cart/add")
 public class AddProductCartServlet extends HttpServlet {
+
+    @Inject
+    private Cart cart;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long productId = Long.parseLong(request.getParameter("id"));
@@ -26,8 +30,6 @@ public class AddProductCartServlet extends HttpServlet {
         Optional<Product> product = productService.findById(productId);
         if (product.isPresent()) {
             CartItem cartItem = new CartItem(1, product.get());
-            HttpSession session = request.getSession();
-            Cart cart = (Cart) session.getAttribute("cart");
             cart.addItem(cartItem);
         }
         response.sendRedirect(request.getContextPath() + "/cart/view");
