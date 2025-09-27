@@ -1,10 +1,10 @@
 package org.srestrepo.apiservlet.webapp.cdi.filters;
 
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletResponse;
+import org.srestrepo.apiservlet.webapp.cdi.config.PostgreSQLConnection;
 import org.srestrepo.apiservlet.webapp.cdi.services.JdbcServiceException;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class JdbcConnectionFilter implements Filter {
 
     @Inject
-    @Named("jdbcConnection")
+    @PostgreSQLConnection
     private Connection connection;
 
     @Override

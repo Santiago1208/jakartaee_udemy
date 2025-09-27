@@ -1,12 +1,12 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.srestrepo.apiservlet.webapp.cdi.config.DefaultProductService;
 import org.srestrepo.apiservlet.webapp.cdi.models.Cart;
 import org.srestrepo.apiservlet.webapp.cdi.models.CartItem;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
@@ -21,6 +21,7 @@ public class AddProductCartServlet extends HttpServlet {
     @Inject
     private Cart cart;
     @Inject
+    @DefaultProductService
     private ProductService productService;
 
     @Override

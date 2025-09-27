@@ -3,6 +3,7 @@ package org.srestrepo.apiservlet.webapp.cdi.repositories;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.srestrepo.apiservlet.webapp.cdi.config.PostgreSQLConnection;
 import org.srestrepo.apiservlet.webapp.cdi.models.Category;
 
 import java.sql.*;
@@ -16,7 +17,7 @@ public class CategoryJdbcRepositoryImpl implements JdbcRepository<Category> {
     private final Connection connection;
 
     @Inject
-    public CategoryJdbcRepositoryImpl(@Named("jdbcConnection") Connection connection) {
+    public CategoryJdbcRepositoryImpl(@PostgreSQLConnection Connection connection) {
         this.connection = connection;
     }
 

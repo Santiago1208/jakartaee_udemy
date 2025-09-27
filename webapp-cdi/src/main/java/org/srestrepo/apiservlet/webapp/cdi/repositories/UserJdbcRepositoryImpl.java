@@ -2,7 +2,7 @@ package org.srestrepo.apiservlet.webapp.cdi.repositories;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
+import org.srestrepo.apiservlet.webapp.cdi.config.PostgreSQLConnection;
 import org.srestrepo.apiservlet.webapp.cdi.models.User;
 
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import java.util.List;
 public class UserJdbcRepositoryImpl implements UserJdbcRepository {
 
     @Inject
-    @Named("jdbcConnection")
+    @PostgreSQLConnection
     private Connection connection;
 
     @Override

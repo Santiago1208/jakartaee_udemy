@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.srestrepo.apiservlet.webapp.cdi.config.DefaultProductService;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
 import org.srestrepo.apiservlet.webapp.cdi.services.*;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class ProductServlet extends HttpServlet {
 
     @Inject
+    @DefaultProductService
     private ProductService productService;
     @Inject
     private LoginService loginService;

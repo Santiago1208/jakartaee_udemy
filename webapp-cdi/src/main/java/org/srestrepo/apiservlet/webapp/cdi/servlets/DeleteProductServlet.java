@@ -1,24 +1,23 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.srestrepo.apiservlet.webapp.cdi.config.DefaultProductService;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
-import org.srestrepo.apiservlet.webapp.cdi.services.ProductJdbcServiceImpl;
 import org.srestrepo.apiservlet.webapp.cdi.services.ProductService;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Optional;
 
 @WebServlet("/product/delete")
 public class DeleteProductServlet extends HttpServlet {
 
     @Inject
+    @DefaultProductService
     private ProductService productService;
 
     @Override
