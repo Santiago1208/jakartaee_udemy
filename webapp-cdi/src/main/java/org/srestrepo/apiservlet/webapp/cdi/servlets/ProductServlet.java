@@ -12,20 +12,19 @@ import org.srestrepo.apiservlet.webapp.cdi.services.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @WebServlet({"/products.html", "/products"})
 public class ProductServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(ProductServlet.class.getName());
 
     @Inject
     private ProductService productService;
+    @Inject
+    private LoginService loginService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Product> products = productService.getProducts();
 
-        LoginService loginService = new LoginSessionService();
         Optional<String> usernameOptional = loginService.getUsername(request);
 
         request.setAttribute("products", products);

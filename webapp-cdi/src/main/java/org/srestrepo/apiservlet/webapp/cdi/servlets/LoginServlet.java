@@ -6,7 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.srestrepo.apiservlet.webapp.cdi.models.User;
 import org.srestrepo.apiservlet.webapp.cdi.services.LoginService;
-import org.srestrepo.apiservlet.webapp.cdi.services.LoginSessionService;
 import org.srestrepo.apiservlet.webapp.cdi.services.UserService;
 
 import java.io.IOException;
@@ -17,10 +16,11 @@ public class LoginServlet extends HttpServlet {
 
     @Inject
     private UserService userService;
+    @Inject
+    private LoginService loginService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LoginService loginService = new LoginSessionService();
         Optional<String> usernameOptional = loginService.getUsername(request);
 
         if (usernameOptional.isEmpty()) {

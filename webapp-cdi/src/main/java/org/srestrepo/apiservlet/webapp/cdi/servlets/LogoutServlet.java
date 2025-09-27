@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.srestrepo.apiservlet.webapp.cdi.services.LoginService;
-import org.srestrepo.apiservlet.webapp.cdi.services.LoginSessionService;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -15,9 +15,11 @@ import java.util.Optional;
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 
+    @Inject
+    private LoginService loginService;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LoginService loginService = new LoginSessionService();
         Optional<String> usernameOptional = loginService.getUsername(request);
         if (usernameOptional.isPresent()) {
             HttpSession httpSession = request.getSession();
