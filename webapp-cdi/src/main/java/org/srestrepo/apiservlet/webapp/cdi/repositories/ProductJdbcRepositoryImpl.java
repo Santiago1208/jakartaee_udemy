@@ -1,5 +1,8 @@
 package org.srestrepo.apiservlet.webapp.cdi.repositories;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.srestrepo.apiservlet.webapp.cdi.models.Category;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
 
@@ -7,12 +10,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
+@Named
 public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
-    private final Connection connection;
 
-    public ProductJdbcRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
+    @Inject
+    @Named("jdbcConnection")
+    private Connection connection;
 
     @Override
     public List<Product> findAll() throws SQLException {

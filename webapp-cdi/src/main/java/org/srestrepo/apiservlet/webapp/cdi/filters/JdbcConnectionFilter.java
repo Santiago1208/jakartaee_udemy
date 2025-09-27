@@ -25,7 +25,6 @@ public class JdbcConnectionFilter implements Filter {
                 connection.setAutoCommit(false);
             }
             try {
-                servletRequest.setAttribute("jdbcConnection", connection);
                 filterChain.doFilter(servletRequest, servletResponse);
                 connection.commit();
             } catch (SQLException | JdbcServiceException e) {

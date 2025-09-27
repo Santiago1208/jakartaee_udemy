@@ -1,19 +1,21 @@
 package org.srestrepo.apiservlet.webapp.cdi.services;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.cdi.models.User;
 import org.srestrepo.apiservlet.webapp.cdi.repositories.UserJdbcRepository;
-import org.srestrepo.apiservlet.webapp.cdi.repositories.UserJdbcRepositoryImpl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@ApplicationScoped
 public class UserServiceImpl implements UserService {
     private final UserJdbcRepository userJdbcRepository;
 
-    public UserServiceImpl(Connection connection) {
-        this.userJdbcRepository = new UserJdbcRepositoryImpl(connection);
+    @Inject
+    public UserServiceImpl(UserJdbcRepository userJdbcRepository) {
+        this.userJdbcRepository = userJdbcRepository;
     }
 
     @Override

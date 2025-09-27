@@ -1,24 +1,26 @@
 package org.srestrepo.apiservlet.webapp.cdi.services;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.srestrepo.apiservlet.webapp.cdi.models.Category;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
-import org.srestrepo.apiservlet.webapp.cdi.repositories.CategoryJdbcRepositoryImpl;
 import org.srestrepo.apiservlet.webapp.cdi.repositories.JdbcRepository;
 import org.srestrepo.apiservlet.webapp.cdi.repositories.ProductJdbcRepositoryImpl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@ApplicationScoped
 public class ProductJdbcServiceImpl implements ProductService {
-    private final JdbcRepository<Product> productJdbcRepository;
-    private final JdbcRepository<Category> categoryJdbcRepository;
 
-    public ProductJdbcServiceImpl(Connection connection) {
-        productJdbcRepository = new ProductJdbcRepositoryImpl(connection);
-        categoryJdbcRepository = new CategoryJdbcRepositoryImpl(connection);
-    }
+    @Inject
+    @Named("productJdbcRepositoryImpl")
+    private JdbcRepository<Product> productJdbcRepository;
+    @Inject
+    @Named("categoryJdbcRepositoryImpl")
+    private JdbcRepository<Category> categoryJdbcRepository;
 
     @Override
     public List<Product> getProducts() {
