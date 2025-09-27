@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,11 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.srestrepo.apiservlet.webapp.cdi.models.Category;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
-import org.srestrepo.apiservlet.webapp.cdi.services.ProductJdbcServiceImpl;
 import org.srestrepo.apiservlet.webapp.cdi.services.ProductService;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -22,10 +21,12 @@ import java.util.Optional;
 
 @WebServlet("/product/add")
 public class ProductFormServlet extends HttpServlet {
+
+    @Inject
+    private ProductService productService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection connection = (Connection) req.getAttribute("jdbcConnection");
-        ProductService productService = new ProductJdbcServiceImpl(connection);
         List<Category> categories = productService.getCategories();
 
         Long productId;
@@ -51,8 +52,6 @@ public class ProductFormServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection connection = (Connection) req.getAttribute("jdbcConnection");
-        ProductService productService = new ProductJdbcServiceImpl(connection);
         final Map<String, String> errors = new HashMap<>();
 
         String name = req.getParameter("name");

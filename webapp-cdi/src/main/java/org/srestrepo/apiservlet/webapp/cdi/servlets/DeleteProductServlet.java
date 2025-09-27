@@ -1,5 +1,7 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,10 +17,12 @@ import java.util.Optional;
 
 @WebServlet("/product/delete")
 public class DeleteProductServlet extends HttpServlet {
+
+    @Inject
+    private ProductService productService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection connection = (Connection) req.getAttribute("jdbcConnection");
-        ProductService productService = new ProductJdbcServiceImpl(connection);
         Long id;
         try {
             id = Long.parseLong(req.getParameter("id"));

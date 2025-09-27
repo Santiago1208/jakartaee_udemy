@@ -1,22 +1,23 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.srestrepo.apiservlet.webapp.cdi.services.UserService;
-import org.srestrepo.apiservlet.webapp.cdi.services.UserServiceImpl;
 
 import java.io.IOException;
-import java.sql.Connection;
 
 @WebServlet("/users/delete")
 public class DeleteUserServlet extends HttpServlet {
+
+    @Inject
+    private UserService userService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection connection = (Connection) req.getAttribute("jdbcConnection");
-        UserService userService = new UserServiceImpl(connection);
         long userId;
         try {
             userId = Long.parseLong(req.getParameter("id"));

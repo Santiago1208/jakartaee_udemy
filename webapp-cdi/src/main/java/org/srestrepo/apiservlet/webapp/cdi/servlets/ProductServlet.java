@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +10,6 @@ import org.srestrepo.apiservlet.webapp.cdi.models.Product;
 import org.srestrepo.apiservlet.webapp.cdi.services.*;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -18,10 +18,11 @@ import java.util.logging.Logger;
 public class ProductServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(ProductServlet.class.getName());
 
+    @Inject
+    private ProductService productService;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection connection = (Connection) request.getAttribute("jdbcConnection");
-        ProductService productService = new ProductJdbcServiceImpl(connection);
         List<Product> products = productService.getProducts();
 
         LoginService loginService = new LoginSessionService();

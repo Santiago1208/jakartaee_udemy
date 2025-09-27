@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cdi.services;
 
+import jakarta.enterprise.inject.Alternative;
 import org.srestrepo.apiservlet.webapp.cdi.models.Category;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
 
@@ -7,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+@Alternative
 public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProducts() {

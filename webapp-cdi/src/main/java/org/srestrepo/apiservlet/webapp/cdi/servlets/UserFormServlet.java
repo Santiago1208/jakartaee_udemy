@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,16 +8,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.srestrepo.apiservlet.webapp.cdi.models.User;
 import org.srestrepo.apiservlet.webapp.cdi.services.UserService;
-import org.srestrepo.apiservlet.webapp.cdi.services.UserServiceImpl;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @WebServlet("/users/add")
 public class UserFormServlet extends HttpServlet {
+
+    @Inject
+    private UserService userService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long userId;
@@ -28,8 +31,6 @@ public class UserFormServlet extends HttpServlet {
         User user = new User();
         String title = req.getAttribute("title") + ": New User";
         if (userId > 0L) {
-            Connection connection = (Connection) req.getAttribute("jdbcConnection");
-            UserService userService = new UserServiceImpl(connection);
             Optional<User> userOptional = userService.findById(userId);
             if (userOptional.isPresent()) {
                 user = userOptional.get();
@@ -43,8 +44,6 @@ public class UserFormServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection connection = (Connection) req.getAttribute("jdbcConnection");
-        UserService userService = new UserServiceImpl(connection);
         Map<String, String> errors = new HashMap<>();
 
         String username = req.getParameter("username");

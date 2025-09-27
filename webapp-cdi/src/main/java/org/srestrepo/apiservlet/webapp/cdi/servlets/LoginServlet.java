@@ -1,5 +1,6 @@
 package org.srestrepo.apiservlet.webapp.cdi.servlets;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -7,14 +8,16 @@ import org.srestrepo.apiservlet.webapp.cdi.models.User;
 import org.srestrepo.apiservlet.webapp.cdi.services.LoginService;
 import org.srestrepo.apiservlet.webapp.cdi.services.LoginSessionService;
 import org.srestrepo.apiservlet.webapp.cdi.services.UserService;
-import org.srestrepo.apiservlet.webapp.cdi.services.UserServiceImpl;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Optional;
 
 @WebServlet({"/login", "/login.html"})
 public class LoginServlet extends HttpServlet {
+
+    @Inject
+    private UserService userService;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LoginService loginService = new LoginSessionService();
@@ -34,8 +37,6 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        Connection connection = (Connection) request.getAttribute("jdbcConnection");
-        UserService userService = new UserServiceImpl(connection);
         Optional<User> userOptional = userService.login(username, password);
         if (userOptional.isPresent()) {
             HttpSession httpSession = request.getSession();
