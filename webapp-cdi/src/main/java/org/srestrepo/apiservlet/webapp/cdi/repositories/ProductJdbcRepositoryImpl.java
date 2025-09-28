@@ -20,7 +20,7 @@ public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
     @PostgreSQLConnection
     private Connection connection;
     @Inject
-    private transient Logger log;
+    private Logger log;
 
     @PostConstruct
     public void initialize() {

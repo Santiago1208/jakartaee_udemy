@@ -20,7 +20,7 @@ public class ResourceProducer {
     @Resource(name = "jdbc/javaCourseDB")
     private DataSource dataSource;
     @Inject
-    private transient Logger log;
+    private Logger log;
 
     @Produces
     @RequestScoped

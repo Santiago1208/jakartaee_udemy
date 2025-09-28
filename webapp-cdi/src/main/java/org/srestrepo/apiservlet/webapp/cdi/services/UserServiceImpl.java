@@ -1,7 +1,7 @@
 package org.srestrepo.apiservlet.webapp.cdi.services;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.srestrepo.apiservlet.webapp.cdi.config.Service;
 import org.srestrepo.apiservlet.webapp.cdi.models.User;
 import org.srestrepo.apiservlet.webapp.cdi.repositories.UserJdbcRepository;
 
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
+@Service
 public class UserServiceImpl implements UserService {
     private final UserJdbcRepository userJdbcRepository;
 

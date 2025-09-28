@@ -1,9 +1,8 @@
 package org.srestrepo.apiservlet.webapp.cdi.services;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.srestrepo.apiservlet.webapp.cdi.config.DefaultProductService;
+import org.srestrepo.apiservlet.webapp.cdi.config.Service;
 import org.srestrepo.apiservlet.webapp.cdi.models.Category;
 import org.srestrepo.apiservlet.webapp.cdi.models.Product;
 import org.srestrepo.apiservlet.webapp.cdi.repositories.JdbcRepository;
@@ -13,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
+@Service
 @DefaultProductService
 public class ProductJdbcServiceImpl implements ProductService {
 
