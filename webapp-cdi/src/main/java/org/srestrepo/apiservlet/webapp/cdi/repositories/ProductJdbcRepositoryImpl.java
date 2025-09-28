@@ -1,5 +1,7 @@
 package org.srestrepo.apiservlet.webapp.cdi.repositories;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.cdi.config.PostgreSQLConnection;
 import org.srestrepo.apiservlet.webapp.cdi.config.Repository;
@@ -9,6 +11,7 @@ import org.srestrepo.apiservlet.webapp.cdi.models.Product;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Repository
 public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
@@ -16,6 +19,13 @@ public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
     @Inject
     @PostgreSQLConnection
     private Connection connection;
+    @Inject
+    private transient Logger log;
+
+    @PostConstruct
+    public void initialize() {
+        log.info("Initializing " + this.getClass().getName());
+    }
 
     @Override
     public List<Product> findAll() throws SQLException {
@@ -103,5 +113,10 @@ public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
         product.setCategory(category);
 
         return product;
+    }
+
+    @PreDestroy
+    public void destroy() {
+        log.info("Destroying " + this.getClass().getName());
     }
 }

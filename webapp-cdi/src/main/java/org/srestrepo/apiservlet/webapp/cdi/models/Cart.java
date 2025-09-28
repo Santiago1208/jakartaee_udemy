@@ -1,21 +1,30 @@
 package org.srestrepo.apiservlet.webapp.cdi.models;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.cdi.config.SessionCart;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @SessionCart
 public class Cart implements Serializable {
-    private final List<CartItem> cartItems;
 
-    public Cart() {
-        cartItems = new ArrayList<>();
-    }
+    @Inject
+    private transient Logger log;
+    private List<CartItem> cartItems;
 
     public List<CartItem> getCartItems() {
         return cartItems;
+    }
+
+    @PostConstruct
+    public void initialize() {
+        log.info("Cart initializing");
+        cartItems = new ArrayList<>();
     }
 
     public void addItem(CartItem item) {
@@ -35,5 +44,10 @@ public class Cart implements Serializable {
         return cartItems.stream()
                 .mapToInt(CartItem::getLineTotal)
                 .sum();
+    }
+
+    @PreDestroy
+    public void destroy() {
+        log.info("Cart destroying");
     }
 }
