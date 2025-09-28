@@ -1,17 +1,15 @@
 package org.srestrepo.apiservlet.webapp.cdi.repositories;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
 import org.srestrepo.apiservlet.webapp.cdi.config.PostgreSQLConnection;
+import org.srestrepo.apiservlet.webapp.cdi.config.Repository;
 import org.srestrepo.apiservlet.webapp.cdi.models.Category;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApplicationScoped
-@Named
+@Repository
 public class CategoryJdbcRepositoryImpl implements JdbcRepository<Category> {
 
     private final Connection connection;
