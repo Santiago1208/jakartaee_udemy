@@ -5,6 +5,7 @@ import org.srestrepo.hibernateapp.domain.ClientDTO;
 import org.srestrepo.hibernateapp.entity.Client;
 import org.srestrepo.hibernateapp.util.JpaUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HibernateQLExample {
@@ -162,6 +163,22 @@ public class HibernateQLExample {
         Object[] s = em.createQuery("select min(c.id), max(c.id), sum(c.id), count(c.id), avg(length(c.name)) from Client c", Object[].class)
                         .getSingleResult();
         System.out.println("Min: " + s[0] + " Max: " + s[1] + " Sum: " + s[2] + " Count: " + s[3] +  " Avg: " + s[4]);
+
+        System.out.println("============ Get the shortest name and its length ============");
+        List<Object[]> objs4 = em.createQuery("select c.name, length(c.name) from Client c where length(c.name) = (select min(length(c.name)) from Client c)", Object[].class)
+                        .getResultList();
+        objs4.forEach(o -> System.out.println(o[0] + " | " + o[1]));
+
+        System.out.println("============ Get the latest registered client ============");
+        Client c8 = em.createQuery("select c from Client c where c.id = (select max(c.id) from Client c)", Client.class)
+                        .getSingleResult();
+        System.out.println(c8);
+
+        System.out.println("============ Get all the clients with the specified ID list ============");
+        List<Client> c9 = em.createQuery("select c from Client c where c.id in :list", Client.class)
+                        .setParameter("list", Arrays.asList(1L, 2L, 3L))
+                        .getResultList();
+        c9.forEach(System.out::println);
 
         em.close();
     }
