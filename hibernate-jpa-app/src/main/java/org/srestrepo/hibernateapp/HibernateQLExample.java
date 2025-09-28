@@ -66,6 +66,26 @@ public class HibernateQLExample {
                 .getResultList();
         c3.forEach(System.out::println);
 
+        System.out.println("============ Find all client names ============");
+        List<String> ns = em.createQuery("select c.name from Client c", String.class)
+                        .getResultList();
+        ns.forEach(System.out::println);
+
+        System.out.println("============ Find all client names, distinct ============");
+        List<String> ns2 = em.createQuery("select distinct c.name from Client c", String.class)
+                .getResultList();
+        ns2.forEach(System.out::println);
+
+        System.out.println("============ Find all payment types, distinct ============");
+        List<String> ps = em.createQuery("select distinct c.paymentType from Client c", String.class)
+                .getResultList();
+        ps.forEach(System.out::println);
+
+        System.out.println("============ Count distinct payment types ============");
+        Long c = em.createQuery("select count(distinct(c.paymentType)) from Client c", Long.class)
+                .getSingleResult();
+        System.out.println(c);
+
         em.close();
     }
 }
