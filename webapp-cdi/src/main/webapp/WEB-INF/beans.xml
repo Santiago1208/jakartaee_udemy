@@ -4,5 +4,6 @@
        version="3.0" bean-discovery-mode="annotated">
     <interceptors>
         <class>org.srestrepo.apiservlet.webapp.cdi.interceptors.LoggingInterceptor</class>
+        <class>org.srestrepo.apiservlet.webapp.cdi.interceptors.JdbcTransactionalInterceptor</class>
     </interceptors>
 </beans>
