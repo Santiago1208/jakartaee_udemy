@@ -18,10 +18,8 @@ import java.util.Optional;
 public class ProductJdbcServiceImpl implements ProductService {
 
     @Inject
-    @Named("productJdbcRepositoryImpl")
     private JdbcRepository<Product> productJdbcRepository;
     @Inject
-    @Named("categoryJdbcRepositoryImpl")
     private JdbcRepository<Category> categoryJdbcRepository;
 
     @Override
