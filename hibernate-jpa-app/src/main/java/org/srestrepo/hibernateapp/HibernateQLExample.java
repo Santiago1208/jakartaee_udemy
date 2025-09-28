@@ -1,6 +1,7 @@
 package org.srestrepo.hibernateapp;
 
 import jakarta.persistence.EntityManager;
+import org.srestrepo.hibernateapp.domain.ClientDTO;
 import org.srestrepo.hibernateapp.entity.Client;
 import org.srestrepo.hibernateapp.util.JpaUtil;
 
@@ -45,6 +46,25 @@ public class HibernateQLExample {
             String surname2 = (String) o[2];
             System.out.println("id =" + id2 + ", name =" + name2 + ", surname =" + surname2);
         }
+
+        System.out.println("============ Find all, client and payment type, Object[] ============");
+        List<Object[]> objs2 = em.createQuery("select c, c.paymentType from Client c", Object[].class)
+                .getResultList();
+        objs2.forEach(o -> {
+            Client c =  (Client) o[0];
+            String paymentType = (String) o[1];
+            System.out.println("Payment type =" + paymentType + ", " + c);
+        });
+
+        System.out.println("============ Find all clients, new Entity object ============");
+        List<Client> c2 = em.createQuery("select new Client(c.name, c.surname) from Client c", Client.class)
+                        .getResultList();
+        c2.forEach(System.out::println);
+
+        System.out.println("============ Find all clients, new DTO object ============");
+        List<ClientDTO> c3 = em.createQuery("select new org.srestrepo.hibernateapp.domain.ClientDTO(c.name, c.surname) from Client c", ClientDTO.class)
+                .getResultList();
+        c3.forEach(System.out::println);
 
         em.close();
     }

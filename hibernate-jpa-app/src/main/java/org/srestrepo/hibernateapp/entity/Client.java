@@ -16,6 +16,11 @@ public class Client {
     public Client() {
     }
 
+    public Client(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+
     public Client(Long id, String name, String surname, String paymentType) {
         this.id = id;
         this.name = name;
