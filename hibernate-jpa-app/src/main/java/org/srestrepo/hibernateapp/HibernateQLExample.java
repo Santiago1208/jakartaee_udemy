@@ -113,6 +113,22 @@ public class HibernateQLExample {
                         .getResultList();
         c4.forEach(System.out::println);
 
+        System.out.println("============ Find clients from ID 2 to 5 ============");
+        List<Client> c5 = em.createQuery("select c from Client c where c.id between 2 and 5", Client.class)
+                        .getResultList();
+        c5.forEach(System.out::println);
+
+        System.out.println("============ Find clients with names from 'J' to 'Q' ============");
+        List<Client> c6 = em.createQuery("select c from Client c where c.name between 'J' and 'Q'", Client.class)
+                .getResultList();
+        c6.forEach(System.out::println);
+
+        System.out.println("============ Find clients ordered by ============");
+        List<Client> c7 = em.createQuery("select c from Client c order by c.name asc, c.surname asc", Client.class)
+                        .getResultList();
+        c7.forEach(System.out::println);
+
+
         em.close();
     }
 }
