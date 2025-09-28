@@ -1,10 +1,7 @@
 package org.srestrepo.hibernateapp;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.ParameterExpression;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.srestrepo.hibernateapp.entity.Client;
 import org.srestrepo.hibernateapp.util.JpaUtil;
 
@@ -80,6 +77,16 @@ public class HibernateCriteriaExample {
         cq = cb.createQuery(Client.class);
         from = cq.from(Client.class);
         cq.select(from).where(cb.lt(cb.length(from.get("name")), 5L));
+        c1 = em.createQuery(cq).getResultList();
+        c1.forEach(System.out::println);
+
+        System.out.println("============ Get all the clients with ID greater and equal than 3, are named Andres or the Payment Type is Debito ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        Predicate byName = cb.equal(from.get("name"),  "Andres");
+        Predicate byPaymentType = cb.equal(from.get("paymentType"), "Debito");
+        Predicate byId = cb.ge(from.get("id"), 3L);
+        cq.select(from).where(cb.and(byId, cb.or(byName, byPaymentType)));
         c1 = em.createQuery(cq).getResultList();
         c1.forEach(System.out::println);
 
