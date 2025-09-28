@@ -86,6 +86,33 @@ public class HibernateQLExample {
                 .getSingleResult();
         System.out.println(c);
 
+        System.out.println("============ Get all concatenated names and surnames, concat() ============");
+        List<String> cns = em.createQuery("select concat(c.name, ' ', c.surname) from Client c", String.class)
+                        .getResultList();
+        cns.forEach(System.out::println);
+
+        System.out.println("============ Get all concatenated names and surnames, || ============");
+        List<String> cns2 = em.createQuery("select c.name || ' ' || c.surname as fullName  from Client c", String.class)
+                .getResultList();
+        cns2.forEach(System.out::println);
+
+        System.out.println("============ Get all concatenated uppercased names and surnames ============");
+        List<String> cns3 = em.createQuery("select upper(concat(c.name, ' ', c.surname)) from Client c", String.class)
+                .getResultList();
+        cns3.forEach(System.out::println);
+
+        System.out.println("============ Get all concatenated lowercased names and surnames ============");
+        List<String> cns4 = em.createQuery("select lower(concat(c.name, ' ', c.surname)) from Client c", String.class)
+                .getResultList();
+        cns4.forEach(System.out::println);
+
+        System.out.println("============ Find all clients by name, LIKE ============");
+        String param = "Lu";
+        List<Client> c4 = em.createQuery("select c from Client c where c.name like :word", Client.class)
+                        .setParameter("word", "%" + param + "%")
+                        .getResultList();
+        c4.forEach(System.out::println);
+
         em.close();
     }
 }
