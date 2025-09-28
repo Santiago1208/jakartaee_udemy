@@ -128,6 +128,40 @@ public class HibernateQLExample {
                         .getResultList();
         c7.forEach(System.out::println);
 
+        System.out.println("============ Count all clients ============");
+        Long t = em.createQuery("select count(c.id) as total from Client c", Long.class)
+                        .getSingleResult();
+        System.out.println(t);
+
+        System.out.println("============ Get the minimum ID ============");
+        Long m = em.createQuery("select min(c.id) as min_id from Client c", Long.class)
+                        .getSingleResult();
+        System.out.println(m);
+
+        System.out.println("============ Get the maximum ID ============");
+        Long m2 = em.createQuery("select max(c.id) as min_id from Client c", Long.class)
+                .getSingleResult();
+        System.out.println(m2);
+
+        System.out.println("============ Get names and its length ============");
+        List<Object[]> objs3 = em.createQuery("select c.name, length(c.name) as name_length from Client c",  Object[].class)
+                .getResultList();
+        objs3.forEach(o -> System.out.println(o[0] + " | " + o[1]));
+
+        System.out.println("============ Get the length of the shortest name ============");
+        Integer mn = em.createQuery("select min(length(c.name)) from Client c", Integer.class)
+                        .getSingleResult();
+        System.out.println(mn);
+
+        System.out.println("============ Get the length of the largest name ============");
+        Integer mn2 = em.createQuery("select max(length(c.name)) from Client c", Integer.class)
+                .getSingleResult();
+        System.out.println(mn2);
+
+        System.out.println("============ Get a full report: count, min max, avg, sum ============");
+        Object[] s = em.createQuery("select min(c.id), max(c.id), sum(c.id), count(c.id), avg(length(c.name)) from Client c", Object[].class)
+                        .getSingleResult();
+        System.out.println("Min: " + s[0] + " Max: " + s[1] + " Sum: " + s[2] + " Count: " + s[3] +  " Avg: " + s[4]);
 
         em.close();
     }
