@@ -20,7 +20,7 @@ public class JdbcConnectionFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        try (Connection connection = this.connection) {
+        try {
             if (connection.getAutoCommit()) {
                 connection.setAutoCommit(false);
             }
