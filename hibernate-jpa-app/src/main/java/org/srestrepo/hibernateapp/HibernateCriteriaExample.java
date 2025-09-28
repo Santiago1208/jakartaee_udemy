@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.Root;
 import org.srestrepo.hibernateapp.entity.Client;
 import org.srestrepo.hibernateapp.util.JpaUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class HibernateCriteriaExample {
@@ -48,6 +49,37 @@ public class HibernateCriteriaExample {
         cq = cb.createQuery(Client.class);
         from = cq.from(Client.class);
         cq.select(from).where(cb.between(from.get("id"), 2L, 6L));
+        c1 = em.createQuery(cq).getResultList();
+        c1.forEach(System.out::println);
+
+        System.out.println("============ Get all clients with ID in a fixed list ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        ParameterExpression<List> names = cb.parameter(List.class, "names");
+        cq.select(from).where(from.get("name").in(names));
+        c1 = em.createQuery(cq)
+                .setParameter("names", Arrays.asList("Andres", "John", "Lou"))
+                .getResultList();
+        c1.forEach(System.out::println);
+
+        System.out.println("============ Get all clients with ID greater and equal than 2  ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        cq.select(from).where(cb.ge(from.get("id"), 2L));
+        c1 = em.createQuery(cq).getResultList();
+        c1.forEach(System.out::println);
+
+        System.out.println("============ Get all clients with name length greater than 5 ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        cq.select(from).where(cb.gt(cb.length(from.get("name")), 5L));
+        c1 = em.createQuery(cq).getResultList();
+        c1.forEach(System.out::println);
+
+        System.out.println("============ Get all clients with name length less than 5 ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        cq.select(from).where(cb.lt(cb.length(from.get("name")), 5L));
         c1 = em.createQuery(cq).getResultList();
         c1.forEach(System.out::println);
 
