@@ -34,6 +34,23 @@ public class HibernateCriteriaExample {
                 .getResultList();
         c1.forEach(System.out::println);
 
+        System.out.println("============ Get all clients by using a hint name ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        ParameterExpression<String> nameHint = cb.parameter(String.class, "hint");
+        cq.select(from).where(cb.like(cb.upper(from.get("name")), cb.upper(nameHint)));
+        c1 = em.createQuery(cq)
+                .setParameter("hint", "%lu%")
+                .getResultList();
+        c1.forEach(System.out::println);
+
+        System.out.println("============ Get all clients with ID between 2 and 6 ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        cq.select(from).where(cb.between(from.get("id"), 2L, 6L));
+        c1 = em.createQuery(cq).getResultList();
+        c1.forEach(System.out::println);
+
         em.close();
     }
 }
