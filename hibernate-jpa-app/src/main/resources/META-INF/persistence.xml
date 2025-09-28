@@ -3,6 +3,7 @@
     <persistence-unit name="exampleJPA" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>org.srestrepo.hibernateapp.entity.Client</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/java_course"/>
             <property name="jakarta.persistence.jdbc.user" value="SANTIAGO"/>
