@@ -135,6 +135,27 @@ public class HibernateCriteriaExample {
         l = em.createQuery(cq2).getResultList();
         l.forEach(System.out::println);
 
+        System.out.println("============ Get some of the Client fields (Object[]) ============");
+        CriteriaQuery<Object[]> cq3 = cb.createQuery(Object[].class);
+        from = cq3.from(Client.class);
+        cq3.multiselect(from.get("id"), from.get("name"), from.get("surname"));
+        List<Object[]> l2 = em.createQuery(cq3).getResultList();
+        l2.forEach(o -> System.out.println("id ="+ o[0] + ", name =" + o[1] + ", surname =" + o[2]));
+
+        System.out.println("============ Get some of the Client fields (Object[]) with Where condition ============");
+        cq3 = cb.createQuery(Object[].class);
+        from = cq3.from(Client.class);
+        cq3.multiselect(from.get("id"), from.get("name"), from.get("surname")).where(cb.like(from.get("name"), "%Lu%"));
+        l2 = em.createQuery(cq3).getResultList();
+        l2.forEach(o -> System.out.println("id ="+ o[0] + ", name =" + o[1] + ", surname =" + o[2]));
+
+        System.out.println("============ Get some of the Client fields (Object[]), single result ============");
+        cq3 = cb.createQuery(Object[].class);
+        from = cq3.from(Client.class);
+        cq3.multiselect(from.get("id"), from.get("name"), from.get("surname")).where(cb.equal(from.get("id"), 5L));
+        Object[] o = em.createQuery(cq3).getSingleResult();
+        System.out.println("id ="+ o[0] + ", name =" + o[1] + ", surname =" + o[2]);
+
         em.close();
     }
 }
