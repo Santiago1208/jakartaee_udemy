@@ -90,6 +90,37 @@ public class HibernateCriteriaExample {
         c1 = em.createQuery(cq).getResultList();
         c1.forEach(System.out::println);
 
+        System.out.println("============ Get all the clients ordered by name asc and surname desc ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        cq.select(from).orderBy(cb.asc(from.get("name")), cb.desc(from.get("surname")));
+        c1 = em.createQuery(cq).getResultList();
+        c1.forEach(System.out::println);
+
+        System.out.println("============ Find single client by ID ============");
+        cq = cb.createQuery(Client.class);
+        from = cq.from(Client.class);
+        ParameterExpression<Long> id = cb.parameter(Long.class, "id");
+        cq.select(from).where(cb.equal(from.get("id"), id));
+        Client cl = em.createQuery(cq)
+                .setParameter("id", 1L)
+                .getSingleResult();
+        System.out.println(cl);
+
+        System.out.println("============ Get all client names ============");
+        CriteriaQuery<String> cq2 = cb.createQuery(String.class);
+        from = cq2.from(Client.class);
+        cq2.select(from.get("name"));
+        List<String> l = em.createQuery(cq2).getResultList();
+        l.forEach(System.out::println);
+
+        System.out.println("============ Get all distinct client names, uppercased ============");
+        cq2 = cb.createQuery(String.class);
+        from = cq2.from(Client.class);
+        cq2.select(cb.upper(from.get("name"))).distinct(true);
+        l = em.createQuery(cq2).getResultList();
+        l.forEach(System.out::println);
+
         em.close();
     }
 }
