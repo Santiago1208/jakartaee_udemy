@@ -121,6 +121,20 @@ public class HibernateCriteriaExample {
         l = em.createQuery(cq2).getResultList();
         l.forEach(System.out::println);
 
+        System.out.println("============ Get all concatenated client names and surnames ============");
+        cq2 = cb.createQuery(String.class);
+        from = cq2.from(Client.class);
+        cq2.select(cb.concat(cb.concat(from.get("name"), " "), from.get("surname")));
+        l = em.createQuery(cq2).getResultList();
+        l.forEach(System.out::println);
+
+        System.out.println("============ Get all concatenated client names and surnames, lowercased ============");
+        cq2 = cb.createQuery(String.class);
+        from = cq2.from(Client.class);
+        cq2.select(cb.lower(cb.concat(cb.concat(from.get("name"), " "), from.get("surname"))));
+        l = em.createQuery(cq2).getResultList();
+        l.forEach(System.out::println);
+
         em.close();
     }
 }
