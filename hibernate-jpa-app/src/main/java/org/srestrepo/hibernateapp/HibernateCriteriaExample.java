@@ -156,6 +156,41 @@ public class HibernateCriteriaExample {
         Object[] o = em.createQuery(cq3).getSingleResult();
         System.out.println("id ="+ o[0] + ", name =" + o[1] + ", surname =" + o[2]);
 
+        System.out.println("============ Count all clients ============");
+        CriteriaQuery<Long> cq4 = cb.createQuery(Long.class);
+        from = cq4.from(Client.class);
+        cq4.select(cb.count(from.get("id")));
+        Long theCount = em.createQuery(cq4).getSingleResult();
+        System.out.println(theCount);
+
+        System.out.println("============ Sum all the Client IDs ============");
+        cq4 = cb.createQuery(Long.class);
+        from = cq4.from(Client.class);
+        cq4.select(cb.sum(from.get("id")));
+        Long theSum = em.createQuery(cq4).getSingleResult();
+        System.out.println(theSum);
+
+        System.out.println("============ Find the maximum ID ============");
+        cq4 = cb.createQuery(Long.class);
+        from = cq4.from(Client.class);
+        cq4.select(cb.max(from.get("id")));
+        Long theMax = em.createQuery(cq4).getSingleResult();
+        System.out.println(theMax);
+
+        System.out.println("============ Find the minimum ID ============");
+        cq4 = cb.createQuery(Long.class);
+        from = cq4.from(Client.class);
+        cq4.select(cb.min(from.get("id")));
+        Long theMin = em.createQuery(cq4).getSingleResult();
+        System.out.println(theMin);
+
+        System.out.println("============ Get a full report ============");
+        cq3 = cb.createQuery(Object[].class);
+        from = cq3.from(Client.class);
+        cq3.multiselect(cb.count(from.get("id")), cb.max(from.get("id")), cb.min(from.get("id")), cb.avg(from.get("id")));
+        o = em.createQuery(cq3).getSingleResult();
+        System.out.println("Count =" + o[0] + ", Max =" + o[1] + ", Min =" + o[2] + ", Avg =" + o[3] );
+
         em.close();
     }
 }
