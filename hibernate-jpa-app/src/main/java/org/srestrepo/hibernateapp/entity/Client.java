@@ -2,6 +2,8 @@ package org.srestrepo.hibernateapp.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -12,6 +14,10 @@ public class Client {
     private String surname;
     @Column(name = "payment_type")
     private String paymentType;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     public Client() {
     }
@@ -26,6 +32,18 @@ public class Client {
         this.name = name;
         this.surname = surname;
         this.paymentType = paymentType;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        System.out.println("Initializing something right before persisting...");
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        System.out.println("Initializing something right before updating...");
+        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -60,11 +78,29 @@ public class Client {
         this.paymentType = paymentType;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public String toString() {
         return "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", paymentType='" + paymentType + '\'';
+                ", paymentType='" + paymentType + '\'' +
+                ", createdAt=" + createdAt + '\'' +
+                ", updatedAt=" + updatedAt;
     }
 }
