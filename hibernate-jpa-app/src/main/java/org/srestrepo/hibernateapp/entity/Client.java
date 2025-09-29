@@ -2,6 +2,8 @@ package org.srestrepo.hibernateapp.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -64,11 +66,13 @@ public class Client {
 
     @Override
     public String toString() {
+        LocalDateTime createdAt = this.audit != null ? this.audit.getCreatedAt() : null;
+        LocalDateTime updatedAt = this.audit != null ? this.audit.getUpdatedAt() : null;
         return "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", paymentType='" + paymentType + '\'' +
-                ", createdAt=" + audit.getCreatedAt() + '\'' +
-                ", updatedAt=" + audit.getUpdatedAt();
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'';
     }
 }
