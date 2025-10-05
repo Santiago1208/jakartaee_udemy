@@ -97,6 +97,11 @@ public class Client {
         return this;
     }
 
+    public void removeInvoice(Invoice invoice) {
+        this.invoices.remove(invoice);
+        invoice.setClient(null);
+    }
+
     public Audit getAudit() {
         return audit;
     }
