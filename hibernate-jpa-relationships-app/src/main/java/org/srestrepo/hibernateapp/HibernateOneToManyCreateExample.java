@@ -21,6 +21,14 @@ public class HibernateOneToManyCreateExample {
             em.persist(client);
 
             em.getTransaction().commit();
+            System.out.println(client);
+
+            em.getTransaction().begin();
+            client = em.find(Client.class, client.getId());
+            client.getAddresses().remove(a1);
+            em.getTransaction().commit();
+            System.out.println(client);
+
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {

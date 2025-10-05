@@ -21,6 +21,12 @@ public class HibernateOneToManyFindExample {
 
             em.getTransaction().commit();
             System.out.println(client);
+
+            em.getTransaction().begin();
+            a1 = em.find(Address.class, 1L);
+            client.getAddresses().remove(a1);
+            em.getTransaction().commit();
+            System.out.println(client);
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {
