@@ -3,6 +3,8 @@ package org.srestrepo.hibernateapp.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "clients")
@@ -16,6 +18,9 @@ public class Client {
     private String paymentType;
     @Embedded
     private Audit audit = new Audit();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_client")
+    private List<Address> addresses = new ArrayList<>();
 
     public Client() {
     }
@@ -64,6 +69,14 @@ public class Client {
         this.paymentType = paymentType;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     @Override
     public String toString() {
         LocalDateTime createdAt = this.audit != null ? this.audit.getCreatedAt() : null;
@@ -73,6 +86,7 @@ public class Client {
                 ", surname='" + surname + '\'' +
                 ", paymentType='" + paymentType + '\'' +
                 ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'';
+                ", updatedAt='" + updatedAt + '\'' +
+                ", addresses=" + addresses;
     }
 }
