@@ -19,7 +19,10 @@ public class Client {
     @Embedded
     private Audit audit = new Audit();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_client")
+    @JoinTable(name = "tbl_clients_addresses",
+            joinColumns = @JoinColumn(name = "id_client"),
+            inverseJoinColumns = @JoinColumn(name = "id_address"),
+            uniqueConstraints = @UniqueConstraint(columnNames = "id_address"))
     private List<Address> addresses = new ArrayList<>();
 
     public Client() {

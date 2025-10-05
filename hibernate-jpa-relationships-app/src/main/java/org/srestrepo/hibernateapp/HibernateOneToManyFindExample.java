@@ -20,6 +20,7 @@ public class HibernateOneToManyFindExample {
             em.merge(client);
 
             em.getTransaction().commit();
+            System.out.println(client);
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {
