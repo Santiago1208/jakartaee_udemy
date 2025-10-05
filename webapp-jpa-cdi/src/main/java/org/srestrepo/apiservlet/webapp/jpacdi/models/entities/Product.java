@@ -1,14 +1,22 @@
-package org.srestrepo.apiservlet.webapp.jpacdi.models;
+package org.srestrepo.apiservlet.webapp.jpacdi.models.entities;
 
+
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "products")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
     private int price;
     private String sku;
+    @Column(name = "created_at")
     private LocalDate createdAt;
 
     public Product() {

@@ -2,7 +2,7 @@ package org.srestrepo.apiservlet.webapp.jpacdi.services;
 
 import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.Service;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.User;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
 import org.srestrepo.apiservlet.webapp.jpacdi.repositories.UserJdbcRepository;
 
 import java.sql.SQLException;

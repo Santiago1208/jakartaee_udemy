@@ -1,5 +1,7 @@
 package org.srestrepo.apiservlet.webapp.jpacdi.models;
 
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
+
 import java.util.Objects;
 
 public class CartItem {

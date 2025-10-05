@@ -3,7 +3,7 @@ package org.srestrepo.apiservlet.webapp.jpacdi.repositories;
 import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.PostgreSQLConnection;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.Repository;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Category;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category;
 
 import java.sql.*;
 import java.util.ArrayList;

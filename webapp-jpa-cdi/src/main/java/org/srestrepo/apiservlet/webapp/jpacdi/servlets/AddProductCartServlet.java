@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.DefaultProductService;
 import org.srestrepo.apiservlet.webapp.jpacdi.models.Cart;
 import org.srestrepo.apiservlet.webapp.jpacdi.models.CartItem;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Product;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
 import org.srestrepo.apiservlet.webapp.jpacdi.services.ProductService;
 
 import java.io.IOException;

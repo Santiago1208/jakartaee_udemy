@@ -3,8 +3,8 @@ package org.srestrepo.apiservlet.webapp.jpacdi.services;
 import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.DefaultProductService;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.Service;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Category;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Product;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
 import org.srestrepo.apiservlet.webapp.jpacdi.repositories.JdbcRepository;
 import org.srestrepo.apiservlet.webapp.jpacdi.repositories.ProductJdbcRepositoryImpl;
 

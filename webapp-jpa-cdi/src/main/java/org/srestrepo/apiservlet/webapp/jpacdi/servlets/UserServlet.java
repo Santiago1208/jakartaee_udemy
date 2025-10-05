@@ -6,7 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.User;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
 import org.srestrepo.apiservlet.webapp.jpacdi.services.LoginService;
 import org.srestrepo.apiservlet.webapp.jpacdi.services.LoginSessionService;
 import org.srestrepo.apiservlet.webapp.jpacdi.services.UserService;

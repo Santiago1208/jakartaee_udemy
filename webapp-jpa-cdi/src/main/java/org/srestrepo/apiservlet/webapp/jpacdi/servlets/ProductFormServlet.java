@@ -7,8 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.DefaultProductService;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Category;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Product;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
 import org.srestrepo.apiservlet.webapp.jpacdi.services.ProductService;
 
 import java.io.IOException;

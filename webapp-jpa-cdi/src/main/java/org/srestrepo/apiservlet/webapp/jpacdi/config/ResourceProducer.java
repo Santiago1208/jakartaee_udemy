@@ -8,6 +8,8 @@ import jakarta.enterprise.inject.Disposes;
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import org.srestrepo.apiservlet.webapp.jpacdi.util.JpaUtil;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -38,5 +40,18 @@ public class ResourceProducer {
     @Dependent
     private Logger produceLogger(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
+    }
+
+    @Produces
+    @RequestScoped
+    private EntityManager produceEntityManager() {
+        return JpaUtil.getEntityManager();
+    }
+
+    public void closeEntityManager(@Disposes EntityManager entityManager) {
+        if (entityManager.isOpen()) {
+            entityManager.close();
+            log.info("Entity Manager closed");
+        }
     }
 }

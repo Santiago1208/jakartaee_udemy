@@ -4,7 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.User;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
 import org.srestrepo.apiservlet.webapp.jpacdi.services.LoginService;
 import org.srestrepo.apiservlet.webapp.jpacdi.services.UserService;
 

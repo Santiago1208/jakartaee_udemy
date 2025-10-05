@@ -1,6 +1,6 @@
 package org.srestrepo.apiservlet.webapp.jpacdi.services;
 
-import org.srestrepo.apiservlet.webapp.jpacdi.models.User;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
 
 import java.util.List;
 import java.util.Optional;

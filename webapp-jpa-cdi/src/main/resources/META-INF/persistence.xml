@@ -2,6 +2,9 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
     <persistence-unit name="exampleJPA" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product</class>
+        <class>org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category</class>
+        <class>org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/java_course_hibernate"/>

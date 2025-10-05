@@ -1,6 +1,6 @@
 package org.srestrepo.apiservlet.webapp.jpacdi.repositories;
 
-import org.srestrepo.apiservlet.webapp.jpacdi.models.User;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
 
 import java.sql.SQLException;
 

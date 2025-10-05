@@ -1,7 +1,7 @@
 package org.srestrepo.apiservlet.webapp.jpacdi.services;
 
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Category;
-import org.srestrepo.apiservlet.webapp.jpacdi.models.Product;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category;
+import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
 
 import java.util.List;
 import java.util.Optional;
