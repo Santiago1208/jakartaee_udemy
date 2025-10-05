@@ -11,3 +11,7 @@ INSERT INTO public.students("name", surname) VALUES('Johana', 'Doe');
 INSERT INTO public.students("name", surname) VALUES('Pepe', 'Gon');
 INSERT INTO public.courses("name", professor) VALUES('Curso Spring', 'Andres');
 INSERT INTO public.courses("name", professor) VALUES('Curso Java EE 9', 'Andres');
+INSERT INTO public.addresses(street, "number") VALUES('Vaticano', 123);
+INSERT INTO public.addresses(street, "number") VALUES('Colón', 456);
+INSERT INTO public.tbl_clients_addresses(id_client, id_address) VALUES(1, 1);
+INSERT INTO public.tbl_clients_addresses(id_client, id_address) VALUES(1, 2);
