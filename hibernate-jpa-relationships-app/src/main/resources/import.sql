@@ -16,3 +16,5 @@ INSERT INTO public.addresses(street, "number") VALUES('Colón', 456);
 INSERT INTO public.tbl_clients_addresses(id_client, id_address) VALUES(1, 1);
 INSERT INTO public.tbl_clients_addresses(id_client, id_address) VALUES(1, 2);
 INSERT INTO public.client_details(prime, score_total, id_client) VALUES(TRUE, 8000, 1);
+INSERT INTO public.tbl_students_courses(student_id, course_id) VALUES(1, 1);
+INSERT INTO public.tbl_students_courses(student_id, course_id) VALUES(1, 2);
