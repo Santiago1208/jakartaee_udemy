@@ -14,7 +14,6 @@ import java.lang.annotation.Target;
 @Stereotype
 @ApplicationScoped
 @Logging
-@JdbcTransactional
 @Named
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})

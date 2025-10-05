@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@JdbcRepository
 public class UserJdbcRepositoryImpl implements UserRepository {
 
     @Inject

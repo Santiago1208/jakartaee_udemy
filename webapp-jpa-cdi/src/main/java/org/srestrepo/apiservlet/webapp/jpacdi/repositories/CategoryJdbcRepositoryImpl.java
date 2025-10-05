@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CategoryCrudRepositoryImpl implements CrudRepository<Category> {
+@JdbcRepository
+public class CategoryJdbcRepositoryImpl implements CrudRepository<Category> {
 
     private final Connection connection;
 
     @Inject
-    public CategoryCrudRepositoryImpl(@PostgreSQLConnection Connection connection) {
+    public CategoryJdbcRepositoryImpl(@PostgreSQLConnection Connection connection) {
         this.connection = connection;
     }
 

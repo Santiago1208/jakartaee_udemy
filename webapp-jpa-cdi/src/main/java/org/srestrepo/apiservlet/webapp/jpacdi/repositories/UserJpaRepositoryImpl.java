@@ -8,6 +8,7 @@ import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
 import java.util.List;
 
 @Repository
+@JpaRepository
 public class UserJpaRepositoryImpl implements UserRepository {
     @Inject
     private EntityManager em;

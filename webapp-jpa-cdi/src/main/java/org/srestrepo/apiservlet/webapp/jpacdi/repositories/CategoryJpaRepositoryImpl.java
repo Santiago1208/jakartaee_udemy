@@ -8,6 +8,7 @@ import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category;
 import java.util.List;
 
 @Repository
+@JpaRepository
 public class CategoryJpaRepositoryImpl implements CrudRepository<Category> {
     @Inject
     private EntityManager em;

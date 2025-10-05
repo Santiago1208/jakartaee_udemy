@@ -8,6 +8,7 @@ import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
 import java.util.List;
 
 @Repository
+@JpaRepository
 public class ProductJpaRepositoryImpl implements CrudRepository<Product> {
     @Inject
     private EntityManager em;

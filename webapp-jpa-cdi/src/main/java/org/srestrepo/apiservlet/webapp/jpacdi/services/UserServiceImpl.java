@@ -2,18 +2,21 @@ package org.srestrepo.apiservlet.webapp.jpacdi.services;
 
 import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.Service;
+import org.srestrepo.apiservlet.webapp.jpacdi.interceptors.JpaTransactional;
 import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
+import org.srestrepo.apiservlet.webapp.jpacdi.repositories.JpaRepository;
 import org.srestrepo.apiservlet.webapp.jpacdi.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@JpaTransactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userJdbcRepository;
 
     @Inject
-    public UserServiceImpl(UserRepository userJdbcRepository) {
+    public UserServiceImpl(@JpaRepository UserRepository userJdbcRepository) {
         this.userJdbcRepository = userJdbcRepository;
     }
 
