@@ -26,6 +26,9 @@ public class Client {
     private List<Address> addresses = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
     private List<Invoice> invoices = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "client_detail_id")
+    private ClientDetail detail;
 
 
     public Client() {
@@ -110,6 +113,14 @@ public class Client {
         this.audit = audit;
     }
 
+    public ClientDetail getDetail() {
+        return detail;
+    }
+
+    public void setDetail(ClientDetail detail) {
+        this.detail = detail;
+    }
+
     @Override
     public String toString() {
         LocalDateTime createdAt = this.audit != null ? this.audit.getCreatedAt() : null;
@@ -121,6 +132,8 @@ public class Client {
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
                 ", addresses=" + addresses +
-                ", invoices=" + invoices + " }";
+                ", invoices=" + invoices +
+                ", detail=" + detail +
+                " }";
     }
 }

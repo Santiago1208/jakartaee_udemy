@@ -5,6 +5,7 @@
         <class>org.srestrepo.hibernateapp.entity.Client</class>
         <class>org.srestrepo.hibernateapp.entity.Invoice</class>
         <class>org.srestrepo.hibernateapp.entity.Address</class>
+        <class>org.srestrepo.hibernateapp.entity.ClientDetail</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/java_course_hibernate"/>
