@@ -15,3 +15,4 @@ INSERT INTO public.addresses(street, "number") VALUES('Vaticano', 123);
 INSERT INTO public.addresses(street, "number") VALUES('Colón', 456);
 INSERT INTO public.tbl_clients_addresses(id_client, id_address) VALUES(1, 1);
 INSERT INTO public.tbl_clients_addresses(id_client, id_address) VALUES(1, 2);
+INSERT INTO public.client_details(prime, score_total, id_client) VALUES(TRUE, 8000, 1);
