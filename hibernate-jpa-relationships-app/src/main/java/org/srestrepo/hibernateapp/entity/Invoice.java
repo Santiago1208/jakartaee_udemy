@@ -56,9 +56,8 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "id=" + id +
+        return "{ id=" + id +
                 ", description='" + description + '\'' +
-                ", total=" + total +
-                ", client={ " + client + "}";
+                ", total=" + total + " }";
     }
 }

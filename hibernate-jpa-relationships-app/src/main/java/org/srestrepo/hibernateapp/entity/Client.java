@@ -24,6 +24,9 @@ public class Client {
             inverseJoinColumns = @JoinColumn(name = "id_address"),
             uniqueConstraints = @UniqueConstraint(columnNames = "id_address"))
     private List<Address> addresses = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
+    private List<Invoice> invoices = new ArrayList<>();
+
 
     public Client() {
     }
@@ -80,16 +83,39 @@ public class Client {
         this.addresses = addresses;
     }
 
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+    public Client addInvoice(Invoice invoice) {
+        this.invoices.add(invoice);
+        invoice.setClient(this);
+        return this;
+    }
+
+    public Audit getAudit() {
+        return audit;
+    }
+
+    public void setAudit(Audit audit) {
+        this.audit = audit;
+    }
+
     @Override
     public String toString() {
         LocalDateTime createdAt = this.audit != null ? this.audit.getCreatedAt() : null;
         LocalDateTime updatedAt = this.audit != null ? this.audit.getUpdatedAt() : null;
-        return "id=" + id +
+        return "{ id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", paymentType='" + paymentType + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +
-                ", addresses=" + addresses;
+                ", addresses=" + addresses +
+                ", invoices=" + invoices + " }";
     }
 }
