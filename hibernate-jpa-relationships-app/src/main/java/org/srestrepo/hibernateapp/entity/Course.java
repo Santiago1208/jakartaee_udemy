@@ -2,6 +2,10 @@ package org.srestrepo.hibernateapp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -10,6 +14,8 @@ public class Course {
     private Long id;
     private String name;
     private String professor;
+    @ManyToMany(mappedBy = "courses")
+    private List<Student> students = new ArrayList<>();
 
     public Course() {
     }
@@ -41,6 +47,26 @@ public class Course {
 
     public void setProfessor(String professor) {
         this.professor = professor;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return Objects.equals(id, course.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     @Override
