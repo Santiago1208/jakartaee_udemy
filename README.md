@@ -70,4 +70,33 @@ public class DatasourceJdbcConnection {
 }
 
 ```
+## Lesson 185: Persistence XML template
 
+The `src/main/resources/META-INF/persistence.xml` is an special file to tell JPA how the persistence implementation will look like.
+You can define the provider (Hibernate, EclipseLink, OpenJPA), the datasource URL, username, password, JDBC driver and other useful properties and configurations.
+This is a template for JPA 3.0, make sure to update it properly to your version of Jakarta and JPA.
+The transaction type was left `RESOURCE_LOCAL` for not JTA based containers, like Tomcat or Desktop applications. You can change it to `JTA` for Wildfly, Glassfish or Payara.
+
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+    <persistence-unit name="<yourPersistenceUnit>" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<class>full package name of your class 1</class>
+        <properties>
+            <property name="jakarta.persistence.jdbc.url" value="<yourURL>"/>
+            <property name="jakarta.persistence.jdbc.user" value="<yourUsername>"/>
+            <property name="jakarta.persistence.jdbc.password" value="<yourPassoword>"/>
+            <property name="jakarta.persistence.jdbc.driver" value="<YourDriver>"/>
+            <property name="hibernate.dialect" value="<YourDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+			
+			<!-- CAUTION: for DEV only! -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+
+```

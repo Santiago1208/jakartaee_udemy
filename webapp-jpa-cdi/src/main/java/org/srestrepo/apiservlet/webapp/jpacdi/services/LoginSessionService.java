@@ -1,0 +1,17 @@
+package org.srestrepo.apiservlet.webapp.jpacdi.services;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+import java.util.Optional;
+
+@ApplicationScoped
+public class LoginSessionService implements LoginService {
+
+    @Override
+    public Optional<String> getUsername(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return Optional.ofNullable((String) session.getAttribute("username"));
+    }
+}
