@@ -3,18 +3,17 @@ package org.srestrepo.apiservlet.webapp.jpacdi.services;
 import jakarta.inject.Inject;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.Service;
 import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.User;
-import org.srestrepo.apiservlet.webapp.jpacdi.repositories.UserJdbcRepository;
+import org.srestrepo.apiservlet.webapp.jpacdi.repositories.UserRepository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserJdbcRepository userJdbcRepository;
+    private final UserRepository userJdbcRepository;
 
     @Inject
-    public UserServiceImpl(UserJdbcRepository userJdbcRepository) {
+    public UserServiceImpl(UserRepository userJdbcRepository) {
         this.userJdbcRepository = userJdbcRepository;
     }
 
@@ -23,7 +22,7 @@ public class UserServiceImpl implements UserService {
         try {
             return Optional.ofNullable(userJdbcRepository.findByUsername(username))
                     .filter(user -> user.getPassword().equals(password));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e.getCause());
         }
     }
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
         try {
             return userJdbcRepository.findAll();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e.getCause());
         }
     }
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findById(Long id) {
         try {
             return Optional.ofNullable(userJdbcRepository.findById(id));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e.getCause());
         }
     }
@@ -50,7 +49,7 @@ public class UserServiceImpl implements UserService {
     public void save(User user) {
         try {
             userJdbcRepository.save(user);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e.getCause());
         }
     }
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         try {
             userJdbcRepository.delete(id);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e.getCause());
         }
     }
@@ -68,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public boolean existsByUsername(String username) {
         try {
             return Optional.ofNullable(userJdbcRepository.findByUsername(username)).isPresent();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e.getCause());
         }
     }
@@ -77,7 +76,7 @@ public class UserServiceImpl implements UserService {
     public boolean existsByEmail(String email) {
         try {
             return Optional.ofNullable(userJdbcRepository.findByEmail(email)).isPresent();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e.getCause());
         }
     }

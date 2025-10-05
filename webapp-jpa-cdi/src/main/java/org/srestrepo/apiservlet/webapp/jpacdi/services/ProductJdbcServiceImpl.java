@@ -5,10 +5,9 @@ import org.srestrepo.apiservlet.webapp.jpacdi.config.DefaultProductService;
 import org.srestrepo.apiservlet.webapp.jpacdi.config.Service;
 import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category;
 import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
-import org.srestrepo.apiservlet.webapp.jpacdi.repositories.JdbcRepository;
+import org.srestrepo.apiservlet.webapp.jpacdi.repositories.CrudRepository;
 import org.srestrepo.apiservlet.webapp.jpacdi.repositories.ProductJdbcRepositoryImpl;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,15 +16,15 @@ import java.util.Optional;
 public class ProductJdbcServiceImpl implements ProductService {
 
     @Inject
-    private JdbcRepository<Product> productJdbcRepository;
+    private CrudRepository<Product> productJdbcRepository;
     @Inject
-    private JdbcRepository<Category> categoryJdbcRepository;
+    private CrudRepository<Category> categoryJdbcRepository;
 
     @Override
     public List<Product> getProducts() {
         try {
             return productJdbcRepository.findAll();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }
@@ -34,7 +33,7 @@ public class ProductJdbcServiceImpl implements ProductService {
     public Optional<Product> findById(Long id) {
         try {
             return Optional.ofNullable(productJdbcRepository.findById(id));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }
@@ -43,7 +42,7 @@ public class ProductJdbcServiceImpl implements ProductService {
     public void save(Product product) {
         try {
             productJdbcRepository.save(product);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }
@@ -52,7 +51,7 @@ public class ProductJdbcServiceImpl implements ProductService {
     public void delete(Long id) {
         try {
             productJdbcRepository.delete(id);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }
@@ -61,7 +60,7 @@ public class ProductJdbcServiceImpl implements ProductService {
     public List<Category> getCategories() {
         try {
             return categoryJdbcRepository.findAll();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }
@@ -70,7 +69,7 @@ public class ProductJdbcServiceImpl implements ProductService {
     public Optional<Category> findCategoryById(Long id) {
         try {
             return Optional.ofNullable(categoryJdbcRepository.findById(id));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }
@@ -79,7 +78,7 @@ public class ProductJdbcServiceImpl implements ProductService {
     public boolean existsBySku(String sku) {
         try {
             return ((ProductJdbcRepositoryImpl) productJdbcRepository).existsBySku(sku);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
     }

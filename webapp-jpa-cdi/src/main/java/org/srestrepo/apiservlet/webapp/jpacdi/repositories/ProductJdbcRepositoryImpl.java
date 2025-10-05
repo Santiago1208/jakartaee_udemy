@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Repository
-public class ProductJdbcRepositoryImpl implements JdbcRepository<Product> {
+public class ProductJdbcRepositoryImpl implements CrudRepository<Product> {
 
     @Inject
     @PostgreSQLConnection

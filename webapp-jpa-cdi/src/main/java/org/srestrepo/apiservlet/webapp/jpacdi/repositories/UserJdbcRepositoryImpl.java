@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserJdbcRepositoryImpl implements UserJdbcRepository {
+public class UserJdbcRepositoryImpl implements UserRepository {
 
     @Inject
     @PostgreSQLConnection
