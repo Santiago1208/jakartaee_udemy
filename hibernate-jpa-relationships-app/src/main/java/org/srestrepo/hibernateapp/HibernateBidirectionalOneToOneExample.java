@@ -1,0 +1,30 @@
+package org.srestrepo.hibernateapp;
+
+import jakarta.persistence.EntityManager;
+import org.srestrepo.hibernateapp.entity.Client;
+import org.srestrepo.hibernateapp.entity.ClientDetail;
+import org.srestrepo.hibernateapp.util.JpaUtil;
+
+public class HibernateBidirectionalOneToOneExample {
+    public static void main(String[] args) {
+        EntityManager em = JpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Client client = new Client("Cata", "Edu");
+            client.setPaymentType("PayPal");
+
+            ClientDetail clientDetail = new ClientDetail(true, 8000L);
+
+            client.addDetail(clientDetail);
+
+            em.persist(client);
+            em.getTransaction().commit();
+            System.out.println(client);
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+        }  finally {
+            em.close();
+        }
+    }
+}

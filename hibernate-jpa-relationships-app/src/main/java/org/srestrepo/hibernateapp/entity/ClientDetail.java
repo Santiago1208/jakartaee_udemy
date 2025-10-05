@@ -11,6 +11,9 @@ public class ClientDetail {
     private Boolean prime;
     @Column(name = "score_total")
     private Long scoreTotal;
+    @OneToOne
+    @JoinColumn(name = "id_client")
+    private Client client;
 
     public ClientDetail() {
     }
@@ -42,6 +45,14 @@ public class ClientDetail {
 
     public void setScoreTotal(Long scoreTotal) {
         this.scoreTotal = scoreTotal;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     @Override

@@ -26,8 +26,7 @@ public class Client {
     private List<Address> addresses = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
     private List<Invoice> invoices = new ArrayList<>();
-    @OneToOne
-    @JoinColumn(name = "client_detail_id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
     private ClientDetail detail;
 
 
@@ -119,6 +118,16 @@ public class Client {
 
     public void setDetail(ClientDetail detail) {
         this.detail = detail;
+    }
+
+    public void addDetail(ClientDetail detail) {
+        this.detail = detail;
+        detail.setClient(this);
+    }
+
+    public void removeDetail() {
+        detail.setClient(null);
+        this.detail = null;
     }
 
     @Override
