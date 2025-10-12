@@ -6,5 +6,6 @@
 <body>
     <h2>Hello World EJB</h2>
     <h3>${requestScope.greeting}</h3>
+    <h3>${requestScope.greeting2}</h3>
 </body>
 </html>
