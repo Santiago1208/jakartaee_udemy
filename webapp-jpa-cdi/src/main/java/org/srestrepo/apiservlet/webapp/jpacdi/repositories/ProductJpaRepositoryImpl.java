@@ -9,13 +9,13 @@ import java.util.List;
 
 @Repository
 @JpaRepository
-public class ProductJpaRepositoryImpl implements CrudRepository<Product> {
+public class ProductJpaRepositoryImpl implements ProductRepository {
     @Inject
     private EntityManager em;
 
     @Override
     public List<Product> findAll() throws Exception {
-        return em.createQuery("from Product", Product.class).getResultList();
+        return em.createQuery("select p from Product p left outer join fetch p.category", Product.class).getResultList();
     }
 
     @Override
@@ -36,5 +36,12 @@ public class ProductJpaRepositoryImpl implements CrudRepository<Product> {
     public void delete(Long id) throws Exception {
         Product product = findById(id);
         em.remove(product);
+    }
+
+    @Override
+    public boolean existsBySku(String sku) throws Exception {
+        return !em.createQuery("select p from Product p where p.sku = :sku", Product.class)
+                .setParameter("sku", sku)
+                .getResultList().isEmpty();
     }
 }

@@ -100,13 +100,13 @@ public class ProductFormServlet extends HttpServlet {
             createdAt = null;
         }
 
-        long productId;
+        Long productId;
         try {
             productId = Long.parseLong(req.getParameter("id"));
         } catch (NumberFormatException e) {
-            productId = 0L;
+            productId = null;
         }
-        if (productId == 0L) {
+        if (productId == null) {
             boolean existsSku = productService.existsBySku(sku);
             if (existsSku) {
                 errors.put("sku", "Sku already exists");

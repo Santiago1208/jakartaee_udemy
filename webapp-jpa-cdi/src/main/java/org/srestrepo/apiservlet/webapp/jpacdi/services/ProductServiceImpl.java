@@ -8,7 +8,7 @@ import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Category;
 import org.srestrepo.apiservlet.webapp.jpacdi.models.entities.Product;
 import org.srestrepo.apiservlet.webapp.jpacdi.repositories.CrudRepository;
 import org.srestrepo.apiservlet.webapp.jpacdi.repositories.JpaRepository;
-import org.srestrepo.apiservlet.webapp.jpacdi.repositories.ProductJdbcRepositoryImpl;
+import org.srestrepo.apiservlet.webapp.jpacdi.repositories.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,15 +20,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Inject
     @JpaRepository
-    private CrudRepository<Product> productJdbcRepository;
+    private ProductRepository productRepository;
     @Inject
     @JpaRepository
-    private CrudRepository<Category> categoryJdbcRepository;
+    private CrudRepository<Category> categoryRepository;
 
     @Override
     public List<Product> getProducts() {
         try {
-            return productJdbcRepository.findAll();
+            return productRepository.findAll();
         } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Product> findById(Long id) {
         try {
-            return Optional.ofNullable(productJdbcRepository.findById(id));
+            return Optional.ofNullable(productRepository.findById(id));
         } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void save(Product product) {
         try {
-            productJdbcRepository.save(product);
+            productRepository.save(product);
         } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Long id) {
         try {
-            productJdbcRepository.delete(id);
+            productRepository.delete(id);
         } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Category> getCategories() {
         try {
-            return categoryJdbcRepository.findAll();
+            return categoryRepository.findAll();
         } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Category> findCategoryById(Long id) {
         try {
-            return Optional.ofNullable(categoryJdbcRepository.findById(id));
+            return Optional.ofNullable(categoryRepository.findById(id));
         } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }
@@ -82,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean existsBySku(String sku) {
         try {
-            return ((ProductJdbcRepositoryImpl) productJdbcRepository).existsBySku(sku);
+            return productRepository.existsBySku(sku);
         } catch (Exception e) {
             throw new JdbcServiceException(e.getMessage(), e);
         }

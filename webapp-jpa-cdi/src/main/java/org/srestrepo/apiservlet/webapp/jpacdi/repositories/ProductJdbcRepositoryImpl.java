@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 @Repository
 @JdbcRepository
-public class ProductJdbcRepositoryImpl implements CrudRepository<Product> {
+public class ProductJdbcRepositoryImpl implements ProductRepository {
 
     @Inject
     @PostgreSQLConnection
@@ -87,6 +87,7 @@ public class ProductJdbcRepositoryImpl implements CrudRepository<Product> {
         }
     }
 
+    @Override
     public boolean existsBySku(String sku) throws SQLException {
         boolean exists = false;
         try (PreparedStatement statement = connection.prepareStatement("select p.id from products as p where sku = ?")) {
