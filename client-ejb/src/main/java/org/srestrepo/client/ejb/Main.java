@@ -3,10 +3,8 @@ package org.srestrepo.client.ejb;
 import org.srestrepo.appejb.remote.model.Product;
 import org.srestrepo.appejb.remote.service.ProductServiceRemoteEJB;
 
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import java.util.Properties;
 
 public class Main {
 
