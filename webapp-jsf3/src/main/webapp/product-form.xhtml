@@ -9,6 +9,9 @@
     <title>Product Form</title>
 </h:head>
 <h:body>
+    <f:metadata>
+        <f:viewParam name="id" value="#{productController.id}" />
+    </f:metadata>
     <h:panelGrid border="1">
         <f:facet name="header">
             <h:outputText value="Product Form"/>

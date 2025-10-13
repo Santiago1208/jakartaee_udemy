@@ -18,6 +18,8 @@ public class ProductController {
 
     private Product product;
 
+    private Long id;
+
     @Produces
     @Model
     public String title() {
@@ -35,6 +37,9 @@ public class ProductController {
     @Model
     public Product product() {
         this.product = new Product();
+        if (id != null && id > 0) {
+            productService.getProduct(id).ifPresent(p -> this.product = p);
+        }
         return product;
     }
 
@@ -42,5 +47,23 @@ public class ProductController {
         System.out.println(product);
         productService.saveProduct(product);
         return "index.xhtml?faces-redirect=true";
+    }
+
+    public String edit(Long id) {
+        this.id = id;
+        return "product-form.xhtml";
+    }
+
+    public String delete(Long id) {
+        productService.deleteProduct(id);
+        return "index.xhtml?faces-redirect=true";
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

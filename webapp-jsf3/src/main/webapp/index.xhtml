@@ -48,6 +48,31 @@
                 </f:facet>
                 <h:outputText value="#{p.createdAt}"/>
             </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Edit" />
+                </f:facet>
+                <h:form id="editForm">
+                    <h:commandLink value="Edit" action="#{productController.edit(p.id)}" />
+                </h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Edit 2" />
+                </f:facet>
+                <h:link value="Edit" outcome="product-form">
+                    <f:param name="id" value="#{p.id}" />
+                </h:link>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Delete" />
+                </f:facet>
+                <h:form id="deleteForm">
+                    <h:commandLink value="Delete" action="#{productController.delete(p.id)}"
+                                   onclick="return confirm('Are you sure you want to delete this record?')" />
+                </h:form>
+            </h:column>
         </h:dataTable>
     </h:panelGrid>
 </h:body>
