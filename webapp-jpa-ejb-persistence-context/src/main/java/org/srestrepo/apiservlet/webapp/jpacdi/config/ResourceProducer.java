@@ -8,9 +8,6 @@ import jakarta.enterprise.inject.Disposes;
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.PersistenceUnit;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -25,9 +22,6 @@ public class ResourceProducer {
 
     @Inject
     private Logger log;
-
-    @PersistenceUnit(name = "exampleJPA")
-    private EntityManagerFactory emf;
 
     @Produces
     @RequestScoped
@@ -45,18 +39,5 @@ public class ResourceProducer {
     @Dependent
     private Logger produceLogger(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());
-    }
-
-    @Produces
-    @RequestScoped
-    private EntityManager produceEntityManager() {
-        return emf.createEntityManager();
-    }
-
-    public void closeEntityManager(@Disposes EntityManager entityManager) {
-        if (entityManager.isOpen()) {
-            entityManager.close();
-            log.info("Entity Manager closed");
-        }
     }
 }
