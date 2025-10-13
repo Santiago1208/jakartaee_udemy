@@ -1,0 +1,8 @@
+package org.srestrepo.webapp.jsf3.repositories;
+
+import java.util.List;
+
+public interface CrudRepository<T> {
+    List<T> findAll();
+    T findById(Long id);
+}
