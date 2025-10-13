@@ -69,4 +69,20 @@ public class Product {
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDate.now();
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", sku='" + sku + '\'' +
+                ", price=" + price +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

@@ -9,37 +9,42 @@
     <title>#{title}</title>
 </h:head>
 <h:body>
-    <h1><h:outputText value="#{title}" /></h1>
-    <h:dataTable value="#{products}" var="product">
+    <h1>
+        <h:outputText value="#{title}" />
+    </h1>
+    <h:form>
+        <h:commandLink value="[+] New Product" action="product-form.xhtml" />
+    </h:form>
+    <h:dataTable value="#{products}" var="p">
         <h:column>
             <f:facet name="header">
                 <h:outputText value="ID" />
             </f:facet>
-            <h:outputText value="#{product.id}" />
+            <h:outputText value="#{p.id}" />
         </h:column>
         <h:column>
             <f:facet name="header">
                 <h:outputText value="Name" />
             </f:facet>
-            <h:outputText value="#{product.name}" />
+            <h:outputText value="#{p.name}" />
         </h:column>
         <h:column>
             <f:facet name="header">
                 <h:outputText value="SKU" />
             </f:facet>
-            <h:outputText value="#{product.sku}" />
+            <h:outputText value="#{p.sku}" />
         </h:column>
         <h:column>
             <f:facet name="header">
                 <h:outputText value="Price" />
             </f:facet>
-            <h:outputText value="#{product.price}" />
+            <h:outputText value="#{p.price}" />
         </h:column>
         <h:column>
             <f:facet name="header">
                 <h:outputText value="Created At" />
             </f:facet>
-            <h:outputText value="#{product.createdAt}" />
+            <h:outputText value="#{p.createdAt}" />
         </h:column>
     </h:dataTable>
 </h:body>

@@ -16,6 +16,8 @@ public class ProductController {
     @Inject
     private ProductService productService;
 
+    private Product product;
+
     @Produces
     @Model
     public String title() {
@@ -27,5 +29,18 @@ public class ProductController {
     @Named("products")
     public List<Product> getProducts() {
         return productService.getProducts();
+    }
+
+    @Produces
+    @Model
+    public Product product() {
+        this.product = new Product();
+        return product;
+    }
+
+    public String save() {
+        System.out.println(product);
+        // productService.save(product);
+        return "index.xhtml?faces-redirect=true";
     }
 }
