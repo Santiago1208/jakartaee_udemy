@@ -23,4 +23,14 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Product> getProduct(Long id) {
         return Optional.ofNullable(productRepository.findById(id));
     }
+
+    @Override
+    public void saveProduct(Product product) {
+        productRepository.save(product);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
+    }
 }

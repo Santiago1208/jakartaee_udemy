@@ -22,4 +22,18 @@ public class ProductRepositoryImpl implements CrudRepository<Product> {
     public Product findById(Long id) {
         return em.find(Product.class, id);
     }
+
+    @Override
+    public void save(Product entity) {
+        if (entity.getId() != null && entity.getId() > 0) {
+            em.merge(entity);
+        } else {
+            em.persist(entity);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        em.remove(findById(id));
+    }
 }
