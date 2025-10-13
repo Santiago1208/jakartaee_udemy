@@ -13,9 +13,33 @@
     <h:dataTable value="#{products}" var="product">
         <h:column>
             <f:facet name="header">
+                <h:outputText value="ID" />
+            </f:facet>
+            <h:outputText value="#{product.id}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
                 <h:outputText value="Name" />
             </f:facet>
             <h:outputText value="#{product.name}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="SKU" />
+            </f:facet>
+            <h:outputText value="#{product.sku}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Price" />
+            </f:facet>
+            <h:outputText value="#{product.price}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Created At" />
+            </f:facet>
+            <h:outputText value="#{product.createdAt}" />
         </h:column>
     </h:dataTable>
 </h:body>
