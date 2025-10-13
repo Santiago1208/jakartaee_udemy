@@ -2,12 +2,21 @@
 <!DOCTYPE html>
 <html
         xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html">
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <meta charset="UTF-8" />
-    <title>Hello World Jakarta Server Faces</title>
+    <title>#{title}</title>
 </h:head>
 <h:body>
-    <h1>Hello World Jakarta Server Faces</h1>
+    <h1><h:outputText value="#{title}" /></h1>
+    <h:dataTable value="#{products}" var="product">
+        <h:column>
+            <f:facet name="header">
+                <h:outputText value="Name" />
+            </f:facet>
+            <h:outputText value="#{product.name}" />
+        </h:column>
+    </h:dataTable>
 </h:body>
 </html>
