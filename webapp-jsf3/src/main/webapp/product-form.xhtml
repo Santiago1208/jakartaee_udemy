@@ -12,23 +12,31 @@
     <f:metadata>
         <f:viewParam name="id" value="#{productController.id}" />
     </f:metadata>
+    <h:messages style="color: red" />
     <h:panelGrid border="1">
         <f:facet name="header">
-            <h:outputText value="Product Form"/>
+            <h:outputText value="#{product.id > 0 ? 'Edit' : 'New'} Product"/>
         </f:facet>
         <h:link outcome="index" value="Back" />
         <h:form>
             <h:panelGrid columns="2">
                 <h:outputLabel value="Name:" for="name"/>
-                <h:inputText id="name" value="#{product.name}"/>
+                <h:inputText id="name" value="#{product.name}" required="true" label="Name"/>
 
                 <h:outputLabel value="Price:" for="price"/>
-                <h:inputText id="price" value="#{product.price}"/>
+                <h:inputText id="price" value="#{product.price}" required="true" label="Price"/>
 
                 <h:outputLabel value="SKU:" for="sku"/>
-                <h:inputText id="sku" value="#{product.sku}"/>
+                <h:inputText id="sku" value="#{product.sku}" required="true" label="SKU"/>
 
-                <h:commandButton value="Save" action="#{productController.save}"/>
+                <h:outputLabel value="Created At:" for="createdAt"/>
+                <h:inputText id="createdAt" value="#{product.createdAt}"
+                             convertMessage="Check your date format to be yyyy-MM-dd" label="Created At" required="true">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+                    <f:passThroughAttribute name="type" value="date" />
+                </h:inputText>
+
+                <h:commandButton value="#{product.id > 0 ? 'Edit' : 'Save'}" action="#{productController.save}"/>
                 <h:inputHidden value="#{product.id}"/>
             </h:panelGrid>
         </h:form>

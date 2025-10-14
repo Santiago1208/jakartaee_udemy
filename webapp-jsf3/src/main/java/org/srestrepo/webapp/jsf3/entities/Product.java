@@ -70,11 +70,6 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDate.now();
-    }
-
     @Override
     public String toString() {
         return "{" +

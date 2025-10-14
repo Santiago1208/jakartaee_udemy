@@ -46,7 +46,9 @@
                 <f:facet name="header">
                     <h:outputText value="Created At"/>
                 </f:facet>
-                <h:outputText value="#{p.createdAt}"/>
+                <h:outputText value="#{p.createdAt}">
+                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
+                </h:outputText>
             </h:column>
             <h:column>
                 <f:facet name="header">
