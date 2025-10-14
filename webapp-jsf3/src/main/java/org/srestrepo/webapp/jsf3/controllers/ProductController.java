@@ -5,6 +5,7 @@ import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import org.srestrepo.webapp.jsf3.entities.Category;
 import org.srestrepo.webapp.jsf3.entities.Product;
 import org.srestrepo.webapp.jsf3.services.ProductService;
 
@@ -41,6 +42,12 @@ public class ProductController {
             productService.getProduct(id).ifPresent(p -> this.product = p);
         }
         return product;
+    }
+
+    @Produces
+    @Model
+    public List<Category> categories() {
+        return productService.getCategories();
     }
 
     public String save() {

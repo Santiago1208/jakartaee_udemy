@@ -16,6 +16,8 @@ public class Product {
     private Integer price;
     @Column(name = "created_at")
     private LocalDate createdAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
     public Product() {
     }
@@ -68,6 +70,14 @@ public class Product {
 
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

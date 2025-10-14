@@ -1,6 +1,7 @@
 package org.srestrepo.webapp.jsf3.services;
 
 import jakarta.ejb.Local;
+import org.srestrepo.webapp.jsf3.entities.Category;
 import org.srestrepo.webapp.jsf3.entities.Product;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface ProductService {
     Optional<Product> getProduct(Long id);
     void saveProduct(Product product);
     void deleteProduct(Long id);
+    List<Category> getCategories();
+    Optional<Category> getCategory(Long id);
 }
