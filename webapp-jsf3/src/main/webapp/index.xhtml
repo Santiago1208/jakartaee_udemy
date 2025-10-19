@@ -6,82 +6,105 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"/>
     <title>#{title}</title>
 </h:head>
 <h:body>
-    <h:panelGrid border="1">
-        <f:facet name="header">
-            <h:outputText value="#{title}"/>
-        </f:facet>
-        <h:form id="newProductForm">
-            <h:commandLink value="[+] New Product" action="product-form.xhtml"/>
-        </h:form>
-        <h:outputText value="No products to show" rendered="#{empty products}" />
-        <h:dataTable value="#{products}" var="p" rendered="#{not empty products}">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="ID"/>
-                </f:facet>
-                <h:outputText value="#{p.id}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Name"/>
-                </f:facet>
-                <h:outputText value="#{p.name}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="SKU"/>
-                </f:facet>
-                <h:outputText value="#{p.sku}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Price"/>
-                </f:facet>
-                <h:outputText value="#{p.price}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Created At"/>
-                </f:facet>
-                <h:outputText value="#{p.createdAt}">
-                    <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
-                </h:outputText>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Category"/>
-                </f:facet>
-                <h:outputText value="#{p.category.name}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Edit" />
-                </f:facet>
-                <h:form id="editForm">
-                    <h:commandLink value="Edit" action="#{productController.edit(p.id)}" />
-                </h:form>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Edit 2" />
-                </f:facet>
-                <h:link value="Edit" outcome="product-form">
-                    <f:param name="id" value="#{p.id}" />
-                </h:link>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Delete" />
-                </f:facet>
-                <h:form id="deleteForm">
-                    <h:commandLink value="Delete" action="#{productController.delete(p.id)}"
-                                   onclick="return confirm('Are you sure you want to delete this record?')" />
-                </h:form>
-            </h:column>
-        </h:dataTable>
-    </h:panelGrid>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <h:link outcome="index" value="Home" class="nav-link active"/>
+                    </li>
+                    <li class="nav-item">
+                        <h:link outcome="product-form" value="New Product" class="nav-link"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h:panelGrid border="1" class="table">
+            <f:facet name="header">
+                <h:outputText value="#{title}"/>
+            </f:facet>
+            <h:form id="newProductForm">
+                <h:commandLink value="[+] New Product" action="product-form.xhtml" class="btn btn-primary my-2"/>
+            </h:form>
+            <h:outputText value="No products to show" rendered="#{empty products}" class="alert alert-warning"/>
+            <h:dataTable value="#{products}" var="p" rendered="#{not empty products}" class="table table-hover table-striped">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="ID"/>
+                    </f:facet>
+                    <h:outputText value="#{p.id}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Name"/>
+                    </f:facet>
+                    <h:outputText value="#{p.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="SKU"/>
+                    </f:facet>
+                    <h:outputText value="#{p.sku}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Price"/>
+                    </f:facet>
+                    <h:outputText value="#{p.price}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Created At"/>
+                    </f:facet>
+                    <h:outputText value="#{p.createdAt}">
+                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Category"/>
+                    </f:facet>
+                    <h:outputText value="#{p.category.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Edit"/>
+                    </f:facet>
+                    <h:form id="editForm">
+                        <h:commandLink value="Edit" action="#{productController.edit(p.id)}" class="btn btn-sm btn-success"/>
+                    </h:form>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Edit 2"/>
+                    </f:facet>
+                    <h:link value="Edit" outcome="product-form" class="btn btn-sm btn-info">
+                        <f:param name="id" value="#{p.id}"/>
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Delete"/>
+                    </f:facet>
+                    <h:form id="deleteForm">
+                        <h:commandLink value="Delete" action="#{productController.delete(p.id)}"
+                                       onclick="return confirm('Are you sure you want to delete this record?')"
+                                       class="btn btn-sm btn-danger"/>
+                    </h:form>
+                </h:column>
+            </h:dataTable>
+        </h:panelGrid>
+    </div>
 </h:body>
 </html>
