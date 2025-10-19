@@ -15,12 +15,14 @@ public class ProductRepositoryImpl implements CrudRepository<Product> {
 
     @Override
     public List<Product> findAll() {
-        return em.createQuery("from Product", Product.class).getResultList();
+        return em.createQuery("select p from Product p left outer join fetch p.category", Product.class).getResultList();
     }
 
     @Override
     public Product findById(Long id) {
-        return em.find(Product.class, id);
+        return em.createQuery("select p from Product p left outer join fetch p.category where p.id = :id", Product.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     @Override
