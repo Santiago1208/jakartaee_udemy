@@ -1,6 +1,7 @@
 package org.srestrepo.webapp.jsf3.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -11,11 +12,24 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
     private String name;
+
+    @NotEmpty
+    @Size(min = 4, max = 10, message = "SKU min value is 4 and max is 10")
     private String sku;
+
+    @NotNull
+    @Min(5)
+    @Max(100_000)
     private Integer price;
+
+    @NotNull
     @Column(name = "created_at")
     private LocalDate createdAt;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
