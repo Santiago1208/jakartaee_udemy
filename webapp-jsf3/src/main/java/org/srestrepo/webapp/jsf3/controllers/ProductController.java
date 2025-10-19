@@ -3,6 +3,8 @@ package org.srestrepo.webapp.jsf3.controllers;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.Produces;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.srestrepo.webapp.jsf3.entities.Category;
@@ -16,6 +18,9 @@ public class ProductController {
 
     @Inject
     private ProductService productService;
+
+    @Inject
+    private FacesContext facesContext;
 
     private Product product;
 
@@ -53,6 +58,13 @@ public class ProductController {
     public String save() {
         System.out.println(product);
         productService.saveProduct(product);
+        if (product.getId() != null && product.getId() > 0) {
+            facesContext.addMessage(null,
+                    new FacesMessage("Product " +  product.getName() + " has been updated"));
+        } else {
+            facesContext.addMessage(null,
+                    new FacesMessage("Product " +  product.getName() + " has been saved"));
+        }
         return "index.xhtml?faces-redirect=true";
     }
 
@@ -61,8 +73,10 @@ public class ProductController {
         return "product-form.xhtml";
     }
 
-    public String delete(Long id) {
-        productService.deleteProduct(id);
+    public String delete(Product product) {
+        productService.deleteProduct(product.getId());
+        facesContext.addMessage(null,
+                new FacesMessage("Product " + product.getName() + " has been deleted"));
         return "index.xhtml?faces-redirect=true";
     }
 
