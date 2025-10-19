@@ -11,24 +11,24 @@
         </f:metadata>
         <h:panelGrid border="1" class="table">
             <f:facet name="header">
-                <h:outputText value="#{product.id > 0 ? 'Edit' : 'New'} Product"/>
+                <h:outputText value="#{product.id > 0 ? multiLanguage['menu.text.edit'] : multiLanguage['menu.text.new']}"/>
             </f:facet>
-            <h:link outcome="index" value="Back" class="btn btn-sm btn-primary my-2"/>
+            <h:link outcome="index" value="#{multiLanguage['product.button.back']}" class="btn btn-sm btn-primary my-2"/>
             <h:form>
                 <h:panelGrid columns="3" class="table table-hover table-striped">
-                    <h:outputLabel value="Name:" for="name" class="col-form-label"/>
+                    <h:outputLabel value="#{multiLanguage['product.name']}:" for="name" class="col-form-label"/>
                     <h:inputText id="name" value="#{product.name}" label="Name" class="form-control"/>
                     <h:message for="name" style="color: red;"/>
 
-                    <h:outputLabel value="Price:" for="price" class="col-form-label"/>
+                    <h:outputLabel value="#{multiLanguage['product.price']}:" for="price" class="col-form-label"/>
                     <h:inputText id="price" value="#{product.price}" label="Price" class="form-control"/>
                     <h:message for="price" style="color: red;"/>
 
-                    <h:outputLabel value="SKU:" for="sku" class="col-form-label"/>
+                    <h:outputLabel value="#{multiLanguage['product.sku']}:" for="sku" class="col-form-label"/>
                     <h:inputText id="sku" value="#{product.sku}" label="SKU" class="form-control"/>
                     <h:message for="sku" style="color: red;"/>
 
-                    <h:outputLabel value="Created At:" for="createdAt" class="col-form-label"/>
+                    <h:outputLabel value="#{multiLanguage['product.createdAt']}:" for="createdAt" class="col-form-label"/>
                     <h:inputText id="createdAt" value="#{product.createdAt}"
                                  convertMessage="Check your date format to be yyyy-MM-dd" label="Created At"
                                  class="form-control">
@@ -37,15 +37,16 @@
                     </h:inputText>
                     <h:message for="createdAt" style="color: red;"/>
 
-                    <h:outputLabel value="Category:" for="category" class="col-form-label"/>
+                    <h:outputLabel value="#{multiLanguage['product.category']}:" for="category" class="col-form-label"/>
                     <h:selectOneMenu id="category" value="#{product.category}" class="form-select">
-                        <f:selectItem itemLabel="--- Select One ---" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="#{multiLanguage['product.category.selectOne']}" itemValue="#{null}"/>
                         <f:selectItems value="#{categories}" var="c" itemLabel="#{c.name}"/>
                         <f:converter binding="#{categoryConverter}"/>
                     </h:selectOneMenu>
                     <h:message for="category" style="color: red;"/>
 
-                    <h:commandButton value="#{product.id > 0 ? 'Edit' : 'Save'}" action="#{productController.save}"
+                    <h:commandButton value="#{product.id > 0 ? multiLanguage['product.button.edit'] : multiLanguage['product.button.save']}"
+                                     action="#{productController.save}"
                                      class="btn btn-primary"/>
                     <h:inputHidden value="#{product.id}"/>
                     <p>&#160;</p>

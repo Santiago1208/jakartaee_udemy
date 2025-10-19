@@ -11,38 +11,39 @@
                 <h:outputText value="#{title}"/>
             </f:facet>
             <h:form id="newProductForm">
-                <h:commandLink value="[+] New Product" action="product-form.xhtml" class="btn btn-primary my-2"/>
+                <h:commandLink value="[+] #{multiLanguage['menu.text.new']}" action="product-form.xhtml"
+                               class="btn btn-primary my-2"/>
             </h:form>
-            <h:outputText value="No products to show" rendered="#{empty products}" class="alert alert-warning"/>
+            <h:outputText value="#{multiLanguage['product.text.noResults']}" rendered="#{empty products}" class="alert alert-warning"/>
             <h:dataTable value="#{products}" var="p" rendered="#{not empty products}"
                          class="table table-hover table-striped">
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="ID"/>
+                        <h:outputText value="#{multiLanguage['product.id']}"/>
                     </f:facet>
                     <h:outputText value="#{p.id}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Name"/>
+                        <h:outputText value="#{multiLanguage['product.name']}"/>
                     </f:facet>
                     <h:outputText value="#{p.name}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="SKU"/>
+                        <h:outputText value="#{multiLanguage['product.sku']}"/>
                     </f:facet>
                     <h:outputText value="#{p.sku}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Price"/>
+                        <h:outputText value="#{multiLanguage['product.price']}"/>
                     </f:facet>
                     <h:outputText value="#{p.price}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Created At"/>
+                        <h:outputText value="#{multiLanguage['product.createdAt']}"/>
                     </f:facet>
                     <h:outputText value="#{p.createdAt}">
                         <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
@@ -50,33 +51,36 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Category"/>
+                        <h:outputText value="#{multiLanguage['product.category']}"/>
                     </f:facet>
                     <h:outputText value="#{p.category.name}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Edit"/>
+                        <h:outputText value="#{multiLanguage['product.button.edit']}"/>
                     </f:facet>
                     <h:form id="editForm">
-                        <h:commandLink value="Edit" action="#{productController.edit(p.id)}"
+                        <h:commandLink value="#{multiLanguage['product.button.edit']}"
+                                       action="#{productController.edit(p.id)}"
                                        class="btn btn-sm btn-success"/>
                     </h:form>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Edit 2"/>
+                        <h:outputText value="#{multiLanguage['product.button.edit']} 2"/>
                     </f:facet>
-                    <h:link value="Edit" outcome="product-form" class="btn btn-sm btn-info">
+                    <h:link value="#{multiLanguage['product.button.edit']}" outcome="product-form"
+                            class="btn btn-sm btn-info">
                         <f:param name="id" value="#{p.id}"/>
                     </h:link>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        <h:outputText value="Delete"/>
+                        <h:outputText value="#{multiLanguage['product.button.delete']}"/>
                     </f:facet>
                     <h:form id="deleteForm">
-                        <h:commandLink value="Delete" action="#{productController.delete(p)}"
+                        <h:commandLink value="#{multiLanguage['product.button.delete']}"
+                                       action="#{productController.delete(p)}"
                                        onclick="return confirm('Are you sure you want to delete this record?')"
                                        class="btn btn-sm btn-danger"/>
                     </h:form>
