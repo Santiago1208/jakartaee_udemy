@@ -12,6 +12,7 @@ import org.srestrepo.webapp.jsf3.entities.Product;
 import org.srestrepo.webapp.jsf3.services.ProductService;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Model
 public class ProductController {
@@ -22,6 +23,10 @@ public class ProductController {
     @Inject
     private FacesContext facesContext;
 
+    @Inject
+    @Named("multiLanguage")
+    private ResourceBundle resourceBundle;
+
     private Product product;
 
     private Long id;
@@ -29,7 +34,7 @@ public class ProductController {
     @Produces
     @Model
     public String title() {
-        return "Hello World Jakarta Server Faces";
+        return resourceBundle.getString("product.text.title");
     }
 
     @Produces
@@ -60,10 +65,10 @@ public class ProductController {
         productService.saveProduct(product);
         if (product.getId() != null && product.getId() > 0) {
             facesContext.addMessage(null,
-                    new FacesMessage("Product " +  product.getName() + " has been updated"));
+                    new FacesMessage(String.format(resourceBundle.getString("product.text.message.edit"), product.getName())));
         } else {
             facesContext.addMessage(null,
-                    new FacesMessage("Product " +  product.getName() + " has been saved"));
+                    new FacesMessage(String.format(resourceBundle.getString("product.text.message.new"), product.getName())));
         }
         return "index.xhtml?faces-redirect=true";
     }
@@ -76,7 +81,7 @@ public class ProductController {
     public String delete(Product product) {
         productService.deleteProduct(product.getId());
         facesContext.addMessage(null,
-                new FacesMessage("Product " + product.getName() + " has been deleted"));
+                new FacesMessage(String.format(resourceBundle.getString("product.text.message.delete"), product.getName())));
         return "index.xhtml?faces-redirect=true";
     }
 
