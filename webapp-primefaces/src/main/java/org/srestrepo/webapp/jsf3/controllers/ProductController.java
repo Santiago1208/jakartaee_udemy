@@ -1,5 +1,6 @@
 package org.srestrepo.webapp.jsf3.controllers;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.Produces;
@@ -31,17 +32,17 @@ public class ProductController {
 
     private Long id;
 
+    private List<Product> products;
+
+    @PostConstruct
+    public void init() {
+        this.products = productService.getProducts();
+    }
+
     @Produces
     @Model
     public String title() {
         return resourceBundle.getString("product.text.title");
-    }
-
-    @Produces
-    @RequestScoped
-    @Named("products")
-    public List<Product> getProducts() {
-        return productService.getProducts();
     }
 
     @Produces
@@ -62,7 +63,6 @@ public class ProductController {
 
     public String save() {
         System.out.println(product);
-        productService.saveProduct(product);
         if (product.getId() != null && product.getId() > 0) {
             facesContext.addMessage(null,
                     new FacesMessage(String.format(resourceBundle.getString("product.text.message.edit"), product.getName())));
@@ -70,7 +70,9 @@ public class ProductController {
             facesContext.addMessage(null,
                     new FacesMessage(String.format(resourceBundle.getString("product.text.message.new"), product.getName())));
         }
-        return "index.xhtml?faces-redirect=true";
+        productService.saveProduct(product);
+        products = productService.getProducts();
+        return "index.xhtml";
     }
 
     public String edit(Long id) {
@@ -78,11 +80,11 @@ public class ProductController {
         return "product-form.xhtml";
     }
 
-    public String delete(Product product) {
+    public void delete(Product product) {
         productService.deleteProduct(product.getId());
         facesContext.addMessage(null,
                 new FacesMessage(String.format(resourceBundle.getString("product.text.message.delete"), product.getName())));
-        return "index.xhtml?faces-redirect=true";
+        products = productService.getProducts();
     }
 
     public Long getId() {
@@ -91,5 +93,13 @@ public class ProductController {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
