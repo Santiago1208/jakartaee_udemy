@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="primefaces"
+        template="/layout/main.xhtml">
+    <ui:define name="content">
+        <p:panelGrid columns="1">
+            <f:facet name="header">
+                <h:outputText value="#{title}"/>
+            </f:facet>
+            <h:form id="newProductForm">
+                <p:commandButton value="[+] #{multiLanguage['menu.text.new']}" action="product-form.xhtml"
+                               class="p-my-2"/>
+            </h:form>
+            <h:outputText value="#{multiLanguage['product.text.noResults']}" rendered="#{empty products}" class="alert alert-warning"/>
+            <p:dataTable value="#{products}" var="p" rendered="#{not empty products}">
+                <p:column headerText="#{multiLanguage['product.id']}">
+                    <h:outputText value="#{p.id}"/>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.name']}">
+                    <h:outputText value="#{p.name}"/>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.sku']}">
+                    <h:outputText value="#{p.sku}"/>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.price']}">
+                    <h:outputText value="#{p.price}"/>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.createdAt']}">
+                    <h:outputText value="#{p.createdAt}">
+                        <f:convertDateTime type="localDate" pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.category']}">
+                    <h:outputText value="#{p.category.name}"/>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.button.edit']}">
+                    <h:form id="editForm">
+                        <p:commandButton value="#{multiLanguage['product.button.edit']}"
+                                       action="#{productController.edit(p.id)}"
+                                       class="ui-button-success"/>
+                    </h:form>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.button.edit']} 2">
+                    <p:linkButton value="#{multiLanguage['product.button.edit']}" outcome="product-form"
+                            class="ui-button-info">
+                        <f:param name="id" value="#{p.id}"/>
+                    </p:linkButton>
+                </p:column>
+                <p:column headerText="#{multiLanguage['product.button.delete']}">
+                    <h:form id="deleteForm">
+                        <p:commandButton value="#{multiLanguage['product.button.delete']}"
+                                       action="#{productController.delete(p)}"
+                                       onclick="return confirm(`#{multiLanguage['product.text.message.delete.confirmation']}`)"
+                                       class="ui-button-danger"/>
+                    </h:form>
+                </p:column>
+            </p:dataTable>
+        </p:panelGrid>
+    </ui:define>
+</ui:composition>
