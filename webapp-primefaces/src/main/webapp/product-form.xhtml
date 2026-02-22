@@ -1,22 +1,16 @@
-<ui:composition
+<ui:component
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        xmlns:p="primefaces"
-        template="/layout/main.xhtml">
-    <ui:define name="content">
-        <f:metadata>
-            <f:viewParam name="id" value="#{productController.id}"/>
-        </f:metadata>
-        <p:panel header="#{product.id > 0 ? multiLanguage['menu.text.edit'] : multiLanguage['menu.text.new']}">
-            <p:linkButton outcome="index" value="#{multiLanguage['product.button.back']}" class="p-my-2"/>
-            <h:form>
+        xmlns:p="primefaces">
+
+            <h:form id="productForm">
                 <div class="field grid">
                     <p:outputLabel value="#{multiLanguage['product.name']}:" for="name" class="p-col-fixed"
                                    style="width: 200px;"/>
                     <div class="col">
-                        <p:inputText id="name" value="#{product.name}" label="Name"/>
+                        <p:inputText id="name" value="#{productController.product.name}" label="Name"/>
                     </div>
                     <div class="col">
                         <p:message for="name" style="color: red;"/>
@@ -26,7 +20,7 @@
                     <p:outputLabel value="#{multiLanguage['product.price']}:" for="price" class="p-col-fixed"
                                    style="width: 200px;"/>
                     <div class="col">
-                        <p:inputText id="price" value="#{product.price}" label="Price"/>
+                        <p:inputText id="price" value="#{productController.product.price}" label="Price"/>
                     </div>
                     <div class="col">
                         <p:message for="price" style="color: red;"/>
@@ -36,7 +30,7 @@
                     <p:outputLabel value="#{multiLanguage['product.sku']}:" for="sku" class="p-col-fixed"
                                    style="width: 200px;"/>
                     <div class="col">
-                        <p:inputText id="sku" value="#{product.sku}" label="SKU"/>
+                        <p:inputText id="sku" value="#{productController.product.sku}" label="SKU"/>
                     </div>
                     <div class="col">
                         <p:message for="sku" style="color: red;"/>
@@ -46,7 +40,7 @@
                     <p:outputLabel value="#{multiLanguage['product.createdAt']}:" for="createdAt"
                                    class="p-col-fixed" style="width: 200px;"/>
                     <div class="col">
-                        <p:datePicker pattern="yyyy-MM-dd" id="createdAt" value="#{product.createdAt}"
+                        <p:datePicker pattern="yyyy-MM-dd" id="createdAt" value="#{productController.product.createdAt}"
                                       converterMessage="Check your date format to be yyyy-MM-dd" label="Created At">
                             <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
                             <f:passThroughAttribute name="type" value="date"/>
@@ -60,7 +54,7 @@
                     <p:outputLabel value="#{multiLanguage['product.category']}:" for="category" class="p-col-fixed"
                                    style="width: 200px;"/>
                     <div class="col">
-                        <p:selectOneMenu id="category" value="#{product.category}">
+                        <p:selectOneMenu id="category" value="#{productController.product.category}">
                             <f:selectItem itemLabel="#{multiLanguage['product.category.selectOne']}"
                                           itemValue="#{null}"/>
                             <f:selectItems value="#{categories}" var="c" itemLabel="#{c.name}"/>
@@ -73,11 +67,9 @@
                 </div>
                 <div class="field grid">
                     <p:commandButton
-                            value="#{product.id > 0 ? multiLanguage['product.button.edit'] : multiLanguage['product.button.save']}"
-                            action="#{productController.save}" class="ui-button-outlined" update="@form"/>
-                    <h:inputHidden value="#{product.id}"/>
+                            value="#{productController.product.id > 0 ? multiLanguage['product.button.edit'] : multiLanguage['product.button.save']}"
+                            action="#{productController.save}" class="ui-button-outlined" update="@form productsTable"/>
+                    <h:inputHidden value="#{productController.product.id}"/>
                 </div>
             </h:form>
-        </p:panel>
-    </ui:define>
-</ui:composition>
+</ui:component>

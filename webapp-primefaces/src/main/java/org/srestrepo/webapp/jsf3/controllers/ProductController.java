@@ -39,6 +39,7 @@ public class ProductController {
     @PostConstruct
     public void init() {
         this.products = productService.getProducts();
+        product = new Product();
     }
 
     @Produces
@@ -47,8 +48,6 @@ public class ProductController {
         return resourceBundle.getString("product.text.title");
     }
 
-    @Produces
-    @Model
     public Product product() {
         this.product = new Product();
         if (id != null && id > 0) {
@@ -63,7 +62,7 @@ public class ProductController {
         return productService.getCategories();
     }
 
-    public String save() {
+    public void save() {
         System.out.println(product);
         if (product.getId() != null && product.getId() > 0) {
             facesContext.addMessage(null,
@@ -74,12 +73,12 @@ public class ProductController {
         }
         productService.saveProduct(product);
         products = productService.getProducts();
-        return "index.xhtml";
+        product = new Product();
     }
 
-    public String edit(Long id) {
+    public void edit(Long id) {
         this.id = id;
-        return "product-form.xhtml";
+        product();
     }
 
     public void delete(Product product) {
@@ -91,6 +90,11 @@ public class ProductController {
 
     public void search() {
         this.products = productService.searchByName(this.nameSearch);
+    }
+
+    public void onCloseDialog() {
+        System.out.println("Closing Add/Edit Dialog");
+        product = new Product();
     }
 
     public Long getId() {
@@ -115,5 +119,13 @@ public class ProductController {
 
     public void setNameSearch(String nameSearch) {
         this.nameSearch = nameSearch;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

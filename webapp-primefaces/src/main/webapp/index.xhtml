@@ -12,8 +12,10 @@
             </f:facet>
             <p:divider/>
             <h:form id="newProductForm">
-                <p:commandButton value="[+] #{multiLanguage['menu.text.new']}" action="product-form.xhtml"
-                               class="p-my-2"/>
+                <p:commandButton value="#{multiLanguage['menu.text.new']}" onclick="PF('formDialog').show()"
+                                 class="p-my-2" icon="pi pi-plus-circle">
+                    <p:resetInput target="productForm"/>
+                </p:commandButton>
             </h:form>
             <h:outputText value="#{multiLanguage['product.text.noResults']}" rendered="#{empty productController.products}" class="alert alert-warning"/>
             <h:form>
@@ -58,25 +60,26 @@
                 <p:column headerText="#{multiLanguage['product.button.edit']}">
                     <h:form id="editForm">
                         <p:commandButton value="#{multiLanguage['product.button.edit']}"
-                                       action="#{productController.edit(p.id)}"
-                                       class="ui-button-success"/>
+                                         action="#{productController.edit(p.id)}"
+                                         class="ui-button-success" onclick="PF('formDialog').show()" icon="pi pi-save" update="productForm">
+                            <p:resetInput target="productForm"/>
+                        </p:commandButton>
                     </h:form>
-                </p:column>
-                <p:column headerText="#{multiLanguage['product.button.edit']} 2">
-                    <p:linkButton value="#{multiLanguage['product.button.edit']}" outcome="product-form"
-                            class="ui-button-info">
-                        <f:param name="id" value="#{p.id}"/>
-                    </p:linkButton>
                 </p:column>
                 <p:column headerText="#{multiLanguage['product.button.delete']}">
                     <h:form id="deleteForm">
                         <p:commandButton value="#{multiLanguage['product.button.delete']}"
                                        action="#{productController.delete(p)}"
                                        onclick="return confirm(`#{multiLanguage['product.text.message.delete.confirmation']}`)"
-                                       class="ui-button-danger" update="productsTable"/>
+                                       class="ui-button-danger" update="productsTable" icon="pi pi-trash"/>
                     </h:form>
                 </p:column>
             </p:dataTable>
+            <p:dialog header="#{productController.product.id > 0 ? multiLanguage['menu.text.edit'] : multiLanguage['menu.text.new']}"
+                      widgetVar="formDialog" minHeight="200" minWidth="500" showEffect="fade" modal="true">
+                <p:ajax event="close" listener="#{productController.onCloseDialog}" update="productForm" />
+                <ui:include src="product-form.xhtml"/>
+            </p:dialog>
         </p:card>
     </ui:define>
 </ui:composition>
