@@ -8,7 +8,7 @@ import org.srestrepo.webapp.jsf3.entities.Product;
 import java.util.List;
 
 @RequestScoped
-public class ProductRepositoryImpl implements CrudRepository<Product> {
+public class ProductRepositoryImpl implements ProductRepository {
 
     @Inject
     private EntityManager em;
@@ -37,5 +37,13 @@ public class ProductRepositoryImpl implements CrudRepository<Product> {
     @Override
     public void delete(Long id) {
         em.remove(findById(id));
+    }
+
+    @Override
+    public List<Product> findByName(String name) {
+        return em.createQuery("select p from Product p left outer join fetch p.category where lower(p.name) like lower(:name)", Product.class)
+                .setParameter("name", "%" + name + "%")
+                .getResultList();
+
     }
 }

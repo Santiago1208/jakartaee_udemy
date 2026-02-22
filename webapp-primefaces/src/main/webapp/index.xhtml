@@ -16,6 +16,19 @@
                                class="p-my-2"/>
             </h:form>
             <h:outputText value="#{multiLanguage['product.text.noResults']}" rendered="#{empty productController.products}" class="alert alert-warning"/>
+            <h:form>
+                <div class="field grid p-my-2">
+                    <label for="nameSearch" class="col-fixed" style="width: 100px;">Search</label>
+                    <div class="col">
+                        <p:inputText id="nameSearch" value="#{productController.nameSearch}" placeholder="Some Name">
+                            <p:ajax listener="#{productController.search}" event="keyup" update="productsTable result" />
+                        </p:inputText>
+                    </div>
+                    <div class="col">
+                        <h:outputText value="#{productController.nameSearch}" id="result" />
+                    </div>
+                </div>
+            </h:form>
             <p:dataTable value="#{productController.products}" var="p" rendered="#{not empty productController.products}"
                          style="max-width: 65%;" id="productsTable">
                 <p:column headerText="#{multiLanguage['product.id']}">

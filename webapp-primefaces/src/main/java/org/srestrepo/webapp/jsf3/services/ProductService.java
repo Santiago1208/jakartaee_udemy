@@ -15,4 +15,5 @@ public interface ProductService {
     void deleteProduct(Long id);
     List<Category> getCategories();
     Optional<Category> getCategory(Long id);
+    List<Product> searchByName(String name);
 }

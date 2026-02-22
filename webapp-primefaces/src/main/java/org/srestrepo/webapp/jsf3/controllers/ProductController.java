@@ -34,6 +34,8 @@ public class ProductController {
 
     private List<Product> products;
 
+    private String nameSearch;
+
     @PostConstruct
     public void init() {
         this.products = productService.getProducts();
@@ -87,6 +89,10 @@ public class ProductController {
         products = productService.getProducts();
     }
 
+    public void search() {
+        this.products = productService.searchByName(this.nameSearch);
+    }
+
     public Long getId() {
         return id;
     }
@@ -101,5 +107,13 @@ public class ProductController {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public String getNameSearch() {
+        return nameSearch;
+    }
+
+    public void setNameSearch(String nameSearch) {
+        this.nameSearch = nameSearch;
     }
 }

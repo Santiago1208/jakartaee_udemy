@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import org.srestrepo.webapp.jsf3.entities.Category;
 import org.srestrepo.webapp.jsf3.entities.Product;
 import org.srestrepo.webapp.jsf3.repositories.CrudRepository;
+import org.srestrepo.webapp.jsf3.repositories.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     @Inject
-    private CrudRepository<Product> productRepository;
+    private ProductRepository productRepository;
 
     @Inject
     private CrudRepository<Category> categoryRepository;
@@ -46,5 +47,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Category> getCategory(Long id) {
         return Optional.ofNullable(categoryRepository.findById(id));
+    }
+
+    @Override
+    public List<Product> searchByName(String name) {
+        return productRepository.findByName(name);
     }
 }
